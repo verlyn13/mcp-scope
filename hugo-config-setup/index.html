@@ -1,0 +1,224 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>| ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1></h1><div class=metadata></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#base-configuration-file>Base Configuration File</a></li><li><a href=#custom-parameters-explanation>Custom Parameters Explanation</a><ul><li><a href=#status-system>Status System</a></li><li><a href=#documentation-layers>Documentation Layers</a></li><li><a href=#taxonomies>Taxonomies</a></li></ul></li><li><a href=#github-pages-configuration>GitHub Pages Configuration</a></li><li><a href=#additional-configuration-options>Additional Configuration Options</a><ul><li><a href=#language-settings>Language Settings</a></li><li><a href=#sitemap-configuration>Sitemap Configuration</a></li><li><a href=#output-formats>Output Formats</a></li></ul></li><li><a href=#theme-customization>Theme Customization</a></li><li><a href=#implementation-instructions>Implementation Instructions</a></li></ul></nav></div><div class=content-body><h1 id=hugo-configuration-setup>Hugo Configuration Setup</h1><p>This document provides the initial Hugo configuration for the ScopeCam MCP documentation site. It includes the basic <code>config.toml</code> file and instructions for customizing it for your deployment.</p><h2 id=base-configuration-file>Base Configuration File</h2><p>Create a file named <code>config.toml</code> in the root of your Hugo project with the following content:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">95
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-toml data-lang=toml><span style=display:flex><span><span style=color:#75715e># ScopeCam MCP Documentation Hugo Configuration</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>baseURL</span> = <span style=color:#e6db74>&#34;https://example.github.io/mcp-scope/&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>languageCode</span> = <span style=color:#e6db74>&#34;en-us&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>title</span> = <span style=color:#e6db74>&#34;ScopeCam MCP Documentation&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>theme</span> = <span style=color:#e6db74>&#34;mcp-theme&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enableGitInfo</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enableEmoji</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Enable robots.txt generation</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enableRobotsTXT</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Syntax highlighting configuration</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>markup</span>.<span style=color:#a6e22e>highlight</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>codeFences</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>guessSyntax</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>lineNos</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>lineNumbersInTable</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tabWidth</span> = <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Configure Markdown renderer</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>markup</span>.<span style=color:#a6e22e>goldmark</span>.<span style=color:#a6e22e>renderer</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>unsafe</span> = <span style=color:#66d9ef>true</span> <span style=color:#75715e># Allows HTML in Markdown</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Set permalinks structure</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>permalinks</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>project</span> = <span style=color:#e6db74>&#34;/project/:filename/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>guides</span> = <span style=color:#e6db74>&#34;/guides/:filename/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>architecture</span> = <span style=color:#e6db74>&#34;/architecture/:filename/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>standards</span> = <span style=color:#e6db74>&#34;/standards/:filename/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>templates</span> = <span style=color:#e6db74>&#34;/templates/:filename/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>mcp</span> = <span style=color:#e6db74>&#34;/mcp/:sections/:filename/&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Define taxonomies</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>taxonomies</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tag</span> = <span style=color:#e6db74>&#34;tags&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>status</span> = <span style=color:#e6db74>&#34;status&#34;</span> 
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>contributor</span> = <span style=color:#e6db74>&#34;contributors&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Menu configuration</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>menu</span>]
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Home&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Project&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/project/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Architecture&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/architecture/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>30</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Guides&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/guides/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>40</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Standards&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/standards/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>50</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  [[<span style=color:#a6e22e>menu</span>.<span style=color:#a6e22e>main</span>]]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;MCP&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;/mcp/&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>60</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Parameters for theme and site functionality</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>params</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Documentation for the ScopeCam Multi-Agent Control Platform&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>author</span> = <span style=color:#e6db74>&#34;ScopeCam Team&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>github_repo</span> = <span style=color:#e6db74>&#34;https://github.com/example/mcp-scope&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>github_branch</span> = <span style=color:#e6db74>&#34;main&#34;</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  <span style=color:#75715e># Status settings</span>
+</span></span><span style=display:flex><span>  [<span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>status</span>]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>active</span> = <span style=color:#e6db74>&#34;🟢 Active&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>draft</span> = <span style=color:#e6db74>&#34;🟡 Draft&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>review</span> = <span style=color:#e6db74>&#34;🟠 Review&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>outdated</span> = <span style=color:#e6db74>&#34;🔴 Outdated&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>archived</span> = <span style=color:#e6db74>&#34;⚫ Archived&#34;</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  <span style=color:#75715e># Layer configuration</span>
+</span></span><span style=display:flex><span>  [<span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>layers</span>]
+</span></span><span style=display:flex><span>    [<span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>layers</span>.<span style=color:#a6e22e>root</span>]
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;Root Documentation&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Project-wide information and ScopeCam integration&#34;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    [<span style=color:#a6e22e>params</span>.<span style=color:#a6e22e>layers</span>.<span style=color:#a6e22e>mcp</span>]
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;MCP Documentation&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Detailed implementation guides and technical information&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=custom-parameters-explanation>Custom Parameters Explanation</h2><h3 id=status-system>Status System</h3><p>The configuration uses a custom parameter section <code>[params.status]</code> to define the display format for each status. This will be used by the theme templates to render status indicators consistently.</p><h3 id=documentation-layers>Documentation Layers</h3><p>The configuration defines the dual-layer structure using <code>[params.layers]</code> with separate sections for the root documentation layer and the MCP-specific layer. This enables the theme to provide layer-specific navigation and styling.</p><h3 id=taxonomies>Taxonomies</h3><p>The configuration sets up three taxonomies:</p><ul><li><code>tags</code> - For categorizing content by topic</li><li><code>status</code> - For tracking document status</li><li><code>contributors</code> - For identifying document authors</li></ul><p>These taxonomies will generate automatic listing pages and can be used for filtering content.</p><h2 id=github-pages-configuration>GitHub Pages Configuration</h2><p>When deploying to GitHub Pages from the <code>gh-pages</code> branch, make the following adjustments:</p><ol><li>Update the <code>baseURL</code> to match your GitHub Pages URL</li><li>Set the correct repository and branch in <code>github_repo</code> and <code>github_branch</code></li><li>If using a custom domain:<ul><li>Add your domain to <code>baseURL</code></li><li>Create a <code>static/CNAME</code> file with your domain</li></ul></li></ol><h2 id=additional-configuration-options>Additional Configuration Options</h2><h3 id=language-settings>Language Settings</h3><p>For multilingual support, add:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>languages</span>]
+</span></span><span style=display:flex><span>  [<span style=color:#a6e22e>languages</span>.<span style=color:#a6e22e>en</span>]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>languageName</span> = <span style=color:#e6db74>&#34;English&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>  [<span style=color:#a6e22e>languages</span>.<span style=color:#a6e22e>es</span>]
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>languageName</span> = <span style=color:#e6db74>&#34;Español&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>weight</span> = <span style=color:#ae81ff>2</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=sitemap-configuration>Sitemap Configuration</h3><p>For advanced sitemap settings:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>sitemap</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>changefreq</span> = <span style=color:#e6db74>&#34;weekly&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>priority</span> = <span style=color:#ae81ff>0.5</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>filename</span> = <span style=color:#e6db74>&#34;sitemap.xml&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=output-formats>Output Formats</h3><p>To generate additional output formats:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>outputs</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>home</span> = [<span style=color:#e6db74>&#34;HTML&#34;</span>, <span style=color:#e6db74>&#34;RSS&#34;</span>, <span style=color:#e6db74>&#34;JSON&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>page</span> = [<span style=color:#e6db74>&#34;HTML&#34;</span>]
+</span></span></code></pre></td></tr></table></div></div><p>The JSON output is useful for implementing search functionality.</p><h2 id=theme-customization>Theme Customization</h2><p>The MCP theme will need to be developed or adapted from an existing theme. Key components to implement:</p><ol><li>Status styling and indicators</li><li>Layer navigation system</li><li>Progress bar visualization</li><li>Taxonomy displays</li><li>Search integration</li></ol><h2 id=implementation-instructions>Implementation Instructions</h2><ol><li>Create a <code>config.toml</code> file in the Hugo project root directory</li><li>Copy the base configuration provided above</li><li>Adjust parameters based on your specific deployment needs</li><li>Test the configuration locally with <code>hugo server</code></li><li>Deploy to GitHub Pages using the CI/CD workflow</li></ol></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

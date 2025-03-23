@@ -1,0 +1,206 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>MCP Testing Guide | ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Guides</h3><ul><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-implementation-guide/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-onboarding-checklist/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-quick-start/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-tech-specs/></a></li><li><a href=https://example.github.io/mcp-scope/guides/>Guides</a></li><li><a href=https://example.github.io/mcp-scope/guides/containerized-dev-environment/>MCP Containerized Development Environment</a></li><li><a href=https://example.github.io/mcp-scope/guides/health-monitoring-guide/>MCP Health Monitoring Guide</a></li><li><a href=https://example.github.io/mcp-scope/guides/testing-guide/ class=active>MCP Testing Guide</a></li></ul><p><a href=/>&larr; Back to home</a></p></div></nav></aside><main class=main-content><article class=content><header><h1>MCP Testing Guide</h1><div class="status status-active">🟢 Active</div><div class=metadata><span class=created-date>Created: 2025-03-23</span>
+<span class=updated-date>Updated: 2025-03-23</span>
+<span class=version>Version: 1.0</span><div class=contributors>Contributors:
+Documentation Architect
+, Build Engineer</div></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#testing-infrastructure>Testing Infrastructure</a></li><li><a href=#test-structure>Test Structure</a></li><li><a href=#running-tests>Running Tests</a><ul><li><a href=#local-environment>Local Environment</a></li><li><a href=#containerized-environment>Containerized Environment</a></li></ul></li><li><a href=#key-test-components>Key Test Components</a><ul><li><a href=#agent-state-machine-tests>Agent State Machine Tests</a></li><li><a href=#nats-connection-tests>NATS Connection Tests</a></li><li><a href=#orchestrator-tests>Orchestrator Tests</a></li><li><a href=#health-monitoring-tests>Health Monitoring Tests</a></li></ul></li><li><a href=#test-best-practices>Test Best Practices</a><ul><li><a href=#mocking>Mocking</a></li><li><a href=#testing-coroutines>Testing Coroutines</a></li><li><a href=#testing-states-and-events>Testing States and Events</a></li><li><a href=#testing-error-scenarios>Testing Error Scenarios</a></li></ul></li><li><a href=#writing-new-tests>Writing New Tests</a><ul><li><a href=#test-structure-template>Test Structure Template</a></li></ul></li><li><a href=#integration-testing>Integration Testing</a></li><li><a href=#test-performance>Test Performance</a></li><li><a href=#troubleshooting-tests>Troubleshooting Tests</a><ul><li><a href=#flaky-tests>Flaky Tests</a></li><li><a href=#resource-leaks>Resource Leaks</a></li><li><a href=#mock-configuration-issues>Mock Configuration Issues</a></li></ul></li><li><a href=#continuous-improvement>Continuous Improvement</a></li><li><a href=#references>References</a></li></ul></nav></div><div class=content-body><h1 id=mcp-testing-guide>MCP Testing Guide</h1><p><a href=/docs/START_HERE.md>↩️ Back to Start Here</a> | <a href=/docs/README.md>↩️ Back to Documentation Index</a></p><h2 id=overview>Overview</h2><p>This guide documents the testing infrastructure for the Multi-Agent Control Platform (MCP). It covers unit testing, integration testing, and health monitoring tests. The guide also provides best practices for writing new tests and running tests in both local and containerized environments.</p><h2 id=testing-infrastructure>Testing Infrastructure</h2><p>The MCP project uses the following testing libraries:</p><ul><li><strong>JUnit 5</strong>: Core testing framework</li><li><strong>Mockk</strong>: Mocking library for Kotlin</li><li><strong>Kotlin Test</strong>: Assertions and test utilities</li><li><strong>Kotlinx Coroutines Test</strong>: Utilities for testing coroutines</li></ul><p>The testing configuration is defined in the Gradle build files:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span>dependencies {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Testing
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    testImplementation(<span style=color:#e6db74>&#34;org.jetbrains.kotlin:kotlin-test:1.8.10&#34;</span>)
+</span></span><span style=display:flex><span>    testImplementation(<span style=color:#e6db74>&#34;io.mockk:mockk:1.13.4&#34;</span>)
+</span></span><span style=display:flex><span>    testImplementation(<span style=color:#e6db74>&#34;org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4&#34;</span>)
+</span></span><span style=display:flex><span>    testImplementation(<span style=color:#e6db74>&#34;org.junit.jupiter:junit-jupiter:5.9.2&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>tasks.withType&lt;Test&gt; {
+</span></span><span style=display:flex><span>    useJUnitPlatform()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=test-structure>Test Structure</h2><p>Unit tests are organized in a directory structure mirroring the main source code:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>mcp-core/
+</span></span><span style=display:flex><span>├── src/
+</span></span><span style=display:flex><span>│   ├── main/kotlin/com/example/mcp/...
+</span></span><span style=display:flex><span>│   └── test/kotlin/com/example/mcp/
+</span></span><span style=display:flex><span>│       ├── AgentStateMachineTest.kt
+</span></span><span style=display:flex><span>│       ├── NatsConnectionManagerTest.kt
+</span></span><span style=display:flex><span>│       ├── OrchestratorTest.kt
+</span></span><span style=display:flex><span>│       └── health/
+</span></span><span style=display:flex><span>│           ├── SystemMetricsCollectorTest.kt
+</span></span><span style=display:flex><span>│           └── HealthCheckServiceTest.kt
+</span></span></code></pre></td></tr></table></div></div><h2 id=running-tests>Running Tests</h2><h3 id=local-environment>Local Environment</h3><p>To run tests on your local machine:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Navigate to the project directory</span>
+</span></span><span style=display:flex><span>cd mcp-project
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run all tests</span>
+</span></span><span style=display:flex><span>./gradlew test
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run specific module tests</span>
+</span></span><span style=display:flex><span>./gradlew :mcp-core:test
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run a specific test class</span>
+</span></span><span style=display:flex><span>./gradlew :mcp-core:test --tests <span style=color:#e6db74>&#34;com.example.mcp.AgentStateMachineTest&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run a specific test method</span>
+</span></span><span style=display:flex><span>./gradlew :mcp-core:test --tests <span style=color:#e6db74>&#34;com.example.mcp.AgentStateMachineTest.initial state should be Idle&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=containerized-environment>Containerized Environment</h3><p>To run tests in the containerized environment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Run tests in the mcp-core container</span>
+</span></span><span style=display:flex><span>podman exec -it mcp-project_mcp-core_1 ./gradlew test
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run a specific test</span>
+</span></span><span style=display:flex><span>podman exec -it mcp-project_mcp-core_1 ./gradlew test --tests <span style=color:#e6db74>&#34;com.example.mcp.NatsConnectionManagerTest&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=key-test-components>Key Test Components</h2><h3 id=agent-state-machine-tests>Agent State Machine Tests</h3><p>The <code>AgentStateMachineTest</code> class tests the state machine transitions and behavior of the agent lifecycle:</p><ul><li>Tests initial state</li><li>Tests state transitions for initialize, process, and shutdown</li><li>Tests error handling and recovery</li><li>Tests task processing</li></ul><h3 id=nats-connection-tests>NATS Connection Tests</h3><p>The <code>NatsConnectionManagerTest</code> class tests the NATS connection management:</p><ul><li>Tests connection establishment</li><li>Tests connection error handling</li><li>Tests connection configuration</li><li>Tests proper resource cleanup</li></ul><h3 id=orchestrator-tests>Orchestrator Tests</h3><p>The <code>OrchestratorTest</code> class tests the orchestrator&rsquo;s ability to manage agents:</p><ul><li>Tests agent registration</li><li>Tests task distribution</li><li>Tests communication with agents</li><li>Tests orchestrator lifecycle</li></ul><h3 id=health-monitoring-tests>Health Monitoring Tests</h3><p>The health monitoring system includes tests for:</p><ul><li>System metrics collection</li><li>Health check endpoints</li><li>Circuit breaker pattern</li><li>Resilience mechanisms</li></ul><h2 id=test-best-practices>Test Best Practices</h2><h3 id=mocking>Mocking</h3><p>Use Mockk to create mock objects for dependencies:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#75715e>// Create a mock agent
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> mockAgent = mockk&lt;McpAgent&gt;(relaxed = <span style=color:#66d9ef>true</span>) {
+</span></span><span style=display:flex><span>    every { agentId } returns <span style=color:#e6db74>&#34;test-agent&#34;</span>
+</span></span><span style=display:flex><span>    every { capabilities } returns setOf(<span style=color:#a6e22e>Capability</span>.TESTING)
+</span></span><span style=display:flex><span>    coEvery { initialize() } returns Unit
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=testing-coroutines>Testing Coroutines</h3><p>Use the <code>runTest</code> function from <code>kotlinx.coroutines.test</code> for testing coroutines:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#a6e22e>@Test</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>`test coroutine behavior`</span>() = runTest {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test code using coroutines
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>val</span> result = someCoroutineFunction()
+</span></span><span style=display:flex><span>    assertEquals(expectedValue, result)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Advance time if needed
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    advanceTimeBy(<span style=color:#ae81ff>1000</span>)
+</span></span><span style=display:flex><span>    advanceUntilIdle()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=testing-states-and-events>Testing States and Events</h3><p>For testing state machines and event-driven code:</p><ol><li>Set up the initial state</li><li>Trigger an event</li><li>Verify the new state</li><li>Verify side effects</li></ol><p>Example:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#a6e22e>@Test</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>`initialize should transition to Initializing state`</span>() = runTest {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Initial state check
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    assertEquals(<span style=color:#a6e22e>AgentState</span>.Idle, stateMachine.getCurrentState())
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Trigger event
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    stateMachine.initialize()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify state transition
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    assertEquals(<span style=color:#a6e22e>AgentState</span>.Initializing, stateMachine.getCurrentState())
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Allow coroutines to complete
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    advanceUntilIdle()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify side effects
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    coVerify { mockAgent.initialize() }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=testing-error-scenarios>Testing Error Scenarios</h3><p>Always test both success and failure paths:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#a6e22e>@Test</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>`failed initialization should transition to Error state`</span>() = runTest {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Configure mock to throw exception
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    coEvery { mockAgent.initialize() } throws Exception(<span style=color:#e6db74>&#34;Test error&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Trigger event
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    stateMachine.initialize()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Allow coroutines to complete
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    advanceUntilIdle()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Verify error state
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    assertEquals(<span style=color:#a6e22e>AgentState</span>.Error, stateMachine.getCurrentState())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=writing-new-tests>Writing New Tests</h2><p>When adding new functionality, follow these steps for test-driven development:</p><ol><li>Write a test that describes the expected behavior</li><li>Implement the functionality to make the test pass</li><li>Refactor as needed while keeping tests passing</li></ol><h3 id=test-structure-template>Test Structure Template</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#a6e22e>@Test</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>`descriptive test name with expected behavior`</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Arrange - set up test conditions
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>val</span> sut = SystemUnderTest()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Act - perform the action being tested
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>val</span> result = sut.methodBeingTested()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Assert - verify the expected outcome
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    assertEquals(expectedValue, result)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=integration-testing>Integration Testing</h2><p>Integration tests verify that components work together correctly:</p><ol><li><strong>Agent-Orchestrator Integration</strong>: Tests that agents properly register with the orchestrator and respond to commands</li><li><strong>NATS Messaging Integration</strong>: Tests that messages flow correctly between components</li><li><strong>Health Monitoring Integration</strong>: Tests that health metrics are collected and reported</li></ol><h2 id=test-performance>Test Performance</h2><p>For maintaining test performance:</p><ul><li>Use appropriate scopes for test fixtures (method, class, or module level)</li><li>Clean up resources after tests</li><li>Be careful with time-dependent tests</li><li>Use <code>@BeforeEach</code> and <code>@AfterEach</code> for setup and teardown</li></ul><h2 id=troubleshooting-tests>Troubleshooting Tests</h2><p>Common issues and solutions:</p><h3 id=flaky-tests>Flaky Tests</h3><ul><li>Tests that sometimes pass and sometimes fail often have timing issues</li><li>Use <code>advanceUntilIdle()</code> instead of fixed delays</li><li>Add logging to identify the issue</li></ul><h3 id=resource-leaks>Resource Leaks</h3><ul><li>Always close resources in <code>@AfterEach</code> or use <code>use {}</code> blocks</li><li>Watch for unclosed coroutine scopes</li></ul><h3 id=mock-configuration-issues>Mock Configuration Issues</h3><ul><li>Ensure mocks are properly configured for the right methods</li><li>Check for missing or incorrect <code>every</code> or <code>coEvery</code> statements</li></ul><h2 id=continuous-improvement>Continuous Improvement</h2><p>The testing infrastructure is designed to evolve with the project:</p><ol><li>Regularly review test coverage</li><li>Refactor tests as the codebase changes</li><li>Add new tests for bug fixes and new features</li></ol><h2 id=references>References</h2><ul><li><a href=https://junit.org/junit5/docs/current/user-guide/>JUnit 5 Documentation</a></li><li><a href=https://mockk.io/>Mockk Documentation</a></li><li><a href=https://kotlinlang.org/api/latest/kotlin.test/>Kotlin Test Documentation</a></li><li><a href=https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-test/>Kotlinx Coroutines Test Documentation</a></li></ul></div><div class=related-docs><h2>Related Documents</h2><ul><li><a href=/docs/guides/build-engineer-implementation-guide.md>/docs/guides/build-engineer-implementation-guide.md</a></li><li><a href=/docs/guides/containerized-dev-environment.md>/docs/guides/containerized-dev-environment.md</a></li><li><a href=/docs/project/build-engineer-next-steps.md>/docs/project/build-engineer-next-steps.md</a></li></ul></div><div class=tags><h3>Tags</h3><ul><li><a href=/tags/testing>testing</a></li><li><a href=/tags/junit>junit</a></li><li><a href=/tags/mockk>mockk</a></li><li><a href=/tags/gradle>gradle</a></li><li><a href=/tags/kotlin-test>kotlin-test</a></li></ul></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

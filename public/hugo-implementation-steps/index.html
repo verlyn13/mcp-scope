@@ -1,0 +1,376 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>| ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1></h1><div class=metadata></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#phase-1-project-setup>Phase 1: Project Setup</a><ul><li><a href=#11-create-the-hugo-project>1.1 Create the Hugo Project</a></li><li><a href=#12-configure-theme>1.2 Configure Theme</a></li><li><a href=#13-configure-hugo>1.3 Configure Hugo</a></li><li><a href=#14-set-up-directory-structure>1.4 Set Up Directory Structure</a></li></ul></li><li><a href=#phase-2-content-migration>Phase 2: Content Migration</a><ul><li><a href=#21-create-migration-script>2.1 Create Migration Script</a></li><li><a href=#22-content-migration-process>2.2 Content Migration Process</a></li><li><a href=#23-manual-content-updates>2.3 Manual Content Updates</a></li></ul></li><li><a href=#phase-3-theme-customization>Phase 3: Theme Customization</a><ul><li><a href=#31-style-customization>3.1 Style Customization</a></li><li><a href=#32-create-shortcodes>3.2 Create Shortcodes</a></li><li><a href=#33-create-custom-layouts>3.3 Create Custom Layouts</a></li></ul></li><li><a href=#phase-4-testing--deployment>Phase 4: Testing & Deployment</a><ul><li><a href=#41-local-testing>4.1 Local Testing</a></li><li><a href=#42-github-pages-setup>4.2 GitHub Pages Setup</a></li><li><a href=#43-deployment>4.3 Deployment</a></li></ul></li><li><a href=#phase-5-post-migration-tasks>Phase 5: Post-Migration Tasks</a><ul><li><a href=#51-validation>5.1 Validation</a></li><li><a href=#52-documentation-updates>5.2 Documentation Updates</a></li><li><a href=#53-redirect-setup>5.3 Redirect Setup</a></li></ul></li><li><a href=#maintenance-plan>Maintenance Plan</a><ul><li><a href=#regular-updates>Regular Updates</a></li><li><a href=#content-guidelines>Content Guidelines</a></li><li><a href=#training>Training</a></li></ul></li></ul></nav></div><div class=content-body><h1 id=hugo-migration-implementation-steps>Hugo Migration Implementation Steps</h1><p>This document provides a step-by-step guide for implementing the ScopeCam MCP documentation migration to Hugo. Follow these instructions to create the Hugo static site structure, migrate content, and deploy to GitHub Pages.</p><h2 id=phase-1-project-setup>Phase 1: Project Setup</h2><h3 id=11-create-the-hugo-project>1.1 Create the Hugo Project</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Install Hugo</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># For Linux:</span>
+</span></span><span style=display:flex><span>sudo apt install hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># For macOS:</span>
+</span></span><span style=display:flex><span>brew install hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create a new Hugo site</span>
+</span></span><span style=display:flex><span>hugo new site mcp-docs
+</span></span><span style=display:flex><span>cd mcp-docs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Initialize Git repository (if not already in one)</span>
+</span></span><span style=display:flex><span>git init
+</span></span></code></pre></td></tr></table></div></div><h3 id=12-configure-theme>1.2 Configure Theme</h3><p>You have two options:</p><h4 id=option-a-use-an-existing-theme-and-customize-it>Option A: Use an existing theme and customize it</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Add a theme as a git submodule</span>
+</span></span><span style=display:flex><span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Or another documentation-focused theme like Docsy</span>
+</span></span><span style=display:flex><span>git submodule add https://github.com/google/docsy.git themes/docsy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Update the config.toml to use the theme</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;theme = &#34;docsy&#34;&#39;</span> &gt;&gt; config.toml
+</span></span></code></pre></td></tr></table></div></div><h4 id=option-b-create-a-custom-theme-recommended-for-specialized-needs>Option B: Create a custom theme (recommended for specialized needs)</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create a new theme</span>
+</span></span><span style=display:flex><span>hugo new theme mcp-theme
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Update the config.toml to use the theme</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;theme = &#34;mcp-theme&#34;&#39;</span> &gt;&gt; config.toml
+</span></span></code></pre></td></tr></table></div></div><h3 id=13-configure-hugo>1.3 Configure Hugo</h3><p>Create the configuration file based on the <code>hugo-config-setup.md</code> document:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Remove the default config.toml</span>
+</span></span><span style=display:flex><span>rm config.toml
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create the new config.toml with the provided content</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Copy content from hugo-config-setup.md</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=14-set-up-directory-structure>1.4 Set Up Directory Structure</h3><p>Create the necessary directories for content organization:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create content directories</span>
+</span></span><span style=display:flex><span>mkdir -p content/<span style=color:#f92672>{</span>project,guides,architecture,standards,templates,tools,mcp<span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create subdirectories for MCP content</span>
+</span></span><span style=display:flex><span>mkdir -p content/mcp/<span style=color:#f92672>{</span>docs,architecture,implementation,project<span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create directories for assets and static files</span>
+</span></span><span style=display:flex><span>mkdir -p static/images
+</span></span><span style=display:flex><span>mkdir -p assets/<span style=color:#f92672>{</span>scss,js<span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>mkdir -p layouts/<span style=color:#f92672>{</span>shortcodes,partials<span style=color:#f92672>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-2-content-migration>Phase 2: Content Migration</h2><h3 id=21-create-migration-script>2.1 Create Migration Script</h3><p>Create a Python script to automate part of the migration process:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># migrate_content.py</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> re
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> shutil
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> yaml
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Define source and destination paths</span>
+</span></span><span style=display:flex><span>source_root <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/home/verlyn13/Projects/mcp-scope&#34;</span>
+</span></span><span style=display:flex><span>hugo_root <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./mcp-docs&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Load path mapping from the file mapping document</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This would parse the hugo-migration-file-mapping.md file</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># and create a dictionary of current paths to Hugo paths</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Process each file</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 1. Read the source file</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2. Update front matter if needed</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 3. Convert README.md to _index.md</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 4. Update internal links</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 5. Write to destination</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=22-content-migration-process>2.2 Content Migration Process</h3><p>Follow this process for each content section:</p><ol><li><p><strong>Root Content</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Convert main README.md to homepage</span>
+</span></span><span style=display:flex><span>python migrate_content.py --file <span style=color:#e6db74>&#34;/README.md&#34;</span> --dest <span style=color:#e6db74>&#34;content/_index.md&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Project Documentation</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate project documentation</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/docs/project&#34;</span> --dest <span style=color:#e6db74>&#34;content/project&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Guides Documentation</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate guides documentation</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/docs/guides&#34;</span> --dest <span style=color:#e6db74>&#34;content/guides&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Architecture Documentation</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate architecture documentation</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/docs/architecture&#34;</span> --dest <span style=color:#e6db74>&#34;content/architecture&#34;</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/architecture&#34;</span> --dest <span style=color:#e6db74>&#34;content/architecture&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Standards Documentation</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate standards documentation</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/docs/standards&#34;</span> --dest <span style=color:#e6db74>&#34;content/standards&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Templates</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate templates</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/docs/templates&#34;</span> --dest <span style=color:#e6db74>&#34;content/templates&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>MCP-specific Documentation</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Migrate MCP documentation</span>
+</span></span><span style=display:flex><span>python migrate_content.py --dir <span style=color:#e6db74>&#34;/mcp-project/docs&#34;</span> --dest <span style=color:#e6db74>&#34;content/mcp&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li></ol><h3 id=23-manual-content-updates>2.3 Manual Content Updates</h3><p>After automated migration, perform these manual checks:</p><ol><li>Fix any broken internal links</li><li>Verify front matter is correctly formatted</li><li>Check that images are properly referenced</li><li>Ensure all <code>related_docs</code> references are updated</li><li>Convert any HTML-specific formatting to Hugo-compatible formats</li></ol><h2 id=phase-3-theme-customization>Phase 3: Theme Customization</h2><h3 id=31-style-customization>3.1 Style Customization</h3><p>Create or modify the theme&rsquo;s styles to match the current documentation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># If using a custom theme</span>
+</span></span><span style=display:flex><span>touch assets/scss/main.scss
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Add styles for the status system</span>
+</span></span><span style=display:flex><span>cat &gt; assets/scss/_status.scss <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  display: inline-block;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  padding: 0.25rem 0.5rem;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  border-radius: 0.25rem;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  font-weight: bold;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status-active {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  background-color: #d4edda;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  color: #155724;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status-draft {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  background-color: #fff3cd;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  color: #856404;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status-review {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  background-color: #ffe5d0;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  color: #ff8000;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status-outdated {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  background-color: #f8d7da;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  color: #721c24;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>.status-archived {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  background-color: #e2e3e5;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  color: #383d41;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Import status styles in main.scss</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;@import &#34;status&#34;;&#39;</span> &gt;&gt; assets/scss/main.scss
+</span></span></code></pre></td></tr></table></div></div><h3 id=32-create-shortcodes>3.2 Create Shortcodes</h3><p>Create custom shortcodes for special formatting:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create status shortcode</span>
+</span></span><span style=display:flex><span>cat &gt; layouts/shortcodes/status.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ \$status := .Get 0 | default (.Page.Params.status) }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ if eq \$status &#34;Active&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-active&#34;&gt;🟢 Active&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Draft&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-draft&#34;&gt;🟡 Draft&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Review&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-review&#34;&gt;🟠 Review&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Outdated&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-outdated&#34;&gt;🔴 Outdated&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Archived&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-archived&#34;&gt;⚫ Archived&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create progress bar shortcode</span>
+</span></span><span style=display:flex><span>cat &gt; layouts/shortcodes/progress.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ \$value := .Get &#34;value&#34; | default 0 }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;div class=&#34;progress&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;div class=&#34;progress-bar&#34; role=&#34;progressbar&#34; style=&#34;width: {{ \$value }}%;&#34; aria-valuenow=&#34;{{ \$value }}&#34; aria-valuemin=&#34;0&#34; aria-valuemax=&#34;100&#34;&gt;{{ \$value }}%&lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create related-docs shortcode</span>
+</span></span><span style=display:flex><span>cat &gt; layouts/shortcodes/related-docs.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ if .Page.Params.related_docs }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;div class=&#34;related-docs&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;h3&gt;Related Documents&lt;/h3&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;ul&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    {{ range .Page.Params.related_docs }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      {{ \$relPath := . }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      {{ \$relPage := site.GetPage \$relPath }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      {{ if \$relPage }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &lt;li&gt;&lt;a href=&#34;{{ \$relPage.RelPermalink }}&#34;&gt;{{ \$relPage.Title }}&lt;/a&gt;&lt;/li&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      {{ else }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &lt;li&gt;{{ \$relPath }} (not found)&lt;/li&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      {{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    {{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;/ul&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=33-create-custom-layouts>3.3 Create Custom Layouts</h3><p>Create custom layouts for special pages:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create home page layout</span>
+</span></span><span style=display:flex><span>cat &gt; layouts/index.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ define &#34;main&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;div class=&#34;home-page&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;h1&gt;{{ .Title }}&lt;/h1&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    {{ .Content }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;div class=&#34;dashboard&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;!-- Project dashboard content --&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-4-testing--deployment>Phase 4: Testing & Deployment</h2><h3 id=41-local-testing>4.1 Local Testing</h3><p>Test the site locally before deployment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Start the Hugo server</span>
+</span></span><span style=display:flex><span>hugo server -D
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Open browser at http://localhost:1313</span>
+</span></span></code></pre></td></tr></table></div></div><p>Verify:</p><ul><li>All pages render correctly</li><li>Navigation works as expected</li><li>Status indicators display properly</li><li>Internal links function correctly</li><li>Images display properly</li></ul><h3 id=42-github-pages-setup>4.2 GitHub Pages Setup</h3><p>Set up GitHub Pages deployment:</p><ol><li><p>Create the GitHub Actions workflow file:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir -p .github/workflows
+</span></span><span style=display:flex><span><span style=color:#75715e># Copy content from github-workflow-setup.md to .github/workflows/hugo-deploy.yml</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Configure the repository for GitHub Pages:</p><ul><li>Go to repository Settings > Pages</li><li>Set Source to &ldquo;GitHub Actions&rdquo;</li></ul></li></ol><h3 id=43-deployment>4.3 Deployment</h3><p>Commit and push changes to trigger deployment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>git add .
+</span></span><span style=display:flex><span>git commit -m <span style=color:#e6db74>&#34;Initial Hugo site migration&#34;</span>
+</span></span><span style=display:flex><span>git push origin main
+</span></span></code></pre></td></tr></table></div></div><p>Monitor the GitHub Actions workflow in the repository&rsquo;s Actions tab.</p><h2 id=phase-5-post-migration-tasks>Phase 5: Post-Migration Tasks</h2><h3 id=51-validation>5.1 Validation</h3><p>After deployment, validate:</p><ul><li>Check all pages on the live site</li><li>Test on multiple devices and browsers</li><li>Verify all links work correctly</li><li>Test search functionality</li></ul><h3 id=52-documentation-updates>5.2 Documentation Updates</h3><p>Update references to documentation in other parts of the project:</p><ul><li>Update main README.md with link to the new documentation site</li><li>Update contributing guidelines with information about the new documentation system</li><li>Inform team members about the migration</li></ul><h3 id=53-redirect-setup>5.3 Redirect Setup</h3><p>If necessary, set up redirects from old documentation paths:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span># In static/_redirects (for Netlify) or equivalent
+</span></span><span style=display:flex><span>/mcp-project/docs/architecture/overview.md  /mcp/architecture/overview/  301
+</span></span></code></pre></td></tr></table></div></div><h2 id=maintenance-plan>Maintenance Plan</h2><h3 id=regular-updates>Regular Updates</h3><p>Establish a process for keeping documentation up to date:</p><ol><li>Documentation updates should be part of the development workflow</li><li>Regular reviews of documentation status</li><li>Automate status tracking with GitHub Actions</li></ol><h3 id=content-guidelines>Content Guidelines</h3><p>Create guidelines for adding new content:</p><ol><li>Where to add new documentation</li><li>Front matter requirements</li><li>How to use shortcodes</li><li>How to update related documents</li></ol><h3 id=training>Training</h3><p>Provide training for team members on:</p><ol><li>How to navigate the new documentation system</li><li>How to contribute to documentation</li><li>How to build and test the documentation locally</li></ol></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

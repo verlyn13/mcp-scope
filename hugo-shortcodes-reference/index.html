@@ -1,0 +1,171 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Hugo Shortcodes Reference for ScopeCam Documentation | ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1>Hugo Shortcodes Reference for ScopeCam Documentation</h1><div class="status status-active">🟢 Active</div><div class=metadata><span class=created-date>Created: 2025-03-23</span>
+<span class=updated-date>Updated: 2025-03-23</span>
+<span class=version>Version: 1.0</span><div class=contributors>Contributors:
+Documentation Architect</div></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#what-are-shortcodes>What Are Shortcodes?</a></li><li><a href=#available-shortcodes>Available Shortcodes</a></li><li><a href=#status-shortcode>Status Shortcode</a><ul><li><a href=#syntax>Syntax</a></li><li><a href=#parameters>Parameters</a></li><li><a href=#examples>Examples</a></li><li><a href=#html-output>HTML Output</a></li><li><a href=#visual-example>Visual Example</a></li></ul></li><li><a href=#progress-shortcode>Progress Shortcode</a><ul><li><a href=#syntax-1>Syntax</a></li><li><a href=#parameters-1>Parameters</a></li><li><a href=#examples-1>Examples</a></li><li><a href=#html-output-1>HTML Output</a></li><li><a href=#visual-example-1>Visual Example</a></li></ul></li><li><a href=#related-docs-shortcode>Related-Docs Shortcode</a><ul><li><a href=#syntax-2>Syntax</a></li><li><a href=#parameters-2>Parameters</a></li><li><a href=#examples-2>Examples</a></li><li><a href=#html-output-2>HTML Output</a></li><li><a href=#visual-example-2>Visual Example</a></li></ul></li><li><a href=#best-practices-for-using-shortcodes>Best Practices for Using Shortcodes</a><ul><li><a href=#status-shortcode-1>Status Shortcode</a></li><li><a href=#progress-shortcode-1>Progress Shortcode</a></li><li><a href=#related-docs-shortcode-1>Related-Docs Shortcode</a></li></ul></li><li><a href=#creating-new-shortcodes>Creating New Shortcodes</a></li><li><a href=#troubleshooting>Troubleshooting</a><ul><li><a href=#common-issues>Common Issues</a></li></ul></li><li><a href=#changelog>Changelog</a></li></ul></nav></div><div class=content-body><h1 id=hugo-shortcodes-reference-for-scopecam-documentation>Hugo Shortcodes Reference for ScopeCam Documentation</h1><p>🟢 <strong>Active</strong></p><h2 id=overview>Overview</h2><p>This document provides a reference guide for the custom Hugo shortcodes available in the ScopeCam MCP documentation site. Shortcodes allow for consistent application of special formatting and components across the documentation.</p><h2 id=what-are-shortcodes>What Are Shortcodes?</h2><p>Shortcodes are special Hugo constructs that provide a simple way to extend Markdown&rsquo;s capabilities. They allow for inserting complex content or formatting without resorting to HTML, ensuring consistency across the documentation.</p><h2 id=available-shortcodes>Available Shortcodes</h2><p>The ScopeCam MCP Hugo implementation includes the following custom shortcodes:</p><ol><li><a href=#status-shortcode><code>status</code></a> - Document status indicator</li><li><a href=#progress-shortcode><code>progress</code></a> - Progress bar for tracking completion</li><li><a href=#related-docs-shortcode><code>related-docs</code></a> - Displays related documents</li></ol><h2 id=status-shortcode>Status Shortcode</h2><p>The <code>status</code> shortcode displays a document&rsquo;s status with appropriate styling and emoji.</p><h3 id=syntax>Syntax</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class="status-indicator status-active">
+  <span class=status-text>Status: Active</span>
+</div>
+</span></span></code></pre></td></tr></table></div></div><p>or</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class="status-indicator status-Active">
+  <span class=status-text>Status: Active</span>
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=parameters>Parameters</h3><ul><li>Status value (optional): If provided, displays the specified status. If not provided, uses the document&rsquo;s status from front matter.</li></ul><h3 id=examples>Examples</h3><p>Display the document&rsquo;s status from front matter:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class="status-indicator status-active">
+  <span class=status-text>Status: Active</span>
+</div>
+</span></span></code></pre></td></tr></table></div></div><p>Display a specific status:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class="status-indicator status-Draft">
+  <span class=status-text>Status: Draft</span>
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=html-output>HTML Output</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>span</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;status status-active&#34;</span>&gt;🟢 Active&lt;/<span style=color:#f92672>span</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=visual-example>Visual Example</h3><p>🟢 <strong>Active</strong> - Current, reviewed and approved<br>🟡 <strong>Draft</strong> - Work in progress, subject to change<br>🟠 <strong>Review</strong> - Complete but pending final approval<br>🔴 <strong>Outdated</strong> - Contains older information that needs updating<br>⚫ <strong>Archived</strong> - Historical information, no longer applicable</p><h2 id=progress-shortcode>Progress Shortcode</h2><p>The <code>progress</code> shortcode displays a progress bar for tracking completion percentages.</p><h3 id=syntax-1>Syntax</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class=progress-container>
+  <div class=progress-bar style=width:75%>
+    <span class=progress-text>75%</span>
+  </div>
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=parameters-1>Parameters</h3><ul><li><code>value</code>: The percentage value (0-100) of completion to display</li></ul><h3 id=examples-1>Examples</h3><p>Display a 75% progress bar:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class=progress-container>
+  <div class=progress-bar style=width:75%>
+    <span class=progress-text>75%</span>
+  </div>
+</div>
+</span></span></code></pre></td></tr></table></div></div><p>Display a complete progress bar:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class=progress-container>
+  <div class=progress-bar style=width:100%>
+    <span class=progress-text>100%</span>
+  </div>
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=html-output-1>HTML Output</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;progress&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;progress-bar&#34;</span> <span style=color:#a6e22e>role</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;progressbar&#34;</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;width: 75%;&#34;</span> 
+</span></span><span style=display:flex><span>       <span style=color:#a6e22e>aria-valuenow</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;75&#34;</span> <span style=color:#a6e22e>aria-valuemin</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0&#34;</span> <span style=color:#a6e22e>aria-valuemax</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;100&#34;</span>&gt;75%&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=visual-example-1>Visual Example</h3><p>A progress bar at 75% would look like:</p><p>[================> ] 75%</p><h2 id=related-docs-shortcode>Related-Docs Shortcode</h2><p>The <code>related-docs</code> shortcode displays a list of related documents specified in the front matter.</p><h3 id=syntax-2>Syntax</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class=related-docs>
+  <h3>Related Documentation</h3>
+  
+  <ul>
+    
+      <li><a href=/documentation-compliance-check.md>/documentation-compliance-check.md</a></li>
+    
+      <li><a href=/hugo-migration-checklist.md>/hugo-migration-checklist.md</a></li>
+    
+      <li><a href=/hugo-theme-design.md>/hugo-theme-design.md</a></li>
+    
+  </ul>
+  
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=parameters-2>Parameters</h3><p>This shortcode does not take parameters. It automatically uses the <code>related_docs</code> list from the document&rsquo;s front matter.</p><h3 id=examples-2>Examples</h3><p>In front matter:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>related_docs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;/project/document-a/&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;/guides/document-b/&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;/architecture/document-c/&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>In content:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+<div class=related-docs>
+  <h3>Related Documentation</h3>
+  
+  <ul>
+    
+      <li><a href=/documentation-compliance-check.md>/documentation-compliance-check.md</a></li>
+    
+      <li><a href=/hugo-migration-checklist.md>/hugo-migration-checklist.md</a></li>
+    
+      <li><a href=/hugo-theme-design.md>/hugo-theme-design.md</a></li>
+    
+  </ul>
+  
+</div>
+</span></span></code></pre></td></tr></table></div></div><h3 id=html-output-2>HTML Output</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;related-docs&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h3</span>&gt;Related Documents&lt;/<span style=color:#f92672>h3</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>li</span>&gt;&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/project/document-a/&#34;</span>&gt;Document A&lt;/<span style=color:#f92672>a</span>&gt;&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>li</span>&gt;&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/guides/document-b/&#34;</span>&gt;Document B&lt;/<span style=color:#f92672>a</span>&gt;&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>li</span>&gt;&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/architecture/document-c/&#34;</span>&gt;Document C&lt;/<span style=color:#f92672>a</span>&gt;&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=visual-example-2>Visual Example</h3><p><strong>Related Documents</strong></p><ul><li><a href=/project/document-a/>Document A</a></li><li><a href=/guides/document-b/>Document B</a></li><li><a href=/architecture/document-c/>Document C</a></li></ul><h2 id=best-practices-for-using-shortcodes>Best Practices for Using Shortcodes</h2><p>When using shortcodes in the ScopeCam MCP documentation, follow these best practices:</p><h3 id=status-shortcode-1>Status Shortcode</h3><ul><li>Place the status shortcode immediately after the main heading of a document</li><li>Only use the parameter version when you need to display a status different from the document&rsquo;s own status</li><li>Don&rsquo;t use more than one status indicator per document</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-markdown data-lang=markdown><span style=display:flex><span># Document Title
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+<div class="status-indicator status-active">
+  <span class=status-text>Status: Active</span>
+</div>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>## Introduction
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=progress-shortcode-1>Progress Shortcode</h3><ul><li>Use progress shortcodes in roadmaps, dashboards, and status reports</li><li>Include a descriptive label before or after the progress bar for context</li><li>Use consistent progress values for related items</li><li>Round progress values to whole numbers</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-markdown data-lang=markdown><span style=display:flex><span>| Component | Progress |
+</span></span><span style=display:flex><span>|-----------|----------|
+</span></span><span style=display:flex><span>| Core System | 
+<div class=progress-container>
+  <div class=progress-bar style=width:100%>
+    <span class=progress-text>100%</span>
+  </div>
+</div> |
+</span></span><span style=display:flex><span>| Camera Integration | 
+<div class=progress-container>
+  <div class=progress-bar style=width:80%>
+    <span class=progress-text>80%</span>
+  </div>
+</div> |
+</span></span></code></pre></td></tr></table></div></div><h3 id=related-docs-shortcode-1>Related-Docs Shortcode</h3><ul><li>Place the related-docs shortcode at the end of a document</li><li>Keep the related_docs list in front matter up to date</li><li>Limit related documents to those most relevant (5-7 max)</li><li>Ensure all paths in related_docs are valid</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-markdown data-lang=markdown><span style=display:flex><span><span style=color:#75715e>## Conclusion
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>...conclusion content...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+<div class=related-docs>
+  <h3>Related Documentation</h3>
+  
+  <ul>
+    
+      <li><a href=/documentation-compliance-check.md>/documentation-compliance-check.md</a></li>
+    
+      <li><a href=/hugo-migration-checklist.md>/hugo-migration-checklist.md</a></li>
+    
+      <li><a href=/hugo-theme-design.md>/hugo-theme-design.md</a></li>
+    
+  </ul>
+  
+</div>
+</span></span></code></pre></td></tr></table></div></div><h2 id=creating-new-shortcodes>Creating New Shortcodes</h2><p>If additional shortcodes are needed, they should:</p><ol><li>Be implemented in <code>themes/mcp-theme/layouts/shortcodes/</code></li><li>Follow the same naming convention (lowercase, hyphenated)</li><li>Include appropriate validation and error handling</li><li>Be documented in this reference guide</li></ol><h2 id=troubleshooting>Troubleshooting</h2><h3 id=common-issues>Common Issues</h3><ul><li><strong>Shortcode doesn&rsquo;t render</strong>: Ensure the shortcode name is correct and syntax is valid</li><li><strong>Status not showing</strong>: Check if the status value is one of the supported values</li><li><strong>Progress bar errors</strong>: Ensure the value parameter is provided and is a number</li><li><strong>Related docs not appearing</strong>: Verify the related_docs list in front matter is formatted correctly</li></ul><h2 id=changelog>Changelog</h2><ul><li>1.0.0 (2025-03-23): Initial version</li></ul></div><div class=related-docs><h2>Related Documents</h2><ul><li><a href=/documentation-compliance-check.md>/documentation-compliance-check.md</a></li><li><a href=/hugo-migration-checklist.md>/hugo-migration-checklist.md</a></li><li><a href=/hugo-theme-design.md>/hugo-theme-design.md</a></li></ul></div><div class=tags><h3>Tags</h3><ul><li><a href=/tags/hugo>hugo</a></li><li><a href=/tags/shortcodes>shortcodes</a></li><li><a href=/tags/reference>reference</a></li><li><a href=/tags/documentation>documentation</a></li></ul></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Api on ScopeCam MCP Documentation</title><link>https://example.github.io/mcp-scope/tags/api/</link><description>Recent content in Api on ScopeCam MCP Documentation</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://example.github.io/mcp-scope/tags/api/index.xml" rel="self" type="application/rss+xml"/><item><title>API Documentation: API Name</title><link>https://example.github.io/mcp-scope/templates/api-documentation-template/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.github.io/mcp-scope/templates/api-documentation-template/</guid><description>API Documentation: API Name ↩️ Back to Documentation Index
+Overview Brief description of the API, its purpose, and which components it belongs to.
+API Version Current Version: X.Y.Z
+Description of versioning scheme and compatibility.
+Prerequisites List prerequisites for using this API.
+Prerequisite 1 Prerequisite 2 Prerequisite 3 Authentication and Authorization Describe authentication and authorization requirements, if any.
+API Summary Provide a high-level summary of available operations.
+Operation Description Access Level Operation 1 Description Public/Internal Operation 2 Description Public/Internal Detailed API Reference Operation 1: Name Detailed description of the operation.</description></item></channel></rss>

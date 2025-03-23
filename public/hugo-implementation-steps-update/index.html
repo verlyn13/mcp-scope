@@ -1,0 +1,887 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Hugo Migration Implementation Steps | ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1>Hugo Migration Implementation Steps</h1><div class="status status-active">🟢 Active</div><div class=metadata><span class=created-date>Created: 2025-03-23</span>
+<span class=updated-date>Updated: 2025-03-23</span>
+<span class=version>Version: 1.1</span><div class=contributors>Contributors:
+Documentation Architect</div></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#phase-1-foundation-setup>Phase 1: Foundation Setup</a><ul><li><a href=#11-container-setup>1.1 Container Setup</a></li><li><a href=#12-create-hugo-project-structure>1.2 Create Hugo Project Structure</a></li><li><a href=#13-configure-theme>1.3 Configure Theme</a></li><li><a href=#14-configure-hugo>1.4 Configure Hugo</a></li><li><a href=#15-set-up-directory-structure>1.5 Set Up Directory Structure</a></li></ul></li><li><a href=#phase-2-content-migration>Phase 2: Content Migration</a><ul><li><a href=#21-extend-doc-managerpy-for-hugo-support>2.1 Extend doc-manager.py for Hugo Support</a></li><li><a href=#22-add-a-migration-script>2.2 Add a Migration Script</a></li><li><a href=#23-execute-content-migration>2.3 Execute Content Migration</a></li><li><a href=#24-manual-content-refinement>2.4 Manual Content Refinement</a></li></ul></li><li><a href=#phase-3-theme-development>Phase 3: Theme Development</a><ul><li><a href=#31-implement-base-theme-components>3.1 Implement Base Theme Components</a></li><li><a href=#32-implement-layer-navigation>3.2 Implement Layer Navigation</a></li><li><a href=#33-add-theme-customization>3.3 Add Theme Customization</a></li></ul></li><li><a href=#phase-4-integration-with-development-environment>Phase 4: Integration with Development Environment</a><ul><li><a href=#41-set-up-automated-validation>4.1 Set Up Automated Validation</a></li><li><a href=#42-set-up-health-monitoring-integration>4.2 Set Up Health Monitoring Integration</a></li><li><a href=#43-update-existing-documentation-references>4.3 Update Existing Documentation References</a></li></ul></li><li><a href=#phase-5-testing--deployment>Phase 5: Testing & Deployment</a><ul><li><a href=#51-local-testing>5.1 Local Testing</a></li><li><a href=#52-github-pages-setup>5.2 GitHub Pages Setup</a></li><li><a href=#53-set-up-github-actions-for-deployment>5.3 Set Up GitHub Actions for Deployment</a></li><li><a href=#54-initial-deployment>5.4 Initial Deployment</a></li></ul></li><li><a href=#phase-6-post-migration-tasks>Phase 6: Post-Migration Tasks</a><ul><li><a href=#61-documentation-updates>6.1 Documentation Updates</a></li><li><a href=#62-automation-updates>6.2 Automation Updates</a></li><li><a href=#63-training-and-knowledge-transfer>6.3 Training and Knowledge Transfer</a></li></ul></li><li><a href=#maintenance-plan>Maintenance Plan</a><ul><li><a href=#regular-updates>Regular Updates</a></li><li><a href=#automation>Automation</a></li><li><a href=#integration-with-development-workflow>Integration with Development Workflow</a></li></ul></li><li><a href=#troubleshooting>Troubleshooting</a><ul><li><a href=#common-issues-and-solutions>Common Issues and Solutions</a></li><li><a href=#debugging-commands>Debugging Commands</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#changelog>Changelog</a></li></ul></nav></div><div class=content-body><h1 id=hugo-migration-implementation-steps>Hugo Migration Implementation Steps</h1><p>🟢 <strong>Active</strong></p><p><a href=/hugo-migration-executive-summary.md>↩️ Back to Hugo Migration Executive Summary</a></p><h2 id=overview>Overview</h2><p>This document provides a detailed, step-by-step guide for implementing the ScopeCam MCP documentation migration to Hugo. The implementation process is designed to integrate seamlessly with the project&rsquo;s existing containerized development environment and automation frameworks.</p><h2 id=prerequisites>Prerequisites</h2><ul><li>Access to the ScopeCam MCP repository</li><li>Familiarity with the <a href=/docs/guides/containerized-dev-environment.md>Containerized Development Environment</a></li><li>Docker or Podman installed locally</li><li>Basic understanding of Hugo</li><li>Git and GitHub access</li></ul><h2 id=phase-1-foundation-setup>Phase 1: Foundation Setup</h2><h3 id=11-container-setup>1.1 Container Setup</h3><p>Instead of installing Hugo directly, we&rsquo;ll set up a containerized environment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create the Hugo Dockerfile</span>
+</span></span><span style=display:flex><span>cat &gt; Dockerfile.hugo <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>FROM klakegg/hugo:ext-alpine-ci AS hugo-dev
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Install additional tools
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>RUN apk add --no-cache git nodejs npm python3 py3-pip
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Install Python dependencies for doc tooling
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>COPY docs/tools/requirements.txt /tmp/
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Set up working directory
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>WORKDIR /src
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Default to development server
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>ENTRYPOINT [&#34;hugo&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>CMD [&#34;server&#34;, &#34;--bind=0.0.0.0&#34;, &#34;--buildDrafts&#34;, &#34;--buildFuture&#34;, &#34;--disableFastRender&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Add Hugo service to podman-compose.yml</span>
+</span></span><span style=display:flex><span>cat &gt;&gt; podman-compose.yml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  docs:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    build:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      context: .
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      dockerfile: Dockerfile.hugo
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    ports:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#34;1313:1313&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    volumes:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - .:/src:z
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    environment:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - HUGO_ENVIRONMENT=development
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - HUGO_BASEURL=http://localhost:1313/
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    networks:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - mcp-network
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=12-create-hugo-project-structure>1.2 Create Hugo Project Structure</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create Hugo project structure within container</span>
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new site hugo-docs
+</span></span><span style=display:flex><span>mv hugo-docs/* .
+</span></span><span style=display:flex><span>rm -rf hugo-docs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Initialize Git repository for theme management</span>
+</span></span><span style=display:flex><span>git init
+</span></span></code></pre></td></tr></table></div></div><h3 id=13-configure-theme>1.3 Configure Theme</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Add a documentation-focused theme like Docsy</span>
+</span></span><span style=display:flex><span>git submodule add https://github.com/google/docsy.git themes/docsy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Or create a custom theme</span>
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new theme mcp-theme
+</span></span></code></pre></td></tr></table></div></div><h3 id=14-configure-hugo>1.4 Configure Hugo</h3><p>Create the Hugo configuration following the project&rsquo;s multi-environment pattern:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create config directory structure</span>
+</span></span><span style=display:flex><span>mkdir -p config/_default config/development config/production
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create base configuration</span>
+</span></span><span style=display:flex><span>cat &gt; config/_default/config.toml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>baseURL = &#34;https://example.github.io/mcp-scope/&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>languageCode = &#34;en-us&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>title = &#34;ScopeCam MCP Documentation&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>theme = &#34;mcp-theme&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>enableGitInfo = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>enableEmoji = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Configure taxonomies
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[taxonomies]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  tag = &#34;tags&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  status = &#34;status&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  contributor = &#34;contributors&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create environment-specific configurations</span>
+</span></span><span style=display:flex><span>cat &gt; config/development/config.toml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>baseURL = &#34;http://localhost:1313/&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>buildDrafts = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>buildFuture = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>cat &gt; config/production/config.toml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>baseURL = &#34;https://example.github.io/mcp-scope/&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>buildDrafts = false
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>buildFuture = false
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>minify = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=15-set-up-directory-structure>1.5 Set Up Directory Structure</h3><p>Create the content structure matching the current documentation organization:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create content directories using the containerized environment</span>
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/project/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/guides/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/architecture/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/standards/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/templates/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/mcp/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/mcp/docs/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/mcp/architecture/_index.md
+</span></span><span style=display:flex><span>podman-compose run --rm docs hugo new content/mcp/implementation/_index.md
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-2-content-migration>Phase 2: Content Migration</h2><h3 id=21-extend-doc-managerpy-for-hugo-support>2.1 Extend doc-manager.py for Hugo Support</h3><p>Add Hugo functionality to the existing documentation management tool:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Navigate to tools directory</span>
+</span></span><span style=display:flex><span>cd docs/tools
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create a backup of the original script</span>
+</span></span><span style=display:flex><span>cp doc-manager.py doc-manager.py.bak
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Add Hugo support to doc-manager.py</span>
+</span></span><span style=display:flex><span>cat &gt;&gt; doc-manager.py <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Hugo support functions
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def convert_to_hugo(md_file, output_path):
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;Convert markdown file to Hugo format.&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    with open(md_file, &#39;r&#39;) as f:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        content = f.read()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Process front matter
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Update internal links
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Handle README.md to _index.md conversion
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    with open(output_path, &#39;w&#39;) as f:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        f.write(content)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    print(f&#34;Converted {md_file} to {output_path}&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def validate_hugo_content():
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;Validate Hugo content structure and front matter.&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Check front matter
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Validate internal links
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Ensure proper index files exist
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    print(&#34;Hugo content validation complete&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Add command line arguments for Hugo operations
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>if __name__ == &#34;__main__&#34;:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    import argparse
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    parser = argparse.ArgumentParser()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    parser.add_argument(&#39;--convert-to-hugo&#39;, help=&#39;Convert markdown to Hugo format&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    parser.add_argument(&#39;--validate-hugo&#39;, action=&#39;store_true&#39;, help=&#39;Validate Hugo content&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # ... existing arguments ...
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    args = parser.parse_args()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    if args.convert_to_hugo:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        convert_to_hugo(args.convert_to_hugo, args.output or args.convert_to_hugo)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    elif args.validate_hugo:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        validate_hugo_content()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # ... existing command handling ...
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=22-add-a-migration-script>2.2 Add a Migration Script</h3><p>Create a migration script that utilizes the extended doc-manager.py:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>cat &gt; docs/tools/hugo-migrate.py <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>#!/usr/bin/env python3
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import os
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import re
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import shutil
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import yaml
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import subprocess
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>from pathlib import Path
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Define paths
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>SOURCE_ROOT = Path(&#39;/home/verlyn13/Projects/mcp-scope&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>HUGO_ROOT = Path(&#39;.&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>CONTENT_DIR = HUGO_ROOT / &#39;content&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Load path mapping from file
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def load_path_mapping():
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    mapping = {}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Parse the hugo-migration-file-mapping.md file
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # and create a dictionary of paths
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    return mapping
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Convert README.md to _index.md
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def convert_readme_to_index(source_path, dest_path):
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    subprocess.run([&#39;python3&#39;, &#39;docs/tools/doc-manager.py&#39;, 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                   &#39;--convert-to-hugo&#39;, source_path, 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                   &#39;--output&#39;, dest_path])
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Update internal links
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def update_internal_links(content, path_mapping):
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Replace links based on path mapping
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    return content
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Main migration function
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>def migrate_content():
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    path_mapping = load_path_mapping()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Process each mapped file
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    for source_path, hugo_path in path_mapping.items():
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        source_file = SOURCE_ROOT / source_path.lstrip(&#39;/&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        dest_file = CONTENT_DIR / hugo_path.lstrip(&#39;/&#39;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        # Ensure directory exists
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        os.makedirs(dest_file.parent, exist_ok=True)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        # Handle README.md files
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        if source_file.name == &#39;README.md&#39;:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            convert_readme_to_index(source_file, dest_file)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        else:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            # Copy and transform regular files
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            subprocess.run([&#39;python3&#39;, &#39;docs/tools/doc-manager.py&#39;, 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                           &#39;--convert-to-hugo&#39;, str(source_file), 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                           &#39;--output&#39;, str(dest_file)])
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>if __name__ == &#39;__main__&#39;:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    migrate_content()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    # Validate the migration
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    subprocess.run([&#39;python3&#39;, &#39;docs/tools/doc-manager.py&#39;, &#39;--validate-hugo&#39;])
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>chmod +x docs/tools/hugo-migrate.py
+</span></span></code></pre></td></tr></table></div></div><h3 id=23-execute-content-migration>2.3 Execute Content Migration</h3><p>Run the migration script in the containerized environment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Start the docs container</span>
+</span></span><span style=display:flex><span>podman-compose up -d docs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Execute the migration script</span>
+</span></span><span style=display:flex><span>podman-compose exec docs python3 docs/tools/hugo-migrate.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Verify migration results</span>
+</span></span><span style=display:flex><span>podman-compose exec docs hugo check
+</span></span></code></pre></td></tr></table></div></div><h3 id=24-manual-content-refinement>2.4 Manual Content Refinement</h3><p>After automated migration, perform these manual checks within the container:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Enter the container for manual editing</span>
+</span></span><span style=display:flex><span>podman-compose exec docs /bin/sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Fix any issues identified by validation</span>
+</span></span><span style=display:flex><span>python3 docs/tools/doc-manager.py --validate-hugo --fix
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-3-theme-development>Phase 3: Theme Development</h2><h3 id=31-implement-base-theme-components>3.1 Implement Base Theme Components</h3><p>Create custom theme components that match the project&rsquo;s styling:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create the status shortcode</span>
+</span></span><span style=display:flex><span>mkdir -p layouts/shortcodes
+</span></span><span style=display:flex><span>cat &gt; layouts/shortcodes/status.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ \$status := .Get 0 | default (.Page.Params.status) }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ if eq \$status &#34;Active&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-active&#34;&gt;🟢 Active&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Draft&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-draft&#34;&gt;🟡 Draft&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Review&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-review&#34;&gt;🟠 Review&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Outdated&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-outdated&#34;&gt;🔴 Outdated&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ else if eq \$status &#34;Archived&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;span class=&#34;status status-archived&#34;&gt;⚫ Archived&lt;/span&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>{{ end }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=32-implement-layer-navigation>3.2 Implement Layer Navigation</h3><p>Create navigation components for the dual-layer structure:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir -p layouts/partials
+</span></span><span style=display:flex><span>cat &gt; layouts/partials/layer-navigation.html <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;div class=&#34;layer-switch&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;button class=&#34;layer-button {{ if eq .Site.Params.currentLayer &#34;root&#34; }}active{{ end }}&#34; 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          data-layer=&#34;root&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Root Documentation
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;/button&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;button class=&#34;layer-button {{ if eq .Site.Params.currentLayer &#34;mcp&#34; }}active{{ end }}&#34; 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          data-layer=&#34;mcp&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    MCP Documentation
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &lt;/button&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=33-add-theme-customization>3.3 Add Theme Customization</h3><p>Create theme styling that matches the project&rsquo;s visual identity:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir -p assets/scss
+</span></span><span style=display:flex><span>cat &gt; assets/scss/main.scss <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>// Import variables
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>@import &#34;variables&#34;;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>// Import status styles
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>@import &#34;status&#34;;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>// Import layout components
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>@import &#34;layout&#34;;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>// Import dual-layer navigation styles
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>@import &#34;layer-navigation&#34;;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>// Import responsive styles
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>@import &#34;responsive&#34;;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-4-integration-with-development-environment>Phase 4: Integration with Development Environment</h2><h3 id=41-set-up-automated-validation>4.1 Set Up Automated Validation</h3><p>Create validation actions as part of the CI pipeline:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir -p .github/workflows
+</span></span><span style=display:flex><span>cat &gt; .github/workflows/docs-validation.yml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>name: Docs Validation
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>on:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  pull_request:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    paths:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;content/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;layouts/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;static/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;config/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;themes/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;assets/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>jobs:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  validate-docs:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    runs-on: ubuntu-latest
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    steps:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Checkout code
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: actions/checkout@v3
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        with:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          submodules: recursive
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Setup Hugo
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: peaceiris/actions-hugo@v2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        with:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          hugo-version: &#39;0.110.0&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          extended: true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Validate front matter
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        run: python docs/tools/doc-manager.py --validate-hugo
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Build site
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        run: hugo --minify
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Check links
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        run: |
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          pip install linkchecker
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          linkchecker public/
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=42-set-up-health-monitoring-integration>4.2 Set Up Health Monitoring Integration</h3><p>Create a health check module for documentation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>cat &gt; mcp-project/mcp-core/src/main/kotlin/com/example/mcp/health/DocumentationHealthCheck.kt <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>package com.example.mcp.health
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import java.io.File
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import java.time.Instant
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import java.time.temporal.ChronoUnit
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>import java.util.concurrent.TimeUnit
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>/**
+</span></span></span><span style=display:flex><span><span style=color:#e6db74> * Health check for documentation status
+</span></span></span><span style=display:flex><span><span style=color:#e6db74> */
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>class DocumentationHealthCheck {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    /**
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>     * Check documentation health
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>     * @return HealthStatus for documentation
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>     */
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    fun check(): HealthStatus {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        val lastBuildTimestamp = getLastBuildTimestamp()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        val buildAge = ChronoUnit.HOURS.between(lastBuildTimestamp, Instant.now())
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        val status = when {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            buildAge &lt; 24 -&gt; HealthStatus.HEALTHY
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            buildAge &lt; 72 -&gt; HealthStatus.DEGRADED
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            else -&gt; HealthStatus.CRITICAL
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        val message = &#34;Documentation last built $buildAge hours ago&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        return HealthStatus(
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            component = &#34;documentation&#34;,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            status = status,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            message = message,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            timestamp = System.currentTimeMillis()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        )
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    private fun getLastBuildTimestamp(): Instant {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        // Implementation would check the timestamp of the last successful build
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        // For now, return current time
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        return Instant.now()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=43-update-existing-documentation-references>4.3 Update Existing Documentation References</h3><p>Update any references to documentation in existing code:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Update README.md to reference the new documentation site</span>
+</span></span><span style=display:flex><span>sed -i <span style=color:#e6db74>&#39;s|Comprehensive documentation is available in the `mcp-project/docs` directory|Comprehensive documentation is available on our [documentation site](https://example.github.io/mcp-scope/)|g&#39;</span> README.md
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-5-testing--deployment>Phase 5: Testing & Deployment</h2><h3 id=51-local-testing>5.1 Local Testing</h3><p>Test the site in the containerized environment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Start Hugo development server</span>
+</span></span><span style=display:flex><span>podman-compose up -d docs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Access the site at http://localhost:1313</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=52-github-pages-setup>5.2 GitHub Pages Setup</h3><p>Configure GitHub repository for GitHub Pages deployment:</p><ol><li>Go to repository Settings > Pages</li><li>Set Source to &ldquo;GitHub Actions&rdquo;</li></ol><h3 id=53-set-up-github-actions-for-deployment>5.3 Set Up GitHub Actions for Deployment</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>cat &gt; .github/workflows/hugo-deploy.yml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>name: Deploy Hugo Site to GitHub Pages
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>on:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  push:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    branches:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - main
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    paths:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;content/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;layouts/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;static/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;config/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;themes/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - &#39;assets/**&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  workflow_dispatch:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>permissions:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  contents: read
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  pages: write
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  id-token: write
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>concurrency:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  group: &#34;pages&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  cancel-in-progress: true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>defaults:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  run:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    shell: bash
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>jobs:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  build:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    runs-on: ubuntu-latest
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    steps:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Checkout
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: actions/checkout@v3
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        with:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          submodules: recursive
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          fetch-depth: 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Setup Hugo
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: peaceiris/actions-hugo@v2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        with:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          hugo-version: &#39;0.110.0&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          extended: true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Setup Pages
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        id: pages
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: actions/configure-pages@v3
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Build with Hugo
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        env:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          HUGO_ENVIRONMENT: production
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        run: hugo --minify --baseURL &#34;${{ steps.pages.outputs.base_url }}/&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Upload artifact
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: actions/upload-pages-artifact@v2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        with:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          path: ./public
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  deploy:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    environment:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      name: github-pages
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      url: ${{ steps.deployment.outputs.page_url }}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    runs-on: ubuntu-latest
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    needs: build
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    steps:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      - name: Deploy to GitHub Pages
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        id: deployment
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        uses: actions/deploy-pages@v2
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=54-initial-deployment>5.4 Initial Deployment</h3><p>Trigger the initial deployment:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Commit all changes</span>
+</span></span><span style=display:flex><span>git add .
+</span></span><span style=display:flex><span>git commit -m <span style=color:#e6db74>&#34;Implement Hugo documentation site&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Push to GitHub to trigger deployment</span>
+</span></span><span style=display:flex><span>git push origin main
+</span></span></code></pre></td></tr></table></div></div><h2 id=phase-6-post-migration-tasks>Phase 6: Post-Migration Tasks</h2><h3 id=61-documentation-updates>6.1 Documentation Updates</h3><p>Create guides for contributing to the new documentation system:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create a guide for documentation contributors</span>
+</span></span><span style=display:flex><span>podman-compose exec docs hugo new content/guides/documentation-contribution-guide.md
+</span></span></code></pre></td></tr></table></div></div><h3 id=62-automation-updates>6.2 Automation Updates</h3><p>Update existing automation scripts to include documentation:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Update build scripts to include documentation validation</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;echo &#34;Validating documentation...&#34;&#39;</span> &gt;&gt; scripts/pre-commit.sh
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;python docs/tools/doc-manager.py --validate-hugo || exit 1&#39;</span> &gt;&gt; scripts/pre-commit.sh
+</span></span></code></pre></td></tr></table></div></div><h3 id=63-training-and-knowledge-transfer>6.3 Training and Knowledge Transfer</h3><p>Create training materials for the team:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create documentation workshop materials</span>
+</span></span><span style=display:flex><span>podman-compose exec docs hugo new content/guides/hugo-documentation-workshop.md
+</span></span></code></pre></td></tr></table></div></div><h2 id=maintenance-plan>Maintenance Plan</h2><h3 id=regular-updates>Regular Updates</h3><p>Establish a process for keeping documentation up to date:</p><ol><li>Include documentation updates in the Definition of Done for all tasks</li><li>Schedule regular documentation reviews</li><li>Use the health monitoring system to track documentation freshness</li></ol><h3 id=automation>Automation</h3><p>Set up automated checks:</p><ol><li>Pre-commit hooks for validating documentation changes</li><li>Regular link checker runs</li><li>Automated reporting on documentation status</li></ol><h3 id=integration-with-development-workflow>Integration with Development Workflow</h3><p>Ensure documentation is integrated with the development workflow:</p><ol><li>Documentation tasks in issue tracking</li><li>Documentation reviews in pull requests</li><li>Documentation health in system monitoring dashboard</li></ol><h2 id=troubleshooting>Troubleshooting</h2><h3 id=common-issues-and-solutions>Common Issues and Solutions</h3><table><thead><tr><th>Issue</th><th>Solution</th></tr></thead><tbody><tr><td>Container failed to start</td><td>Check for port conflicts on 1313</td></tr><tr><td>Hugo build errors</td><td>Check front matter format and content structure</td></tr><tr><td>Missing theme assets</td><td>Verify submodules are correctly initialized</td></tr><tr><td>Deployment failures</td><td>Check GitHub Actions permissions and workflow configuration</td></tr></tbody></table><h3 id=debugging-commands>Debugging Commands</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Check Hugo server logs</span>
+</span></span><span style=display:flex><span>podman-compose logs docs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run Hugo with verbose output</span>
+</span></span><span style=display:flex><span>podman-compose exec docs hugo --verbose
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate documentation structure</span>
+</span></span><span style=display:flex><span>podman-compose exec docs python3 docs/tools/doc-manager.py --validate-hugo --verbose
+</span></span></code></pre></td></tr></table></div></div><h2 id=conclusion>Conclusion</h2><p>This implementation plan provides a comprehensive approach to migrating the ScopeCam MCP documentation to Hugo while fully integrating with the project&rsquo;s containerized development environment and automation frameworks. By following these steps, the documentation will maintain its structure and standards while gaining enhanced features and improved workflow integration.</p><h2 id=changelog>Changelog</h2><ul><li>1.1.0 (2025-03-23): Updated with containerization and automation integration</li><li>1.0.0 (2025-03-23): Initial version</li></ul></div><div class=related-docs><h2>Related Documents</h2><ul><li><a href=/docs/project/documentation-directory-structure.md>/docs/project/documentation-directory-structure.md</a></li><li><a href=/docs/standards/documentation-guidelines.md>/docs/standards/documentation-guidelines.md</a></li><li><a href=/docs/guides/containerized-dev-environment.md>/docs/guides/containerized-dev-environment.md</a></li><li><a href=/hugo-site-plan.md>/hugo-site-plan.md</a></li><li><a href=/hugo-containerized-setup.md>/hugo-containerized-setup.md</a></li><li><a href=/github-workflow-setup.md>/github-workflow-setup.md</a></li></ul></div><div class=tags><h3>Tags</h3><ul><li><a href=/tags/documentation>documentation</a></li><li><a href=/tags/hugo>hugo</a></li><li><a href=/tags/implementation>implementation</a></li><li><a href=/tags/integration>integration</a></li><li><a href=/tags/containerization>containerization</a></li></ul></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

@@ -1,0 +1,240 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>| ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Guides</h3><ul><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-implementation-guide/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-onboarding-checklist/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-quick-start/></a></li><li><a href=https://example.github.io/mcp-scope/guides/build-engineer-tech-specs/ class=active></a></li><li><a href=https://example.github.io/mcp-scope/guides/>Guides</a></li><li><a href=https://example.github.io/mcp-scope/guides/containerized-dev-environment/>MCP Containerized Development Environment</a></li><li><a href=https://example.github.io/mcp-scope/guides/health-monitoring-guide/>MCP Health Monitoring Guide</a></li><li><a href=https://example.github.io/mcp-scope/guides/testing-guide/>MCP Testing Guide</a></li></ul><p><a href=/>&larr; Back to home</a></p></div></nav></aside><main class=main-content><article class=content><header><h1></h1><div class=metadata></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#core-architecture>Core Architecture</a></li><li><a href=#key-interfaces>Key Interfaces</a><ul><li><a href=#mcpagent-interface>McpAgent Interface</a></li><li><a href=#agent-state-machine>Agent State Machine</a></li></ul></li><li><a href=#nats-messaging-patterns>NATS Messaging Patterns</a><ul><li><a href=#topic-structure>Topic Structure</a></li><li><a href=#message-patterns>Message Patterns</a></li></ul></li><li><a href=#core-data-models>Core Data Models</a><ul><li><a href=#task-management>Task Management</a></li><li><a href=#agent-status>Agent Status</a></li></ul></li><li><a href=#implementation-priorities>Implementation Priorities</a></li><li><a href=#design-patterns>Design Patterns</a><ul><li><a href=#1-finite-state-machine>1. Finite State Machine</a></li><li><a href=#2-observer-pattern-via-nats>2. Observer Pattern (via NATS)</a></li><li><a href=#3-command-pattern>3. Command Pattern</a></li></ul></li><li><a href=#concurrency-model>Concurrency Model</a></li><li><a href=#error-handling-strategy>Error Handling Strategy</a></li><li><a href=#resource-management>Resource Management</a></li><li><a href=#testing-requirements>Testing Requirements</a></li><li><a href=#performance-considerations>Performance Considerations</a></li><li><a href=#configuration-options>Configuration Options</a></li><li><a href=#monitoring-hooks>Monitoring Hooks</a></li><li><a href=#resilience-design>Resilience Design</a></li><li><a href=#implementation-tips>Implementation Tips</a></li></ul></nav></div><div class=content-body><h1 id=mcp-technical-specifications---build-engineer-reference>MCP Technical Specifications - Build Engineer Reference</h1><p>This document provides essential technical specifications for implementing the Multi-Agent Control Platform (MCP). Use this as a quick reference alongside the implementation guide and architecture documents.</p><h2 id=core-architecture>Core Architecture</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>┌─────────────────────┐
+</span></span><span style=display:flex><span>│                     │
+</span></span><span style=display:flex><span>│ Android Application │
+</span></span><span style=display:flex><span>│                     │
+</span></span><span style=display:flex><span>└─────────┬───────────┘
+</span></span><span style=display:flex><span>          │ HTTP/WebSocket
+</span></span><span style=display:flex><span>          ▼
+</span></span><span style=display:flex><span>┌─────────────────────┐
+</span></span><span style=display:flex><span>│   MCP Orchestrator  │◄────┐
+</span></span><span style=display:flex><span>│  ┌───────────────┐  │     │
+</span></span><span style=display:flex><span>│  │   FSM Engine  │  │     │ Agent
+</span></span><span style=display:flex><span>│  └───────────────┘  │     │ Registration
+</span></span><span style=display:flex><span>└─────────┬───────────┘     │
+</span></span><span style=display:flex><span>          │ NATS            │
+</span></span><span style=display:flex><span>          ▼                 │
+</span></span><span style=display:flex><span>┌─────────────────────┐     │
+</span></span><span style=display:flex><span>│   Agent Framework   │─────┘
+</span></span><span style=display:flex><span>│  ┌───────┐ ┌──────┐ │
+</span></span><span style=display:flex><span>│  │Agent 1│ │Agent2│ │
+</span></span><span style=display:flex><span>│  └───────┘ └──────┘ │
+</span></span><span style=display:flex><span>└─────────────────────┘
+</span></span></code></pre></td></tr></table></div></div><h2 id=key-interfaces>Key Interfaces</h2><h3 id=mcpagent-interface>McpAgent Interface</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>McpAgent</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> agentId: String
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> capabilities: Set&lt;Capability&gt;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>processTask</span>(task: AgentTask): TaskResult
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>getStatus</span>(): AgentStatus
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>initialize</span>()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> <span style=color:#a6e22e>shutdown</span>()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=agent-state-machine>Agent State Machine</h3><p>Agent lifecycle is managed through a Finite State Machine with these states:</p><ul><li><strong>Idle</strong>: Agent is ready but not processing</li><li><strong>Initializing</strong>: Agent is setting up resources</li><li><strong>Processing</strong>: Agent is handling a task</li><li><strong>Error</strong>: Agent encountered an error</li><li><strong>ShuttingDown</strong>: Agent is releasing resources</li></ul><h2 id=nats-messaging-patterns>NATS Messaging Patterns</h2><h3 id=topic-structure>Topic Structure</h3><ul><li><code>mcp.agent.register</code>: Agent registration</li><li><code>mcp.agent.heartbeat</code>: Agent heartbeat messages</li><li><code>mcp.task.submit</code>: Task submission</li><li><code>mcp.task.{taskId}.status</code>: Task status updates</li><li><code>mcp.task.{taskId}.result</code>: Task results</li><li><code>mcp.system.health</code>: System health monitoring</li></ul><h3 id=message-patterns>Message Patterns</h3><ol><li><p><strong>Request-Reply</strong>: Used for task submission and direct queries</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>Client --request--&gt; Server
+</span></span><span style=display:flex><span>Client &lt;--reply---- Server
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Pub-Sub</strong>: Used for broadcasting events and status updates</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>Publisher ----&gt; Subject
+</span></span><span style=display:flex><span>                  ↓
+</span></span><span style=display:flex><span>              Subscriber(s)
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Queue Groups</strong>: Used for load balancing tasks among similar agents</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>Publisher ----&gt; Subject
+</span></span><span style=display:flex><span>                  ↓
+</span></span><span style=display:flex><span>              Queue Group
+</span></span><span style=display:flex><span>              /    |    \
+</span></span><span style=display:flex><span>           Sub1   Sub2   Sub3
+</span></span></code></pre></td></tr></table></div></div></li></ol><h2 id=core-data-models>Core Data Models</h2><h3 id=task-management>Task Management</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AgentTask</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> taskId: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> agentType: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> payload: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> priority: Int = <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> timeoutMs: Long = <span style=color:#ae81ff>30000</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TaskResult</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> taskId: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> status: TaskStatus,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> result: String? = <span style=color:#66d9ef>null</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> error: String? = <span style=color:#66d9ef>null</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> processingTimeMs: Long? = <span style=color:#66d9ef>null</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>enum</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TaskStatus</span> {
+</span></span><span style=display:flex><span>    PENDING,
+</span></span><span style=display:flex><span>    IN_PROGRESS,
+</span></span><span style=display:flex><span>    COMPLETED,
+</span></span><span style=display:flex><span>    FAILED
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=agent-status>Agent Status</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AgentStatus</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> agentId: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> state: String,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> healthCheck: Boolean,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> activeTaskCount: Int = <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> lastHeartbeatMs: Long = <span style=color:#a6e22e>System</span>.currentTimeMillis()
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=implementation-priorities>Implementation Priorities</h2><p>Focus on implementing components in this order:</p><ol><li><strong>Core Data Models and Interfaces</strong> (AgentState, AgentEvent, McpAgent)</li><li><strong>NATS Connection Management</strong></li><li><strong>Agent State Machine</strong></li><li><strong>Orchestrator Core</strong></li><li><strong>Simple Camera Integration Agent</strong></li></ol><h2 id=design-patterns>Design Patterns</h2><h3 id=1-finite-state-machine>1. Finite State Machine</h3><p>Used for modeling agent lifecycles with clear state transitions.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#75715e>// Example state transition
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>state&lt;<span style=color:#a6e22e>AgentState</span>.Initializing&gt; {
+</span></span><span style=display:flex><span>    on&lt;<span style=color:#a6e22e>AgentEvent</span>.Initialize&gt; {
+</span></span><span style=display:flex><span>        transitionTo(<span style=color:#a6e22e>AgentState</span>.Processing)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-observer-pattern-via-nats>2. Observer Pattern (via NATS)</h3><p>Used for event notification and loose coupling between components.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#75715e>// Publisher
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>natsConnection.publish(<span style=color:#e6db74>&#34;mcp.task.result&#34;</span>, message.toByteArray())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Subscriber
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>natsConnection.subscribe(<span style=color:#e6db74>&#34;mcp.task.result&#34;</span>) { message <span style=color:#f92672>-&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Process incoming message
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-command-pattern>3. Command Pattern</h3><p>Used for encapsulating tasks as objects for flexible execution.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#75715e>// Task as a command
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>val</span> task = AgentTask(
+</span></span><span style=display:flex><span>    taskId = <span style=color:#a6e22e>UUID</span>.randomUUID().toString(),
+</span></span><span style=display:flex><span>    agentType = <span style=color:#e6db74>&#34;camera&#34;</span>,
+</span></span><span style=display:flex><span>    payload = <span style=color:#e6db74>&#34;&#34;&#34;{&#34;action&#34;: &#34;detectDevices&#34;}&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=concurrency-model>Concurrency Model</h2><ul><li>Use Kotlin coroutines for asynchronous operations</li><li>Employ structured concurrency with coroutine scopes</li><li>Handle task execution in separate coroutines</li><li>Use supervisorScope for fault isolation</li></ul><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#75715e>// Example coroutine usage
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>scope.launch {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>val</span> result = agent.processTask(task)
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Handle result
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    } <span style=color:#66d9ef>catch</span> (e: Exception) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Handle error
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=error-handling-strategy>Error Handling Strategy</h2><ol><li><p><strong>Categorize Errors</strong>:</p><ul><li>Transient errors (retry appropriate)</li><li>Permanent errors (fail fast)</li><li>Resource errors (apply backpressure)</li></ul></li><li><p><strong>Recovery Mechanisms</strong>:</p><ul><li>Circuit breaker for failing dependencies</li><li>Exponential backoff for retries</li><li>Supervisor strategy for agent failures</li></ul></li><li><p><strong>Logging Requirements</strong>:</p><ul><li>Log all state transitions</li><li>Include correlation IDs in logs</li><li>Log task submission, execution, and completion</li><li>Use structured logging with consistent format</li></ul></li></ol><h2 id=resource-management>Resource Management</h2><ol><li><p><strong>Connection Pooling</strong>:</p><ul><li>Reuse NATS connections</li><li>Close resources in finally blocks or use Kotlin&rsquo;s <code>use</code> function</li></ul></li><li><p><strong>Memory Management</strong>:</p><ul><li>Consider object pooling for frequently created objects</li><li>Use memory-mapped files for large data transfers</li><li>Implement backpressure mechanisms for task queues</li></ul></li></ol><h2 id=testing-requirements>Testing Requirements</h2><ol><li><p><strong>Unit Testing</strong>:</p><ul><li>Test state transitions in isolation</li><li>Mock NATS with MockK</li><li>Test task processing workflows</li></ul></li><li><p><strong>Integration Testing</strong>:</p><ul><li>Test agent registration flow</li><li>Verify task distribution and execution</li><li>Test error handling and recovery</li></ul></li></ol><h2 id=performance-considerations>Performance Considerations</h2><ol><li><p><strong>Optimizing Message Throughput</strong>:</p><ul><li>Use binary serialization (Protocol Buffers or similar)</li><li>Batch related messages when possible</li><li>Consider message compression for large payloads</li></ul></li><li><p><strong>Reducing Latency</strong>:</p><ul><li>Minimize blocking operations</li><li>Use non-blocking I/O with coroutines</li><li>Implement proper timeout handling</li></ul></li></ol><h2 id=configuration-options>Configuration Options</h2><p>Key configuration parameters to implement:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>nats.server.url = nats://localhost:4222
+</span></span><span style=display:flex><span>nats.max.reconnect = -1  # Unlimited reconnects
+</span></span><span style=display:flex><span>agent.heartbeat.interval.ms = 10000
+</span></span><span style=display:flex><span>task.default.timeout.ms = 30000
+</span></span><span style=display:flex><span>health.check.interval.ms = 5000
+</span></span></code></pre></td></tr></table></div></div><h2 id=monitoring-hooks>Monitoring Hooks</h2><p>Implement these monitoring points:</p><ol><li>Agent state transitions</li><li>Task lifecycle events</li><li>Resource utilization metrics</li><li>Error rate and types</li><li>Message throughput statistics</li></ol><h2 id=resilience-design>Resilience Design</h2><ol><li><p><strong>Circuit Breaker</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CircuitBreaker</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> maxFailures: Int = <span style=color:#ae81ff>3</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>val</span> resetTimeoutMs: Long = <span style=color:#ae81ff>5000</span>
+</span></span><span style=display:flex><span>) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Implementation details
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></td></tr></table></div></div></li><li><p><strong>Retry Policy</strong>:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-kotlin data-lang=kotlin><span style=display:flex><span><span style=color:#66d9ef>suspend</span> <span style=color:#66d9ef>fun</span> &lt;<span style=color:#a6e22e>T</span>&gt; <span style=color:#a6e22e>withRetry</span>(
+</span></span><span style=display:flex><span>    attempts: Int = <span style=color:#ae81ff>3</span>,
+</span></span><span style=display:flex><span>    initialDelayMs: Long = <span style=color:#ae81ff>100</span>,
+</span></span><span style=display:flex><span>    maxDelayMs: Long = <span style=color:#ae81ff>1000</span>,
+</span></span><span style=display:flex><span>    factor: Double = <span style=color:#ae81ff>2.0</span>,
+</span></span><span style=display:flex><span>    block: <span style=color:#66d9ef>suspend</span> () <span style=color:#f92672>-&gt;</span> T
+</span></span><span style=display:flex><span>): T {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Implementation details
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></td></tr></table></div></div></li></ol><h2 id=implementation-tips>Implementation Tips</h2><ol><li>Start with minimal, functional components</li><li>Focus on correctness before optimization</li><li>Build comprehensive tests alongside implementation</li><li>Implement proper error handling from the start</li><li>Document your code as you go</li></ol></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

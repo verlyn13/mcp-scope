@@ -1,0 +1,260 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>| ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1></h1><div class=metadata></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#quick-start>Quick Start</a></li><li><a href=#architecture>Architecture</a></li><li><a href=#directory-structure>Directory Structure</a></li><li><a href=#installation>Installation</a><ul><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#automated-setup>Automated Setup</a></li><li><a href=#container-setup>Container Setup</a></li></ul></li><li><a href=#usage>Usage</a><ul><li><a href=#hugo-site-management>Hugo Site Management</a></li><li><a href=#template-processing>Template Processing</a></li><li><a href=#deployment>Deployment</a></li></ul></li><li><a href=#template-system>Template System</a><ul><li><a href=#template-structure>Template Structure</a></li><li><a href=#data-structure>Data Structure</a></li><li><a href=#creating-new-documents>Creating New Documents</a></li></ul></li><li><a href=#best-practices>Best Practices</a></li><li><a href=#troubleshooting>Troubleshooting</a><ul><li><a href=#common-issues>Common Issues</a></li><li><a href=#getting-help>Getting Help</a></li></ul></li><li><a href=#easter-egg>Easter Egg</a></li><li><a href=#advanced-topics>Advanced Topics</a><ul><li><a href=#customizing-templates>Customizing Templates</a></li><li><a href=#schema-validation>Schema Validation</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div><div class=content-body><h1 id=mcp-documentation-system>MCP Documentation System</h1><p>This documentation system combines Hugo static site generation with Jinja2 template-based content creation for the Multi-Agent Control Platform (MCP) project.</p><h2 id=quick-start>Quick Start</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Check prerequisites</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh check
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Start Hugo development server</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh hugo server
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Build static site</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh hugo build
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Generate document from template</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh template generate templates/test.j2 template-data/test-data.json test-output.md
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Deploy to GitHub Pages</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh deploy
+</span></span></code></pre></td></tr></table></div></div><h2 id=architecture>Architecture</h2><p>The documentation system uses a dual approach:</p><ol><li><strong>Hugo</strong>: Static site generator for the final documentation site</li><li><strong>Jinja2</strong>: Template system for efficient document creation</li></ol><p>This combination gives you both the benefits of static site generation (speed, simplicity, deployment options) and the power of template-based content creation (consistency, efficiency, reusability).</p><h2 id=directory-structure>Directory Structure</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-gdscript3 data-lang=gdscript3><span style=display:flex><span><span style=color:#f92672>/</span>                               <span style=color:#75715e># Root directory</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> content<span style=color:#f92672>/</span>                    <span style=color:#75715e># Hugo content</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> _index<span style=color:#f92672>.</span>md               <span style=color:#75715e># Home page</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> architecture<span style=color:#f92672>/</span>           <span style=color:#75715e># Architecture documentation</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> guides<span style=color:#f92672>/</span>                 <span style=color:#75715e># Implementation guides</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> mcp<span style=color:#f92672>/</span>                    <span style=color:#75715e># MCP-specific documentation</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> project<span style=color:#f92672>/</span>                <span style=color:#75715e># Project documentation</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> standards<span style=color:#f92672>/</span>              <span style=color:#75715e># Standards and guidelines</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> templates<span style=color:#f92672>/</span>              <span style=color:#75715e># Templates (final Hugo output)</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> templates<span style=color:#f92672>/</span>                  <span style=color:#75715e># Jinja2 templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> base<span style=color:#f92672>/</span>                   <span style=color:#75715e># Base templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> architecture<span style=color:#f92672>/</span>           <span style=color:#75715e># Architecture templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> implementation<span style=color:#f92672>/</span>         <span style=color:#75715e># Implementation guides</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> api<span style=color:#f92672>/</span>                    <span style=color:#75715e># API documentation</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> components<span style=color:#f92672>/</span>             <span style=color:#75715e># Reusable components</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> template<span style=color:#f92672>-</span>data<span style=color:#f92672>/</span>              <span style=color:#75715e># Data for templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> common<span style=color:#f92672>/</span>                 <span style=color:#75715e># Common data</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> components<span style=color:#f92672>/</span>             <span style=color:#75715e># Component data</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> schemas<span style=color:#f92672>/</span>                <span style=color:#75715e># JSON schemas</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> docs<span style=color:#f92672>/</span>                       <span style=color:#75715e># Original documentation</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> tools<span style=color:#f92672>/</span>                  <span style=color:#75715e># Documentation tools</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> themes<span style=color:#f92672>/</span>                     <span style=color:#75715e># Hugo themes</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> mcp<span style=color:#f92672>-</span>theme<span style=color:#f92672>/</span>              <span style=color:#75715e># Custom MCP theme</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> config<span style=color:#f92672>/</span>                     <span style=color:#75715e># Hugo configuration</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> <span style=color:#66d9ef>static</span><span style=color:#f92672>/</span>                     <span style=color:#75715e># Static assets</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> mcp<span style=color:#f92672>-</span>docs<span style=color:#f92672>.</span>sh                 <span style=color:#75715e># Main documentation script</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> Dockerfile<span style=color:#f92672>.</span>hugo             <span style=color:#75715e># Hugo container definition</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>└──</span> Dockerfile<span style=color:#f92672>.</span>template         <span style=color:#75715e># Template container definition</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=installation>Installation</h2><h3 id=prerequisites>Prerequisites</h3><ol><li><p><strong>Local Development</strong>:</p><ul><li>Hugo (Extended) >= 0.110.0</li><li>Python 3.10 or newer</li><li>Jinja2, PyYAML, jsonschema packages</li></ul></li><li><p><strong>Container-based Development</strong>:</p><ul><li>Docker or Podman</li></ul></li></ol><h3 id=automated-setup>Automated Setup</h3><p>The <code>mcp-docs.sh</code> script can automatically check and install some dependencies:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>./mcp-docs.sh check
+</span></span></code></pre></td></tr></table></div></div><p>This will verify if you have the necessary tools and suggest installations if needed.</p><h3 id=container-setup>Container Setup</h3><p>If you prefer to use containers (recommended for consistent environments):</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Build Hugo container</span>
+</span></span><span style=display:flex><span>podman build -t hugo-local -f Dockerfile.hugo .
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Build Template container</span>
+</span></span><span style=display:flex><span>podman build -t template-processor -f Dockerfile.template .
+</span></span></code></pre></td></tr></table></div></div><h2 id=usage>Usage</h2><h3 id=hugo-site-management>Hugo Site Management</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Start development server</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh hugo server
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Build static site</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh hugo build
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create new content</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh hugo new path/to/new-file.md
+</span></span></code></pre></td></tr></table></div></div><h3 id=template-processing>Template Processing</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># List available templates</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh template list
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Generate document from template</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh template generate &lt;template-path&gt; &lt;data-path&gt; &lt;output-path&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Validate template data</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh template validate &lt;data-path&gt; <span style=color:#f92672>[</span>schema-path<span style=color:#f92672>]</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=deployment>Deployment</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Deploy to GitHub Pages</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh deploy
+</span></span></code></pre></td></tr></table></div></div><h2 id=template-system>Template System</h2><h3 id=template-structure>Template Structure</h3><p>Templates are Jinja2 files with the <code>.j2</code> extension. They support:</p><ul><li>Template inheritance (extending base templates)</li><li>Variable substitution</li><li>Conditional logic</li><li>Loops and iterations</li><li>Macros and includes</li></ul><h3 id=data-structure>Data Structure</h3><p>Template data is stored in YAML or JSON files, typically with this structure:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Basic metadata</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>title</span>: <span style=color:#e6db74>&#34;Document Title&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>status</span>: <span style=color:#e6db74>&#34;Draft&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#34;0.1&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>contributors</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Author Name&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>tags</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;tag1&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;tag2&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Content-specific data</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>overview</span>: <span style=color:#e6db74>&#34;Brief description of the document purpose.&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>responsibilities</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Responsibility 1&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Responsibility 2&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>implementation_status</span>:
+</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;Feature 1&#34;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>status</span>: <span style=color:#e6db74>&#34;Active&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>percentage</span>: <span style=color:#ae81ff>70</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=creating-new-documents>Creating New Documents</h3><p>The general workflow for creating new documentation:</p><ol><li>Choose an appropriate template</li><li>Create a data file with your content</li><li>Generate the document</li><li>Review and edit if needed</li><li>Commit to the repository</li></ol><p>Example:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create data file</span>
+</span></span><span style=display:flex><span>cat &gt; template-data/components/my-component.yaml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>title: &#34;My Component&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>status: &#34;Draft&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>version: &#34;0.1&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>contributors:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Your Name&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>tags:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;architecture&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;component&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>overview: &#34;Description of my component&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>responsibilities:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Handle important tasks&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Process data efficiently&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Generate document</span>
+</span></span><span style=display:flex><span>./mcp-docs.sh template generate templates/architecture/component.j2 <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  template-data/components/my-component.yaml <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  content/architecture/my-component.md
+</span></span></code></pre></td></tr></table></div></div><h2 id=best-practices>Best Practices</h2><ol><li><p><strong>Use templates for consistency</strong>: Always use templates for new documentation to ensure consistency.</p></li><li><p><strong>Data-driven approach</strong>: Keep content separate from presentation by storing data in YAML or JSON files.</p></li><li><p><strong>Validate before generating</strong>: Use the validation tools to check your data before generating documents.</p></li><li><p><strong>Maintain both environments</strong>: Keep both Hugo content and template data in sync.</p></li><li><p><strong>Regular deployments</strong>: Deploy documentation updates regularly to keep the site current.</p></li><li><p><strong>Version control</strong>: Commit both the generated content and the template data to version control.</p></li></ol><h2 id=troubleshooting>Troubleshooting</h2><h3 id=common-issues>Common Issues</h3><ol><li><p><strong>Hugo errors</strong>:</p><ul><li>Ensure Hugo is properly installed with the Extended version</li><li>Check for YAML syntax errors in front matter</li><li>Verify shortcode syntax</li></ul></li><li><p><strong>Template processing errors</strong>:</p><ul><li>Check Jinja2 is installed (<code>pip install Jinja2</code>)</li><li>Validate template syntax</li><li>Ensure data files exist and have proper format</li></ul></li><li><p><strong>Deployment issues</strong>:</p><ul><li>Verify GitHub repository permissions</li><li>Check GitHub Pages settings</li><li>Ensure gh-pages branch exists</li></ul></li></ol><h3 id=getting-help>Getting Help</h3><p>For additional assistance:</p><ol><li>Check the error messages for specific issues</li><li>Run <code>./mcp-docs.sh check</code> to verify your environment</li><li>Try using the container-based approach for a consistent environment</li></ol><h2 id=easter-egg>Easter Egg</h2><p>Try running:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>./mcp-docs.sh help --mcp-special
+</span></span></code></pre></td></tr></table></div></div><p>For a pleasant surprise! 🚀</p><h2 id=advanced-topics>Advanced Topics</h2><h3 id=customizing-templates>Customizing Templates</h3><p>To create a new template:</p><ol><li>Create a base template in <code>templates/base/</code></li><li>Create specialized templates that extend the base</li><li>Use blocks for customizable sections</li></ol><p>Example:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jinja data-lang=jinja><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>extends</span> <span style=color:#e6db74>&#34;base/document.j2&#34;</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>block</span> content <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>## Custom Content
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>This is the specialized content for this template.
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endblock</span> <span style=color:#75715e>%}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=schema-validation>Schema Validation</h3><p>Create JSON schemas in <code>template-data/schemas/</code> to validate your template data:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;object&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;required&#34;</span>: [<span style=color:#e6db74>&#34;title&#34;</span>, <span style=color:#e6db74>&#34;status&#34;</span>, <span style=color:#e6db74>&#34;version&#34;</span>],
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;properties&#34;</span>: {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;title&#34;</span>: {
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span>
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;status&#34;</span>: {
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;enum&#34;</span>: [<span style=color:#e6db74>&#34;Draft&#34;</span>, <span style=color:#e6db74>&#34;Review&#34;</span>, <span style=color:#e6db74>&#34;Active&#34;</span>, <span style=color:#e6db74>&#34;Archived&#34;</span>]
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>Then validate your data:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>./mcp-docs.sh template validate my-data.yaml my-schema.json
+</span></span></code></pre></td></tr></table></div></div><h2 id=conclusion>Conclusion</h2><p>This documentation system provides a powerful, flexible approach to maintaining the MCP project documentation. By combining Hugo and Jinja2, we get the best of both worlds: elegant presentation and efficient content creation.</p><p>The system is designed to grow with the project, providing a solid foundation for comprehensive, consistent, and maintainable documentation.</p></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

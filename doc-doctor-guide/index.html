@@ -1,0 +1,279 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Doc Doctor Guide | ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1>Doc Doctor Guide</h1><div class="status status-active">🟢 Active</div><div class=metadata><span class=created-date>Created: 2025-03-23</span>
+<span class=updated-date>Updated: 2025-03-23</span>
+<span class=version>Version: 1.0</span><div class=contributors>Contributors:
+Documentation Architect</div></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#table-of-contents>Table of Contents</a></li><li><a href=#features>Features</a></li><li><a href=#architecture>Architecture</a></li><li><a href=#check-modules>Check Modules</a></li><li><a href=#usage>Usage</a><ul><li><a href=#options>Options</a></li><li><a href=#examples>Examples</a></li></ul></li><li><a href=#check-levels>Check Levels</a></li><li><a href=#focus-areas>Focus Areas</a></li><li><a href=#reports>Reports</a><ul><li><a href=#report-structure>Report Structure</a></li></ul></li><li><a href=#integration>Integration</a><ul><li><a href=#cicd-integration>CI/CD Integration</a></li><li><a href=#pre-commit-hooks>Pre-commit Hooks</a></li><li><a href=#scheduled-reviews>Scheduled Reviews</a></li></ul></li><li><a href=#creating-new-modules>Creating New Modules</a><ul><li><a href=#module-template>Module Template</a></li></ul></li><li><a href=#troubleshooting>Troubleshooting</a><ul><li><a href=#common-issues>Common Issues</a></li><li><a href=#debug-mode>Debug Mode</a></li></ul></li><li><a href=#example-output>Example Output</a><ul><li><a href=#terminal-output>Terminal Output</a></li></ul></li><li><a href=#related-documentation>Related Documentation</a></li></ul></nav></div><div class=content-body><h1 id=doc-doctor-documentation-health-check-system>Doc Doctor: Documentation Health Check System</h1><div class="status-indicator status-active"><span class=status-text>Status: Active</span></div><p><a href=/tools/>↩️ Back to Tools</a> | <a href=/docs/>↩️ Back to Documentation Index</a></p><h2 id=overview>Overview</h2><p>Doc Doctor is a comprehensive documentation health check system designed to ensure high-quality, consistent documentation across the MCP project. It performs a variety of checks on documentation content, structure, and metadata to identify issues and provide actionable feedback.</p><div class="callout callout-info"><h4 class=callout-title>Concept</h4><div class=callout-content>Think of Doc Doctor as a medical professional for your documentation - it performs routine check-ups, diagnoses issues, and provides treatment recommendations to keep your documentation healthy.</div></div><h2 id=table-of-contents>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#table-of-contents>Table of Contents</a></li><li><a href=#features>Features</a></li><li><a href=#architecture>Architecture</a></li><li><a href=#check-modules>Check Modules</a></li><li><a href=#usage>Usage</a><ul><li><a href=#options>Options</a></li><li><a href=#examples>Examples</a></li></ul></li><li><a href=#check-levels>Check Levels</a></li><li><a href=#focus-areas>Focus Areas</a></li><li><a href=#reports>Reports</a><ul><li><a href=#report-structure>Report Structure</a></li></ul></li><li><a href=#integration>Integration</a><ul><li><a href=#cicd-integration>CI/CD Integration</a></li><li><a href=#pre-commit-hooks>Pre-commit Hooks</a></li><li><a href=#scheduled-reviews>Scheduled Reviews</a></li></ul></li><li><a href=#creating-new-modules>Creating New Modules</a><ul><li><a href=#module-template>Module Template</a></li></ul></li><li><a href=#troubleshooting>Troubleshooting</a><ul><li><a href=#common-issues>Common Issues</a></li><li><a href=#debug-mode>Debug Mode</a></li></ul></li><li><a href=#example-output>Example Output</a><ul><li><a href=#terminal-output>Terminal Output</a></li></ul></li><li><a href=#related-documentation>Related Documentation</a></li></ul></nav><h2 id=features>Features</h2><ul><li><strong>Modular Architecture</strong>: Easily extendable with additional check modules</li><li><strong>Multi-level Checking</strong>: Quick, standard, and comprehensive check levels</li><li><strong>Focus Areas</strong>: Target specific aspects of documentation for review</li><li><strong>Reporting Options</strong>: Terminal output, markdown reports, and JSON data</li><li><strong>Actionable Feedback</strong>: Clear guidance on how to fix identified issues</li><li><strong>Integration-Ready</strong>: Designed to work with CI/CD pipelines and other tools</li></ul><h2 id=architecture>Architecture</h2><p>Doc Doctor follows a modular architecture:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>doc-doctor.sh                  # Main script and framework
+</span></span><span style=display:flex><span>├── doc-doctor-modules/        # Check modules directory
+</span></span><span style=display:flex><span>│   ├── status-check.sh        # Status field checks
+</span></span><span style=display:flex><span>│   ├── shortcode-check.sh     # Shortcode validation
+</span></span><span style=display:flex><span>│   ├── frontmatter-check.sh   # Front matter validation
+</span></span><span style=display:flex><span>│   ├── link-check.sh          # Link verification
+</span></span><span style=display:flex><span>│   ├── structure-check.sh     # Document structure analysis
+</span></span><span style=display:flex><span>│   └── ...                    # Additional modules
+</span></span><span style=display:flex><span>├── .doc-doctor-temp/          # Temporary files (created at runtime)
+</span></span><span style=display:flex><span>└── doc-reports/               # Generated reports
+</span></span></code></pre></td></tr></table></div></div><p>The main script provides the framework, while individual modules perform specific checks and report findings back to the main script.</p><h2 id=check-modules>Check Modules</h2><p>Doc Doctor includes multiple specialized check modules:</p><table><thead><tr><th>Module</th><th>Purpose</th><th>Checks Performed</th></tr></thead><tbody><tr><td><code>status-check.sh</code></td><td>Verifies document status metadata</td><td>Missing status, invalid status values, outdated status</td></tr><tr><td><code>shortcode-check.sh</code></td><td>Analyzes shortcode usage</td><td>Unclosed shortcodes, unknown shortcodes, malformed syntax</td></tr><tr><td><code>frontmatter-check.sh</code></td><td>Validates front matter completeness</td><td>Required fields, valid values, consistency</td></tr><tr><td><code>link-check.sh</code></td><td>Verifies internal and external links</td><td>Broken links, outdated references, proper formatting</td></tr><tr><td><code>structure-check.sh</code></td><td>Analyzes document structure</td><td>Heading hierarchy, expected sections, proper organization</td></tr></tbody></table><p>Additional modules available in comprehensive mode:</p><ul><li><code>image-check.sh</code>: Verifies image references and accessibility</li><li><code>style-check.sh</code>: Checks for consistent writing style and terminology</li><li><code>template-check.sh</code>: Validates template usage and conformity</li></ul><h2 id=usage>Usage</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>./doc-doctor.sh <span style=color:#f92672>[</span>options<span style=color:#f92672>]</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=options>Options</h3><ul><li><code>--help</code>: Display help message</li><li><code>--check-level LEVEL</code>: Set check level (quick, standard, comprehensive)</li><li><code>--output-format FORMAT</code>: Set output format (terminal, markdown, json, all)</li><li><code>--focus-area AREA</code>: Set focus area (all, status, shortcodes, frontmatter, links, structure)</li><li><code>--report-dir DIR</code>: Set report directory</li></ul><h3 id=examples>Examples</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Run quick health check</span>
+</span></span><span style=display:flex><span>./doc-doctor.sh --check-level quick
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Focus on shortcode checks only</span>
+</span></span><span style=display:flex><span>./doc-doctor.sh --focus-area shortcodes
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Generate markdown report</span>
+</span></span><span style=display:flex><span>./doc-doctor.sh --output-format markdown
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Thorough check with all outputs</span>
+</span></span><span style=display:flex><span>./doc-doctor.sh --check-level comprehensive --output-format all
+</span></span></code></pre></td></tr></table></div></div><h2 id=check-levels>Check Levels</h2><p>Doc Doctor offers three levels of checking:</p><ol><li><p><strong>Quick</strong>: Fast overview of critical issues</p><ul><li>Samples approximately 20% of documents</li><li>Focuses on the most important checks</li><li>Ideal for frequent verification during work</li><li>Execution time: 30-60 seconds</li></ul></li><li><p><strong>Standard</strong> (Default): Balanced and comprehensive</p><ul><li>Checks all documents</li><li>Performs core validation on status, shortcodes, frontmatter, etc.</li><li>Suitable for regular maintenance</li><li>Execution time: 1-3 minutes</li></ul></li><li><p><strong>Comprehensive</strong>: Deep analysis</p><ul><li>Examines all aspects of documentation</li><li>Includes additional specialized modules</li><li>Performs advanced checks like style consistency</li><li>Best for periodic thorough review</li><li>Execution time: 5-10 minutes</li></ul></li></ol><h2 id=focus-areas>Focus Areas</h2><p>Focus areas allow you to concentrate on specific aspects of documentation:</p><ul><li><code>all</code>: Run all applicable checks</li><li><code>status</code>: Focus on document status metadata</li><li><code>shortcodes</code>: Focus on shortcode usage and templates</li><li><code>frontmatter</code>: Focus on front matter fields and values</li><li><code>links</code>: Focus on internal and external links</li><li><code>structure</code>: Focus on document structure and organization</li></ul><h2 id=reports>Reports</h2><p>Doc Doctor can generate reports in multiple formats:</p><ul><li><strong>Terminal Output</strong>: Colored, human-readable feedback</li><li><strong>Markdown Reports</strong>: Structured documentation with categorized findings</li><li><strong>JSON Data</strong>: Machine-readable format for integration with other tools</li></ul><p>Reports are saved in the <code>./doc-reports</code> directory by default.</p><h3 id=report-structure>Report Structure</h3><p>Markdown reports follow this structure:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-markdown data-lang=markdown><span style=display:flex><span># Doc Doctor Health Check Report
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Generated on: YYYY-MM-DD HH:MM:SS
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>## Check Level: [level]
+</span></span></span><span style=display:flex><span><span style=color:#75715e>## Focus Area: [area]
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e>## Findings
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> ❌ <span style=font-weight:700>**Invalid Status**</span> in <span style=color:#e6db74>`content/project/example.md:5`</span>: Status &#39;Draft123&#39; is not a valid status
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> ⚠️ <span style=font-weight:700>**Unknown Shortcode**</span> in <span style=color:#e6db74>`content/guides/guide.md:42`</span>: Using unknown shortcode: &#39;custom&#39;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> ✅ <span style=font-weight:700>**Valid Status**</span> in <span style=color:#e6db74>`content/architecture/overview.md`</span>: Document has valid status: Active
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>## Summary
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Total Checks: 123
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Passed: 100
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Warnings: 18
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Critical Issues: 5
+</span></span></code></pre></td></tr></table></div></div><p>JSON reports follow this structure:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-json data-lang=json><span style=display:flex><span>[
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;severity&#34;</span>: <span style=color:#e6db74>&#34;CRITICAL&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;check&#34;</span>: <span style=color:#e6db74>&#34;Invalid Status&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;Status &#39;Draft123&#39; is not a valid status&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;file&#34;</span>: <span style=color:#e6db74>&#34;content/project/example.md&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;line&#34;</span>: <span style=color:#e6db74>&#34;5&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;severity&#34;</span>: <span style=color:#e6db74>&#34;WARNING&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;check&#34;</span>: <span style=color:#e6db74>&#34;Unknown Shortcode&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;message&#34;</span>: <span style=color:#e6db74>&#34;Using unknown shortcode: &#39;custom&#39;&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;file&#34;</span>: <span style=color:#e6db74>&#34;content/guides/guide.md&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;line&#34;</span>: <span style=color:#e6db74>&#34;42&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></td></tr></table></div></div><h2 id=integration>Integration</h2><p>Doc Doctor is designed to integrate with your documentation workflow:</p><h3 id=cicd-integration>CI/CD Integration</h3><p>Add Doc Doctor to your CI/CD pipeline:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>documentation_health</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>stage</span>: <span style=color:#ae81ff>test</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>script</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#ae81ff>./doc-doctor.sh --check-level standard --output-format json</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>artifacts</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>doc-reports/</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=pre-commit-hooks>Pre-commit Hooks</h3><p>Create a pre-commit hook for quick checks:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e># Pre-commit hook for documentation health</span>
+</span></span><span style=display:flex><span>./doc-doctor.sh --check-level quick
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># If critical issues are found, prevent commit</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $? -ne <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;Documentation health check failed. Please fix critical issues before committing.&#34;</span>
+</span></span><span style=display:flex><span>  exit <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=scheduled-reviews>Scheduled Reviews</h3><p>Set up scheduled comprehensive reviews:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># In your crontab</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Run comprehensive check every Monday at 9 AM</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>9</span> * * <span style=color:#ae81ff>1</span> cd /path/to/project <span style=color:#f92672>&amp;&amp;</span> ./doc-doctor.sh --check-level comprehensive --output-format all
+</span></span></code></pre></td></tr></table></div></div><h2 id=creating-new-modules>Creating New Modules</h2><p>Doc Doctor&rsquo;s modular architecture makes it easy to create new check modules:</p><ol><li>Create a new script in the <code>doc-doctor-modules</code> directory</li><li>Follow the module template structure</li><li>Implement your specific checks</li><li>Create result summaries in the required format</li></ol><h3 id=module-template>Module Template</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Doc Doctor Module: [Your Module Name]</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># [Brief description of what your module checks]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Module information</span>
+</span></span><span style=display:flex><span>MODULE_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;your-module-name&#34;</span>
+</span></span><span style=display:flex><span>TEMP_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;./.doc-doctor-temp&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Custom variables for your checks</span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Parse command line arguments and perform checks</span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Create results file</span>
+</span></span><span style=display:flex><span>cat &gt; <span style=color:#e6db74>&#34;</span>$TEMP_DIR<span style=color:#e6db74>/</span><span style=color:#e6db74>${</span>MODULE_NAME<span style=color:#e6db74>}</span><span style=color:#e6db74>-results.sh&#34;</span> <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># [Your module] check results
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>your_module_total_checks=$total_checks
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>your_module_passed_checks=$passed_checks
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>your_module_warning_checks=$warning_checks
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>your_module_critical_checks=$critical_checks
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74># Update global counters
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>total_checks=\$((total_checks + $total_checks))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>passed_checks=\$((passed_checks + $passed_checks))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>warning_checks=\$((warning_checks + $warning_checks))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>critical_checks=\$((critical_checks + $critical_checks))
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=troubleshooting>Troubleshooting</h2><h3 id=common-issues>Common Issues</h3><ol><li><p><strong>Module not found or not executable</strong></p><ul><li>Ensure the module file exists in <code>doc-doctor-modules/</code></li><li>Check file permissions (<code>chmod +x module.sh</code>)</li></ul></li><li><p><strong>Parsing errors</strong></p><ul><li>Check for proper quoting in front matter</li><li>Ensure markdown files use UTF-8 encoding</li></ul></li><li><p><strong>Performance issues</strong></p><ul><li>Use <code>--check-level quick</code> for faster checks</li><li>Focus on specific areas with <code>--focus-area</code></li></ul></li></ol><h3 id=debug-mode>Debug Mode</h3><p>Run with debug output:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>DOCDOCTOR_DEBUG<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span> ./doc-doctor.sh
+</span></span></code></pre></td></tr></table></div></div><h2 id=example-output>Example Output</h2><h3 id=terminal-output>Terminal Output</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>========================================
+</span></span><span style=display:flex><span>     Doc Doctor
+</span></span><span style=display:flex><span>     Documentation Health Check System 1.0.0
+</span></span><span style=display:flex><span>==========================================
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[INFO] Running health checks (Level: standard, Focus: all)
+</span></span><span style=display:flex><span>[INFO] Running module: status-check
+</span></span><span style=display:flex><span>[SUCCESS] Valid Status in content/architecture/overview.md: Document has valid status: Active
+</span></span><span style=display:flex><span>[WARNING] Missing Status in content/guides/example.md: Document is missing status field
+</span></span><span style=display:flex><span>[CRITICAL] Invalid Status in content/project/overview.md: Status &#39;Draft123&#39; is not a valid status
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[INFO] Status check complete!
+</span></span><span style=display:flex><span>[INFO] Total documents: 42
+</span></span><span style=display:flex><span>[SUCCESS] Valid status: 38
+</span></span><span style=display:flex><span>[WARNING] Missing status: 2
+</span></span><span style=display:flex><span>[CRITICAL] Invalid status: 2
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[INFO] Running module: shortcode-check
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[INFO] Health check complete!
+</span></span><span style=display:flex><span>======= Health Check Summary =======
+</span></span><span style=display:flex><span>Total Checks: 284
+</span></span><span style=display:flex><span>Passed: 245
+</span></span><span style=display:flex><span>Warnings: 28
+</span></span><span style=display:flex><span>Critical Issues: 11
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Overall Health: Fair
+</span></span><span style=display:flex><span>Recommendation: Consider addressing warnings to improve documentation quality.
+</span></span></code></pre></td></tr></table></div></div><h2 id=related-documentation>Related Documentation</h2><div class=related-docs><h3>Related Documentation</h3><ul><li><a href=/standards/documentation-guidelines/>/standards/documentation-guidelines/</a></li><li><a href=/standards/shortcode-standards/>/standards/shortcode-standards/</a></li><li><a href=/standards/status-system/>/standards/status-system/</a></li></ul></div></div><div class=related-docs><h2>Related Documents</h2><ul><li><a href=/standards/documentation-guidelines/>/standards/documentation-guidelines/</a></li><li><a href=/standards/shortcode-standards/>/standards/shortcode-standards/</a></li><li><a href=/standards/status-system/>/standards/status-system/</a></li></ul></div><div class=tags><h3>Tags</h3><ul><li><a href=/tags/tool>tool</a></li><li><a href=/tags/documentation>documentation</a></li><li><a href=/tags/health>health</a></li><li><a href=/tags/verification>verification</a></li><li><a href=/tags/quality>quality</a></li></ul></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>

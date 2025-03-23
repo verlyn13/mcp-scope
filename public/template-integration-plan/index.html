@@ -1,0 +1,519 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>| ScopeCam MCP Documentation</title>
+<meta name=description content="Documentation for the ScopeCam Multi-Agent Control Platform"><style>body{font-family:-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:0 auto;padding:0 20px}.header{padding:20px 0;border-bottom:1px solid #eee}.layer-switch{display:flex;margin:10px 0}.layer-button{padding:8px 16px;background:#f1f1f1;border:1px solid #ddd;cursor:pointer}.layer-button.active{background:#007bff;color:#fff}.sidebar{width:250px;float:left;padding-right:30px}.main-content{margin-left:280px}.status{display:inline-block;padding:5px;border-radius:3px;margin-bottom:20px}.status-active{background-color:#d4edda;color:#155724}.status-draft{background-color:#fff3cd;color:#856404}.status-review{background-color:#ffe5d0;color:#ff8000}.status-outdated{background-color:#f8d7da;color:#721c24}.status-archived{background-color:#e2e3e5;color:#383d41}.footer{margin-top:50px;padding:20px 0;border-top:1px solid #eee;font-size:.9em}pre{background:#f8f9fa;padding:15px;border-radius:4px;overflow:auto}code{font-family:SFMono-Regular,Consolas,liberation mono,Menlo,monospace;background:#f8f9fa;padding:2px 4px;border-radius:3px}@media(max-width:768px){.sidebar{float:none;width:100%}.main-content{margin-left:0}}</style></head><body><header class=header><div class=container><a href=https://example.github.io/mcp-scope/ class=logo>ScopeCam MCP Documentation</a><div class=layer-switch><button class=layer-button data-layer=root>
+Root Documentation
+</button>
+<button class=layer-button data-layer=mcp>
+MCP Documentation</button></div><nav class=main-nav><ul><li><a href=/mcp-scope/>Home</a></li><li><a href=/mcp-scope/project/>Project</a></li><li><a href=/mcp-scope/architecture/>Architecture</a></li><li><a href=/mcp-scope/guides/>Guides</a></li><li><a href=/mcp-scope/standards/>Standards</a></li><li><a href=/mcp-scope/mcp/>MCP</a></li></ul></nav></div></header><div class=container><aside class=sidebar><nav class=sidebar-nav><div class=section-navigation><h3>Documentation Sections</h3><ul><li><a href=/project/>Project</a></li><li><a href=/guides/>Guides</a></li><li><a href=/architecture/>Architecture</a></li><li><a href=/standards/>Standards</a></li><li><a href=/templates/>Templates</a></li><li><a href=/mcp/>MCP</a></li></ul></div></nav></aside><main class=main-content><article class=content><header><h1></h1><div class=metadata></div></header><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#current-status-assessment>Current Status Assessment</a><ul><li><a href=#existing-documentation-tools>Existing Documentation Tools</a></li><li><a href=#current-documentation-structure>Current Documentation Structure</a></li></ul></li><li><a href=#jinja2-integration-strategy>Jinja2 Integration Strategy</a><ul><li><a href=#1-template-infrastructure-setup>1. Template Infrastructure Setup</a></li><li><a href=#2-template-manager-implementation>2. Template Manager Implementation</a></li><li><a href=#3-template-development>3. Template Development</a></li><li><a href=#5-jinja2-template-editor-integration>5. Jinja2 Template Editor Integration</a></li></ul></li><li><a href=#implementation-plan>Implementation Plan</a><ul><li><a href=#phase-1-foundation-2-days>Phase 1: Foundation (2 days)</a></li><li><a href=#phase-2-integration-3-days>Phase 2: Integration (3 days)</a></li><li><a href=#phase-3-content-migration-3-days>Phase 3: Content Migration (3 days)</a></li><li><a href=#phase-4-workflow-optimization-2-days>Phase 4: Workflow Optimization (2 days)</a></li></ul></li><li><a href=#technical-considerations>Technical Considerations</a><ul><li><a href=#template-variables>Template Variables</a></li><li><a href=#data-validation>Data Validation</a></li><li><a href=#error-handling>Error Handling</a></li></ul></li><li><a href=#usage-examples>Usage Examples</a><ul><li><a href=#creating-a-new-architecture-component>Creating a New Architecture Component</a></li><li><a href=#updating-an-existing-document>Updating an Existing Document</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div><div class=content-body><h1 id=jinja2-template-integration-plan-for-scopecam-documentation>Jinja2 Template Integration Plan for ScopeCam Documentation</h1><h2 id=overview>Overview</h2><p>This document outlines the plan for integrating Jinja2 templating into the ScopeCam MCP documentation workflow. The integration will enhance the existing documentation system with template-based content generation while maintaining compatibility with the Hugo static site generator.</p><h2 id=current-status-assessment>Current Status Assessment</h2><h3 id=existing-documentation-tools>Existing Documentation Tools</h3><ul><li><strong>doc-manager.py</strong>: Python tool that manages documentation structure, validation, and migration</li><li><strong>Hugo migration</strong>: In-progress migration of documentation to Hugo static site (Phase 3: 82% complete)</li><li><strong>Containerized environment</strong>: Development setup using podman-compose</li></ul><h3 id=current-documentation-structure>Current Documentation Structure</h3><ul><li>Primary content in <code>/docs/</code> and <code>/mcp-project/docs/</code></li><li>Markdown files with YAML front matter</li><li>Documentation organized by function (architecture, implementation, standards, etc.)</li><li>Current migration to Hugo content structure in <code>/content/</code></li></ul><h2 id=jinja2-integration-strategy>Jinja2 Integration Strategy</h2><h3 id=1-template-infrastructure-setup>1. Template Infrastructure Setup</h3><h4 id=directory-structure>Directory Structure</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-gdscript3 data-lang=gdscript3><span style=display:flex><span><span style=color:#f92672>/</span>docs<span style=color:#f92672>/</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> tools<span style=color:#f92672>/</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> doc<span style=color:#f92672>-</span>manager<span style=color:#f92672>.</span>py               <span style=color:#75715e># Existing documentation manager</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> template<span style=color:#f92672>-</span>manager<span style=color:#f92672>.</span>py          <span style=color:#75715e># New template processing tool</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> requirements<span style=color:#f92672>.</span>txt             <span style=color:#75715e># Python dependencies</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> templates<span style=color:#f92672>/</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> base<span style=color:#f92672>/</span>                        <span style=color:#75715e># Base templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> document<span style=color:#f92672>.</span>j2              <span style=color:#75715e># Base document template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> architecture<span style=color:#f92672>.</span>j2          <span style=color:#75715e># Base architecture template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> implementation<span style=color:#f92672>.</span>j2        <span style=color:#75715e># Base implementation template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> api<span style=color:#f92672>.</span>j2                   <span style=color:#75715e># Base API template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> components<span style=color:#f92672>/</span>                  <span style=color:#75715e># Reusable template components</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> header<span style=color:#f92672>.</span>j2                <span style=color:#75715e># Document header</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> footer<span style=color:#f92672>.</span>j2                <span style=color:#75715e># Document footer</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> status<span style=color:#f92672>.</span>j2                <span style=color:#75715e># Status indicator</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> toc<span style=color:#f92672>.</span>j2                   <span style=color:#75715e># Table of contents</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> architecture<span style=color:#f92672>/</span>                <span style=color:#75715e># Architecture document templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> component<span style=color:#f92672>.</span>j2             <span style=color:#75715e># Architecture component template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> decision<span style=color:#f92672>.</span>j2              <span style=color:#75715e># Architecture decision record template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> implementation<span style=color:#f92672>/</span>              <span style=color:#75715e># Implementation document templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> guide<span style=color:#f92672>.</span>j2                 <span style=color:#75715e># Implementation guide template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> example<span style=color:#f92672>.</span>j2               <span style=color:#75715e># Code example template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> api<span style=color:#f92672>/</span>                         <span style=color:#75715e># API document templates</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>       <span style=color:#960050;background-color:#1e0010>├──</span> endpoint<span style=color:#f92672>.</span>j2              <span style=color:#75715e># API endpoint template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>       <span style=color:#960050;background-color:#1e0010>└──</span> model<span style=color:#f92672>.</span>j2                 <span style=color:#75715e># Data model template</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>└──</span> template<span style=color:#f92672>-</span>data<span style=color:#f92672>/</span>                   <span style=color:#75715e># Data for template variables</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>├──</span> common<span style=color:#f92672>.</span>yaml                  <span style=color:#75715e># Common variables</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>├──</span> components<span style=color:#f92672>/</span>                  <span style=color:#75715e># Component-specific data</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>├──</span> apis<span style=color:#f92672>/</span>                        <span style=color:#75715e># API-specific data</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>└──</span> schema<span style=color:#f92672>/</span>                      <span style=color:#75715e># Data validation schemas</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=python-dependencies>Python Dependencies</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span># requirements.txt
+</span></span><span style=display:flex><span>Jinja2==3.1.2
+</span></span><span style=display:flex><span>PyYAML==6.0
+</span></span><span style=display:flex><span>MarkupSafe==2.1.3
+</span></span><span style=display:flex><span>jsonschema==4.19.0
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-template-manager-implementation>2. Template Manager Implementation</h3><h4 id=core-functionality>Core Functionality</h4><ol><li><strong>Template Loading</strong>: Load Jinja2 templates from the templates directory</li><li><strong>Data Loading</strong>: Load and validate data from YAML files</li><li><strong>Variable Substitution</strong>: Process templates with provided variables</li><li><strong>Output Generation</strong>: Generate Markdown files with Hugo-compatible front matter</li><li><strong>Integration with doc-manager.py</strong>: Work alongside existing documentation tools</li></ol><h4 id=command-line-interface>Command-Line Interface</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Template Manager for ScopeCam Documentation
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>This script manages Jinja2 templates for generating MCP documentation, with support for:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- Listing available templates
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- Generating documents from templates
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- Validating template data
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- Creating new templates
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Usage:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  python template-manager.py [command] [options]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Commands:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  list        List available templates
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  generate    Generate document from template
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  validate    Validate template data
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  create      Create a new template
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  help        Show this help message
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-template-development>3. Template Development</h3><h4 id=base-template-structure>Base Template Structure</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jinja data-lang=jinja><span style=display:flex><span><span style=color:#75715e>{# Base document template (document.j2) #}</span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span>title: &#34;<span style=color:#75715e>{{</span> title <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>status: &#34;<span style=color:#75715e>{{</span> status <span style=color:#f92672>|</span> <span style=color:#a6e22e>default</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;Draft&#39;</span><span style=color:#f92672>)</span> <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>version: &#34;<span style=color:#75715e>{{</span> version <span style=color:#f92672>|</span> <span style=color:#a6e22e>default</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;0.1&#39;</span><span style=color:#f92672>)</span> <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>date_created: &#34;<span style=color:#75715e>{{</span> date_created <span style=color:#f92672>|</span> <span style=color:#a6e22e>default</span><span style=color:#f92672>(</span>today<span style=color:#f92672>)</span> <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>last_updated: &#34;<span style=color:#75715e>{{</span> last_updated <span style=color:#f92672>|</span> <span style=color:#a6e22e>default</span><span style=color:#f92672>(</span>today<span style=color:#f92672>)</span> <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>contributors: [
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>for</span> contributor <span style=color:#66d9ef>in</span> contributors <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>  &#34;<span style=color:#75715e>{{</span> contributor <span style=color:#75715e>}}</span>&#34;<span style=color:#75715e>{%</span> <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>not</span> loop.last <span style=color:#75715e>%}</span>,<span style=color:#75715e>{%</span> <span style=color:#66d9ef>endif</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>related_docs:
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>for</span> doc <span style=color:#66d9ef>in</span> related_docs <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>  - &#34;<span style=color:#75715e>{{</span> doc <span style=color:#75715e>}}</span>&#34;
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>tags: [
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>for</span> tag <span style=color:#66d9ef>in</span> tags <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>  &#34;<span style=color:#75715e>{{</span> tag <span style=color:#75715e>}}</span>&#34;<span style=color:#75715e>{%</span> <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>not</span> loop.last <span style=color:#75715e>%}</span>,<span style=color:#75715e>{%</span> <span style=color:#66d9ef>endif</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>{%</span>- <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># <span style=color:#75715e>{{</span> title <span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;{{&#34;</span><span style=color:#75715e>}}</span> &lt; status &gt; <span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;}}&#34;</span><span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[↩️ Back to <span style=color:#75715e>{{</span> parent_section_name <span style=color:#75715e>}}</span>](<span style=color:#75715e>{{</span> parent_section_path <span style=color:#75715e>}}</span>) | [↩️ Back to Documentation Index](/docs/)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Overview
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{{</span> overview <span style=color:#f92672>|</span> <span style=color:#a6e22e>default</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;*Brief description of the document purpose.*&#39;</span><span style=color:#f92672>)</span> <span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Table of Contents
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;{{&#34;</span><span style=color:#75715e>}}</span> &lt; toc &gt; <span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;}}&#34;</span><span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>block</span> content <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>## Main Content
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>*Main content goes here*
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endblock</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Related Documentation
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;{{&#34;</span><span style=color:#75715e>}}</span> &lt; related-docs &gt; <span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;}}&#34;</span><span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>if</span> changelog <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>## Changelog
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>for</span> version<span style=color:#f92672>,</span> changes <span style=color:#66d9ef>in</span> changelog <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>- <span style=color:#75715e>{{</span> version <span style=color:#75715e>}}</span> (<span style=color:#75715e>{{</span> changes.date <span style=color:#75715e>}}</span>): <span style=color:#75715e>{{</span> changes.description <span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endif</span> <span style=color:#75715e>%}</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=architecture-component-template>Architecture Component Template</h4><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-jinja data-lang=jinja><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>extends</span> <span style=color:#e6db74>&#34;base/architecture.j2&#34;</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>block</span> content <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>## Core Responsibilities
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>for</span> responsibility <span style=color:#66d9ef>in</span> responsibilities <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>- <span style=color:#75715e>{{</span> responsibility <span style=color:#75715e>}}</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Implementation Progress
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>| Feature | Status | Completion |
+</span></span><span style=display:flex><span>|---------|--------|------------|
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>for</span> feature<span style=color:#f92672>,</span> status <span style=color:#66d9ef>in</span> implementation_status.items<span style=color:#f92672>()</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>| <span style=color:#75715e>{{</span> feature <span style=color:#75715e>}}</span> | <span style=color:#75715e>{{</span> status.status <span style=color:#75715e>}}</span> | <span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;{{&#34;</span><span style=color:#75715e>}}</span> &lt; progress value=&#34;<span style=color:#75715e>{{</span> status.percentage <span style=color:#75715e>}}</span>&#34; &gt; <span style=color:#75715e>{{</span><span style=color:#e6db74>&#34;}}&#34;</span><span style=color:#75715e>}}</span> |
+</span></span><span style=display:flex><span><span style=color:#75715e>{%</span> <span style=color:#66d9ef>endfor</span> <span style=color:#75715e>%}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Component Architecture
+</span></span></code></pre></td></tr></table></div></div><p>{{ architecture_diagram }}</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+</span></span><span style=display:flex><span>## Core Interfaces
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>```kotlin
+</span></span><span style=display:flex><span>{% for interface in interfaces %}
+</span></span><span style=display:flex><span>{{ interface }}
+</span></span><span style=display:flex><span>{% endfor %}
+</span></span></code></pre></td></tr></table></div></div><p>{# &mldr; Additional sections &mldr; #}
+{% endblock %}</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>
+</span></span><span style=display:flex><span>### 4. Integration with Existing Workflow
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>#### Extending doc-manager.py
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Add template-related commands to doc-manager.py:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>```python
+</span></span><span style=display:flex><span># New commands in doc-manager.py
+</span></span><span style=display:flex><span>elif command == &#39;create-from-template&#39;:
+</span></span><span style=display:flex><span>    if len(sys.argv) &lt; 4:
+</span></span><span style=display:flex><span>        print(&#34;ERROR: Missing arguments for create-from-template command&#34;)
+</span></span><span style=display:flex><span>        print(&#34;Usage: python doc-manager.py create-from-template TEMPLATE_NAME TARGET_PATH DATA_FILE&#34;)
+</span></span><span style=display:flex><span>        print(&#34;Example: python doc-manager.py create-from-template architecture/component docs/architecture/new-component.md template-data/components/new-component.yaml&#34;)
+</span></span><span style=display:flex><span>        return
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    template_name = sys.argv[2]
+</span></span><span style=display:flex><span>    target_path = sys.argv[3]
+</span></span><span style=display:flex><span>    data_file = sys.argv[4] if len(sys.argv) &gt; 4 else None
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    # Import template_manager and use it
+</span></span><span style=display:flex><span>    from template_manager import TemplateManager
+</span></span><span style=display:flex><span>    template_mgr = TemplateManager(os.path.join(DOCS_ROOT, &#39;templates&#39;))
+</span></span><span style=display:flex><span>    template_mgr.generate_document(template_name, target_path, data_file)
+</span></span></code></pre></td></tr></table></div></div><h4 id=integration-with-hugo-generation>Integration with Hugo Generation</h4><p>Modify the Hugo migration process to use templates:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># In hugo-migrate.py</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>convert_to_hugo_with_templates</span>(source_path, dest_path, template_name<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;Convert a document to Hugo format, optionally using a template.&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> template_name:
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Extract data from existing document</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>with</span> open(source_path, <span style=color:#e6db74>&#39;r&#39;</span>) <span style=color:#66d9ef>as</span> f:
+</span></span><span style=display:flex><span>            content <span style=color:#f92672>=</span> f<span style=color:#f92672>.</span>read()
+</span></span><span style=display:flex><span>        front_matter <span style=color:#f92672>=</span> extract_front_matter(content)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Generate new document from template</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>from</span> template_manager <span style=color:#f92672>import</span> TemplateManager
+</span></span><span style=display:flex><span>        template_mgr <span style=color:#f92672>=</span> TemplateManager(os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(DOCS_ROOT, <span style=color:#e6db74>&#39;templates&#39;</span>))
+</span></span><span style=display:flex><span>        template_mgr<span style=color:#f92672>.</span>generate_document(template_name, dest_path, data<span style=color:#f92672>=</span>front_matter)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Use regular conversion</span>
+</span></span><span style=display:flex><span>        subprocess<span style=color:#f92672>.</span>run([<span style=color:#e6db74>&#39;python3&#39;</span>, <span style=color:#e6db74>&#39;docs/tools/doc-manager.py&#39;</span>,
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#39;--convert-to-hugo&#39;</span>, source_path,
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#39;--output&#39;</span>, dest_path])
+</span></span></code></pre></td></tr></table></div></div><h3 id=5-jinja2-template-editor-integration>5. Jinja2 Template Editor Integration</h3><p>Create a simple web-based editor for templates that:</p><ol><li>Lists available templates</li><li>Allows editing template content</li><li>Provides a preview of rendered templates</li><li>Facilitates template data creation and validation</li></ol><h2 id=implementation-plan>Implementation Plan</h2><h3 id=phase-1-foundation-2-days>Phase 1: Foundation (2 days)</h3><ol><li><p><strong>Environment Setup</strong></p><ul><li>Create requirements.txt with Jinja2 dependencies</li><li>Set up Python environment</li><li>Create basic directory structure</li></ul></li><li><p><strong>Basic Template Manager</strong></p><ul><li>Implement core template loading and rendering</li><li>Create basic CLI interface</li><li>Implement document generation from template</li></ul></li><li><p><strong>Convert Existing Architecture Template</strong></p><ul><li>Create Jinja2 version of architecture component template</li><li>Test template rendering with sample data</li></ul></li></ol><h3 id=phase-2-integration-3-days>Phase 2: Integration (3 days)</h3><ol><li><p><strong>Extend doc-manager.py</strong></p><ul><li>Add template-related commands</li><li>Ensure compatibility with existing functionality</li></ul></li><li><p><strong>Develop Data Schema</strong></p><ul><li>Create JSON schemas for template data validation</li><li>Implement data validation in template manager</li></ul></li><li><p><strong>Setup Hugo Integration</strong></p><ul><li>Ensure generated content works with Hugo</li><li>Update Hugo migration process to use templates</li></ul></li></ol><h3 id=phase-3-content-migration-3-days>Phase 3: Content Migration (3 days)</h3><ol><li><p><strong>Convert Implementation Templates</strong></p><ul><li>Create Jinja2 version of implementation guide template</li><li>Test with sample data</li></ul></li><li><p><strong>Convert API Templates</strong></p><ul><li>Create Jinja2 version of API documentation template</li><li>Test with sample data</li></ul></li><li><p><strong>Update Template Data</strong></p><ul><li>Create template data for existing documents</li><li>Test regeneration of existing content</li></ul></li></ol><h3 id=phase-4-workflow-optimization-2-days>Phase 4: Workflow Optimization (2 days)</h3><ol><li><p><strong>Documentation</strong></p><ul><li>Document template usage process</li><li>Create template development guide</li><li>Update contribution guidelines</li></ul></li><li><p><strong>Automation</strong></p><ul><li>Add CI/CD integration for template validation</li><li>Create pre-commit hooks for template validation</li></ul></li></ol><h2 id=technical-considerations>Technical Considerations</h2><h3 id=template-variables>Template Variables</h3><p>Define standard variables across all templates:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Common variables (common.yaml)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>project_name</span>: <span style=color:#e6db74>&#34;ScopeCam MCP&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>repository_url</span>: <span style=color:#e6db74>&#34;https://github.com/username/mcp-scope&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>copyright_year</span>: <span style=color:#e6db74>&#34;2025&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>status_options</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Active&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Draft&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Review&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Outdated&#34;</span>
+</span></span><span style=display:flex><span>  - <span style=color:#e6db74>&#34;Archived&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>navigation</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>docs_index</span>: <span style=color:#e6db74>&#34;/docs/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>architecture</span>: <span style=color:#e6db74>&#34;/architecture/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>implementation</span>: <span style=color:#e6db74>&#34;/implementation/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>standards</span>: <span style=color:#e6db74>&#34;/standards/&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=data-validation>Data Validation</h3><p>Implement JSON Schema validation for template data:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Architecture component schema (schema/architecture-component.yaml)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>type</span>: <span style=color:#ae81ff>object</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>required</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>title</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>responsibilities</span>
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>interfaces</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>properties</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>title</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>responsibilities</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>array</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>items</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>type</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>interfaces</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>array</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>items</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>type</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>implementation_status</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>object</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>additionalProperties</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>type</span>: <span style=color:#ae81ff>object</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>properties</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>status</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>type</span>: <span style=color:#ae81ff>string</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>enum</span>: [<span style=color:#e6db74>&#34;Active&#34;</span>, <span style=color:#e6db74>&#34;Draft&#34;</span>, <span style=color:#e6db74>&#34;Review&#34;</span>, <span style=color:#e6db74>&#34;Outdated&#34;</span>, <span style=color:#e6db74>&#34;Archived&#34;</span>]
+</span></span><span style=display:flex><span>        <span style=color:#f92672>percentage</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>type</span>: <span style=color:#ae81ff>integer</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>minimum</span>: <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>maximum</span>: <span style=color:#ae81ff>100</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=error-handling>Error Handling</h3><p>Implement comprehensive error handling:</p><ol><li><strong>Template errors</strong>: Clear error messages for template syntax issues</li><li><strong>Data validation errors</strong>: Detailed feedback on invalid template data</li><li><strong>File operation errors</strong>: Proper handling of file I/O issues</li></ol><h2 id=usage-examples>Usage Examples</h2><h3 id=creating-a-new-architecture-component>Creating a New Architecture Component</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create data file</span>
+</span></span><span style=display:flex><span>cat &gt; docs/template-data/components/messaging-service.yaml <span style=color:#e6db74>&lt;&lt; EOF
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>title: &#34;Messaging Service&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>status: &#34;Draft&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>version: &#34;0.1&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>contributors: [&#34;Documentation Architect&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>tags: [&#34;architecture&#34;, &#34;component&#34;, &#34;messaging&#34;, &#34;nats&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>parent_section_name: &#34;Architecture&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>parent_section_path: &#34;/architecture/&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>overview: &#34;The Messaging Service provides reliable message handling between MCP components.&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>responsibilities:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Message routing between agents&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Handling message serialization/deserialization&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;Ensuring reliable message delivery&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>interfaces:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  - &#34;interface MessageService {\n    fun publishMessage(topic: String, payload: ByteArray)\n    suspend fun subscribeToTopic(topic: String): Flow&lt;Message&gt;\n}&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>implementation_status:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;Core Messaging&#34;: 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    status: &#34;Active&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    percentage: 85
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;Error Handling&#34;: 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    status: &#34;Draft&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    percentage: 50
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;Reconnection Logic&#34;: 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    status: &#34;Draft&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    percentage: 30
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>EOF</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Generate document from template</span>
+</span></span><span style=display:flex><span>python docs/tools/template-manager.py generate architecture/component content/architecture/messaging-service.md docs/template-data/components/messaging-service.yaml
+</span></span></code></pre></td></tr></table></div></div><h3 id=updating-an-existing-document>Updating an Existing Document</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Extract data from existing document</span>
+</span></span><span style=display:flex><span>python docs/tools/template-manager.py extract docs/architecture/fsm-agent-interfaces.md docs/template-data/components/fsm-agent.yaml
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Edit the data file as needed</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Regenerate document with updated data</span>
+</span></span><span style=display:flex><span>python docs/tools/template-manager.py generate architecture/component content/architecture/fsm-agent-interfaces.md docs/template-data/components/fsm-agent.yaml
+</span></span></code></pre></td></tr></table></div></div><h2 id=conclusion>Conclusion</h2><p>This integration plan provides a comprehensive approach to incorporating Jinja2 templating into the ScopeCam documentation workflow. By building on the existing documentation infrastructure and maintaining compatibility with Hugo, we can enhance the documentation creation process while ensuring a smooth transition to the new templating system.</p><p>The phased implementation approach allows for incremental adoption and validation of the templating system, with clear milestones and deliverables for each phase.</p></div></article></main></div><footer class=footer><div class=container><p>&copy; 2025 ScopeCam MCP Documentation. All rights reserved.</p></div></footer></body></html>
