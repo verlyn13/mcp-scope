@@ -1,0 +1,10 @@
+{{ if .Page.Params.related_docs }}
+<div class="related-docs">
+  <h3>Related Documents</h3>
+  <ul>
+    {{ range .Page.Params.related_docs }}
+      <li><a href="{{ . }}">{{ . }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

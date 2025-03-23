@@ -1,0 +1,73 @@
+{{ define "main" }}
+<article class="content">
+  <header>
+    <h1>{{ .Title }}</h1>
+    
+    {{ if .Params.status }}
+      <div class="status status-{{ lower .Params.status }}">
+        {{ if eq .Params.status "Active" }}🟢 Active{{ end }}
+        {{ if eq .Params.status "Draft" }}🟡 Draft{{ end }}
+        {{ if eq .Params.status "Review" }}🟠 Review{{ end }}
+        {{ if eq .Params.status "Outdated" }}🔴 Outdated{{ end }}
+        {{ if eq .Params.status "Archived" }}⚫ Archived{{ end }}
+      </div>
+    {{ end }}
+
+    <div class="metadata">
+      {{ if .Params.date_created }}
+        <span class="created-date">Created: {{ .Params.date_created }}</span>
+      {{ end }}
+      
+      {{ if .Params.last_updated }}
+        <span class="updated-date">Updated: {{ .Params.last_updated }}</span>
+      {{ end }}
+      
+      {{ if .Params.version }}
+        <span class="version">Version: {{ .Params.version }}</span>
+      {{ end }}
+      
+      {{ if .Params.contributors }}
+        <div class="contributors">
+          Contributors: 
+          {{ range $index, $contributor := .Params.contributors }}
+            {{ if $index }}, {{ end }}{{ $contributor }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  </header>
+  
+  {{ if .TableOfContents }}
+    <div class="table-of-contents">
+      <h2>Table of Contents</h2>
+      {{ .TableOfContents }}
+    </div>
+  {{ end }}
+  
+  <div class="content-body">
+    {{ .Content }}
+  </div>
+  
+  {{ if .Params.related_docs }}
+    <div class="related-docs">
+      <h2>Related Documents</h2>
+      <ul>
+        {{ range .Params.related_docs }}
+          <li><a href="{{ . }}">{{ . }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+  
+  {{ if .Params.tags }}
+    <div class="tags">
+      <h3>Tags</h3>
+      <ul>
+        {{ range .Params.tags }}
+          <li><a href="/tags/{{ . | urlize }}">{{ . }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+</article>
+{{ end }}

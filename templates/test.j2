@@ -1,0 +1,12 @@
+# This is a test template
+
+## Generated content for {{ title | default("My Document") }}
+
+This template was generated on {{ today }}.
+
+{% if items %}
+## List of items:
+{% for item in items %}
+- {{ item }}
+{% endfor %}
+{% endif %}

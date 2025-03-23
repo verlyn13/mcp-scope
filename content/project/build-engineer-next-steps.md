@@ -6,22 +6,31 @@ date_created: "2025-03-22"
 last_updated: "2025-03-23"
 contributors: ["Documentation Architect", "Build Engineer"]
 related_docs:
-  - "/README.md"
-  - "/docs/README.md"
-  - "/mcp-project/docs/README.md"
-  - "/mcp-project/docs/project/first-steps.md"
+  - "/docs/"
+  - "/mcp/docs/getting-started/"
+  - "/mcp/docs/project-setup/"
+  - "/guides/build-engineer-implementation-guide/"
+  - "/guides/build-engineer-tech-specs/"
 tags: ["project-wide", "tasks", "roadmap", "build-engineer"]
 ---
 
 # Build Engineer Next Steps
 
-🟢 **Active**
+{{< status >}}
 
-[↩️ Back to Documentation Hub](/docs/README.md)
+[↩️ Back to Project Documentation](/project/) | [↩️ Back to Documentation Index](/docs/)
 
 ## Overview
 
 This document outlines the next steps for the build engineer to continue MCP implementation work. It consolidates information from existing plans and provides a clear sequence of tasks based on the current project state.
+
+{{< callout "info" "Task Prioritization" >}}
+Tasks are prioritized based on project needs and dependencies. Critical tasks should be completed first, followed by high and medium priority items.
+{{< /callout >}}
+
+## Table of Contents
+
+{{< toc >}}
 
 ## Current Project Status
 
@@ -42,6 +51,10 @@ The initial implementation of the Multi-Agent Control Platform (MCP) is well und
 ## Next Day Tasks
 
 ### 1. Gradle and Build System Setup (Priority: Critical)
+
+{{< callout "warning" "Critical Task" >}}
+The Gradle setup is critical for ensuring consistent build environments across the team. Complete this task before moving on to other implementation work.
+{{< /callout >}}
 
 1. **Set up Gradle 8.12 environment**
    - Install Gradle 8.12 for local development
@@ -91,7 +104,21 @@ The initial implementation of the Multi-Agent Control Platform (MCP) is well und
    - Add pub-sub for status updates
    - Create event handling for camera events
 
+## Implementation Progress
+
+| Component | Status | Completion |
+|-----------|--------|------------|
+| Gradle Setup | 🟠 In Progress | {{< progress value="20" >}} |
+| Integration Testing | 🟡 Draft | {{< progress value="30" >}} |
+| Health Dashboard | 🟡 Draft | {{< progress value="15" >}} |
+| Advanced Agent Features | 🟡 Draft | {{< progress value="25" >}} |
+| Android Integration | 🔴 Planned | {{< progress value="5" >}} |
+
 ## Getting Started (Tomorrow Morning)
+
+{{< callout "tip" "Morning Routine" >}}
+Starting with these steps first thing in the morning will set up your development environment for the rest of the day's tasks.
+{{< /callout >}}
 
 1. **Install Gradle 8.12**
    ```bash
@@ -102,7 +129,7 @@ The initial implementation of the Multi-Agent Control Platform (MCP) is well und
    sudo ln -s /opt/gradle/gradle-8.12/bin/gradle /usr/local/bin/gradle
    
    # Generate Gradle wrapper in the project
-   cd /home/verlyn13/Projects/mcp-scope/mcp-project
+   cd mcp-project
    gradle wrapper
    ```
 
@@ -117,7 +144,7 @@ The initial implementation of the Multi-Agent Control Platform (MCP) is well und
 3. **Test the system with new Gradle version**
    ```bash
    # Run tests in local environment
-   cd /home/verlyn13/Projects/mcp-scope/mcp-project
+   cd mcp-project
    ./gradlew test
    
    # Rebuild and test in containerized environment
@@ -140,7 +167,7 @@ The initial implementation of the Multi-Agent Control Platform (MCP) is well und
 
 3. **Documentation updates**
    - Update relevant documentation when adding new features
-   - Follow the [Path Reference Guide](/docs/project/path-reference-guide.md)
+   - Follow the [Path Reference Guide](/project/path-reference-guide/)
    - Maintain status indicators and versioning
 
 ## Completed Task Summary
@@ -185,11 +212,22 @@ To keep track of your progress, use comments to mark completed tasks:
 
 ## Alignment with Strategic Plan
 
-These tasks align with Phase 2 of the strategic plan as outlined in `/home/verlyn13/Projects/mcp-scope/current-plan.md`, focusing on:
+These tasks align with Phase 2 of the strategic plan as outlined in the current plan, focusing on:
 
 - Health monitoring and resilience
 - Specialized agent capabilities
 - Integration with Android applications
+
+## Related Documentation
+
+For more information, refer to:
+
+- [Build Engineer Implementation Guide](/guides/build-engineer-implementation-guide/)
+- [Build Engineer Technical Specifications](/guides/build-engineer-tech-specs/)
+- [Testing Guide](/guides/testing-guide/)
+- [Health Monitoring Guide](/guides/health-monitoring-guide/)
+
+{{< related-docs >}}
 
 ## Changelog
 

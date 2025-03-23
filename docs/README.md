@@ -1,10 +1,10 @@
 ---
 title: "ScopeCam MCP Documentation Hub"
 status: "Active"
-version: "1.3"
+version: "1.4"
 date_created: "2025-03-22"
-last_updated: "2025-03-22"
-contributors: ["Documentation Architect"]
+last_updated: "2025-03-23"
+contributors: ["Documentation Architect", "Build Engineer"]
 related_docs:
   - "/README.md"
   - "/docs/project/project-organization.md"
@@ -29,7 +29,8 @@ The ScopeCam MCP project uses a **dual-layer documentation structure** that mirr
 ├── README.md                            # Root project dashboard
 ├── docs/                                # ROOT DOCUMENTATION LAYER
 │   ├── README.md                        # This document - Navigation hub
-│   └── project/                         # Project-level information
+│   ├── project/                         # Project-level information
+│   └── guides/                          # Implementation and technical guides
 └── mcp-project/                         # MCP IMPLEMENTATION LAYER
     ├── README.md                        # MCP implementation dashboard
     └── docs/                            # MCP DOCUMENTATION LAYER
@@ -83,7 +84,7 @@ All documentation uses YAML front matter with tags following these conventions:
   - MCP docs: `implementation`, `architecture`, `technical`
 
 - **Common tags**:
-  - Topic areas: `camera`, `agents`, `nats`, `orchestration`
+  - Topic areas: `camera`, `agents`, `nats`, `orchestration`, `testing`, `health`
   - Doc types: `guide`, `reference`, `specification`, `tutorial`
   - Status: `active`, `draft`, `review`
 
@@ -98,6 +99,12 @@ Documents in this layer:
 - [Project Organization](/docs/project/project-organization.md) - Structure and organization 🟢
 - [Path Reference Guide](/docs/project/path-reference-guide.md) - Definitive path usage guide 🟢
 - [Build Engineer Next Steps](/docs/project/build-engineer-next-steps.md) - Task roadmap for build engineers 🟢
+
+Technical Guides:
+
+- [Testing Guide](/docs/guides/testing-guide.md) - Testing infrastructure and best practices 🟢
+- [Health Monitoring Guide](/docs/guides/health-monitoring-guide.md) - Health monitoring system documentation 🟢
+- [Containerized Development Environment](/docs/guides/containerized-dev-environment.md) - Development environment setup 🟢
 
 ### MCP Documentation Layer
 
@@ -133,6 +140,7 @@ When contributing new documentation:
 
 2. **Then, determine the appropriate directory** within that layer based on the content type:
    - `project/` - Project information, planning, roadmaps
+   - `guides/` - Technical guides and implementation instructions
    - `architecture/` - System design and component specifications
    - `implementation/` - Development guides and how-to content
    - `standards/` - Guidelines and best practices
@@ -148,9 +156,13 @@ When contributing new documentation:
 For team members working on specific aspects of the project:
 
 - **For Build Engineers**: Start with [Build Engineer Next Steps](/docs/project/build-engineer-next-steps.md)
+- **For Testing**: Use the [Testing Guide](/docs/guides/testing-guide.md)
+- **For Health Monitoring**: Refer to the [Health Monitoring Guide](/docs/guides/health-monitoring-guide.md)
+- **For Development Environment**: See the [Containerized Development Environment](/docs/guides/containerized-dev-environment.md)
 
 ## Changelog
 
+- 1.4.0 (2025-03-23): Added new guides for testing, health monitoring, and containerized development
 - 1.3.0 (2025-03-22): Added reference to Build Engineer Next Steps document
 - 1.2.0 (2025-03-22): Added reference to the Path Reference Guide
 - 1.1.0 (2025-03-22): Enhanced with dual-layer documentation explanation

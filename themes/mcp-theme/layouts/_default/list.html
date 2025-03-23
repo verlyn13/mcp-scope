@@ -1,0 +1,65 @@
+{{ define "main" }}
+<section class="section-list">
+  <header>
+    <h1>{{ .Title }}</h1>
+    
+    {{ if .Params.status }}
+      <div class="status status-{{ lower .Params.status }}">
+        {{ if eq .Params.status "Active" }}🟢 Active{{ end }}
+        {{ if eq .Params.status "Draft" }}🟡 Draft{{ end }}
+        {{ if eq .Params.status "Review" }}🟠 Review{{ end }}
+        {{ if eq .Params.status "Outdated" }}🔴 Outdated{{ end }}
+        {{ if eq .Params.status "Archived" }}⚫ Archived{{ end }}
+      </div>
+    {{ end }}
+  </header>
+  
+  <div class="section-content">
+    {{ .Content }}
+  </div>
+  
+  {{ if .Pages }}
+    <div class="document-list">
+      <h2>Documents in this section</h2>
+      
+      <div class="status-filters">
+        <span>Filter by status:</span>
+        <a href="?status=all" class="filter-button active">All</a>
+        <a href="?status=active" class="filter-button">Active</a>
+        <a href="?status=draft" class="filter-button">Draft</a>
+        <a href="?status=review" class="filter-button">Review</a>
+        <a href="?status=outdated" class="filter-button">Outdated</a>
+        <a href="?status=archived" class="filter-button">Archived</a>
+      </div>
+      
+      <ul class="document-items">
+        {{ range .Pages.ByWeight }}
+          <li class="document-item {{ if .Params.status }}status-{{ lower .Params.status }}{{ end }}">
+            <a href="{{ .Permalink }}" class="document-link">
+              <span class="document-title">{{ .Title }}</span>
+              
+              {{ if .Params.status }}
+                <span class="status-badge status-{{ lower .Params.status }}">
+                  {{ if eq .Params.status "Active" }}🟢{{ end }}
+                  {{ if eq .Params.status "Draft" }}🟡{{ end }}
+                  {{ if eq .Params.status "Review" }}🟠{{ end }}
+                  {{ if eq .Params.status "Outdated" }}🔴{{ end }}
+                  {{ if eq .Params.status "Archived" }}⚫{{ end }}
+                </span>
+              {{ end }}
+              
+              {{ if .Description }}
+                <span class="document-description">{{ .Description }}</span>
+              {{ end }}
+              
+              {{ if .Params.last_updated }}
+                <span class="document-date">Updated: {{ .Params.last_updated }}</span>
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,29 @@
+name = "MCP Theme"
+license = "MIT"
+licenselink = "https://github.com/example/mcp-scope/blob/main/LICENSE"
+description = "Custom theme for ScopeCam MCP Documentation"
+
+# The home page of the theme, where the source can be found
+homepage = "https://github.com/example/mcp-scope"
+
+# If you have a running demo of the theme
+demosite = ""
+
+# Minimum version of Hugo required
+min_version = "0.91.0"
+
+# If you provide example content for a newly created project
+exampleSite = false
+
+# If your theme is built for multi-language sites
+multilingual = false
+
+# Features used by this theme
+tags = ["documentation", "responsive", "multilayer"]
+
+# Architecture and UI/UX features
+features = ["responsive", "status indicators", "dual-layer navigation", "progress tracking"]
+
+[author]
+  name = "ScopeCam Team"
+  homepage = "https://github.com/example/mcp-scope"
