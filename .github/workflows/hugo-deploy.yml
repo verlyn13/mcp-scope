@@ -1,33 +1,69 @@
 name: Deploy Hugo site to GitHub Pages
 
+# NOTE: This workflow is provided as a template only.
+# For this repository, the preferred deployment method is using the local script:
+# ./deploy-to-github-pages.sh
+# which uses the GitHub token stored in /home/verlyn13/.secrets/mcp-scope/github_token
+
 on:
-  push:
-    branches:
-      - main  # Set this to your main branch name
+  # Uncomment and modify these triggers if you want to use GitHub Actions for deployment
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          submodules: true  # Fetch Hugo themes (if used)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.110.0'
-          extended: true  # Use Hugo Extended version for SCSS support
+          hugo-version: '0.126.2'
+          extended: true
 
-      - name: Build
+      - name: Prepare content directories
+        run: |
+          mkdir -p content
+          cp README.md content/_index.md
+          
+          # Copy docs directory content
+          if [ -d "docs" ]; then
+            mkdir -p content/docs
+            cp -r docs/* content/
+          fi
+          
+          # Copy architecture directory content
+          if [ -d "architecture" ]; then
+            mkdir -p content/architecture
+            cp -r architecture/* content/architecture/
+          fi
+          
+          # Copy markdown files from root
+          find . -maxdepth 1 -name "*.md" -not -name "README.md" -exec cp {} content/ \;
+          
+          # Copy MCP project documentation
+          if [ -d "mcp-project/docs" ]; then
+            mkdir -p content/mcp
+            cp -r mcp-project/docs/* content/mcp/
+          fi
+
+      - name: Build site
         run: hugo --minify
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          cname: docs.mcp-project.org  # Optional: Set if you have a custom domain
+      - name: Create .nojekyll file
+        run: touch public/.nojekyll
+
+      # Note: This step is commented out as we're using the local deployment script instead
+      # Uncomment and configure this section if you want to use GitHub Actions
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./public
+      #     force_orphan: true
