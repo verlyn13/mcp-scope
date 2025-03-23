@@ -1,132 +1,119 @@
 ---
-title: "ScopeCam MCP Documentation"
-status: "Active"
-version: "1.0"
-date_created: "2025-03-23"
-last_updated: "2025-03-23"
-contributors: ["Documentation Architect", "Build Engineer"]
-tags: ["documentation-hub", "organization", "navigation"]
+title: "ScopeCam MCP"
+description: "Multi-Agent Control Platform for ScopeCam Integration"
 ---
 
-# ScopeCam MCP Documentation
+# Multi-Agent Control Platform (MCP)
 
-🟢 **Active**
+A distributed, message-driven orchestration platform that coordinates specialized agents for complex system integrations.
 
-## Documentation Organization Overview
+## Overview
 
-The ScopeCam MCP project uses a **dual-layer documentation structure** that mirrors the code organization:
+The Multi-Agent Control Platform (MCP) provides a robust framework for creating, managing, and coordinating autonomous agents that work together to accomplish complex tasks. Built around a central orchestrator with a message-driven architecture, MCP enables seamless integration of components written in different languages and running on different systems.
+
+![MCP Architecture](https://via.placeholder.com/800x400?text=MCP+Architecture+Diagram)
+
+### Key Features
+
+- **Distributed Architecture**: Agents can run on different machines while coordinating activities
+- **Language Agnostic**: Support for agents written in Kotlin, Java, Python, and potentially other languages
+- **Message-Driven**: Uses NATS as a high-performance messaging backbone
+- **State Machine Based**: Clear, well-defined agent lifecycles
+- **Extensible**: Easy to create new specialized agents for specific tasks
+- **Containerized**: Optional fully containerized development and deployment
+
+## Project Structure
 
 ```
-/home/verlyn13/Projects/mcp-scope/       # ROOT PROJECT LAYER
-├── README.md                            # Root project dashboard
-├── docs/                                # ROOT DOCUMENTATION LAYER
-│   ├── README.md                        # This document - Navigation hub
-│   ├── project/                         # Project-level information
-│   └── guides/                          # Implementation and technical guides
-└── mcp-project/                         # MCP IMPLEMENTATION LAYER
-    ├── README.md                        # MCP implementation dashboard
-    └── docs/                            # MCP DOCUMENTATION LAYER
-        ├── README.md                    # MCP documentation index
-        ├── project/                     # MCP project information
-        ├── architecture/                # MCP architecture details
-        ├── implementation/              # Implementation guides
-        └── standards/                   # Documentation standards
+mcp-project/
+├── mcp-core/                  # Core orchestration platform
+├── agents/                    # Specialized agent implementations
+│   ├── camera-agent/          # Camera integration agent
+│   └── python-processor/      # Python-based processing agent
+├── nats/                      # NATS server configuration
+├── docs/                      # Documentation
+└── podman-compose.yml         # Container orchestration
 ```
 
-## Documentation Layers
+## Core Components
 
-This project uses a dual-layer documentation approach for clear organization:
+- **Orchestrator**: Central coordination engine that manages agents and distributes tasks
+- **Agent Framework**: Common interfaces and base classes for creating agents
+- **NATS Integration**: Message transport for agent communication
+- **Camera Integration Agent**: Example agent for interfacing with USB cameras
+- **Python Processor Agent**: Example agent demonstrating Python integration
 
-1. **Root Documentation Layer** 
-   - **Purpose**: Project-wide information and ScopeCam integration
-   - **Audience**: All stakeholders, system integrators, project managers
-   - **Content**: Project vision, integration guides, organizational structure
+## Getting Started
 
-2. **MCP Documentation Layer**
-   - **Purpose**: Detailed MCP implementation guides and technical information
-   - **Audience**: Developers implementing or extending the MCP
-   - **Content**: Architecture details, implementation guides, API specifications
+### Prerequisites
 
-## Documentation Status System
+- JDK 17 or later
+- Python 3.11 or later
+- NATS Server
+- Podman/Docker (optional, for containerized development)
 
-Both documentation layers follow the same status system:
+### Quick Start
 
-| Status | Indicator | Description | 
-|--------|-----------|-------------|
-| 🟢 **Active** | `🟢 **Active**` | Current, reviewed and approved |
-| 🟡 **Draft** | `🟡 **Draft**` | Work in progress, subject to change |
-| 🟠 **Review** | `🟠 **Review**` | Complete but pending final approval |
-| 🔴 **Outdated** | `🔴 **Outdated**` | Contains older information that needs updating |
-| ⚫ **Archived** | `⚫ **Archived**` | Historical information, no longer applicable |
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/example/mcp-project.git
+   cd mcp-project
+   ```
 
-## Key Documentation
+2. **Choose your development approach**:
+   - [Local Development](/docs/implementation/local-development-guide.md) (recommended for daily work)
+   - [Containerized Development](/docs/implementation/containerized-development-guide.md) (for consistent environments)
 
-### Root Documentation Layer 
+3. **Follow the getting started guide**:
+   - Detailed instructions in [First Steps Guide](/docs/project/first-steps.md)
 
-- **Start here** for project-wide concerns and understanding how MCP fits into the broader ScopeCam project
+## Development Environment Options
 
-Documents in this layer:
+MCP supports two primary development workflows:
 
-- [Project Organization](/project/project-organization/) - Structure and organization 🟢
-- [Path Reference Guide](/project/path-reference-guide/) - Definitive path usage guide 🟢
-- [Build Engineer Next Steps](/project/build-engineer-next-steps/) - Task roadmap for build engineers 🟢
+### Local Development
 
-Technical Guides:
+Develop and run components directly on your machine for faster iteration cycles and easier debugging. This approach is recommended for daily development work.
 
-- [Testing Guide](/guides/testing-guide/) - Testing infrastructure and best practices 🟢
-- [Health Monitoring Guide](/guides/health-monitoring-guide/) - Health monitoring system documentation 🟢
-- [Containerized Development Environment](/guides/containerized-dev-environment/) - Development environment setup 🟢
+```bash
+# Example: Run the core orchestrator locally
+cd mcp-core
+./gradlew run
+```
 
-### MCP Documentation Layer
+See the [Local Development Guide](/docs/implementation/local-development-guide.md) for detailed instructions.
 
-- **Start here** for implementation and development-focused documentation
+### Containerized Development
 
-Key MCP documents:
+Use containers for a consistent development environment that closely resembles production. This approach is ideal for ensuring compatibility across different machines.
 
-- [First Steps Guide](/mcp/project/first-steps/) - Getting started with MCP development 🟢
-- [Architecture Overview](/mcp/architecture/overview/) - System design and components 🟢
-- [Project Setup](/mcp/implementation/project-setup/) - Development environment setup 🟢
+```bash
+# Start the entire system in containers
+podman-compose up -d
+```
 
-## Project Dashboard
+See the [Containerized Development Guide](/docs/implementation/containerized-development-guide.md) for details.
 
-<table>
-  <tr>
-    <td width="33%" align="center">
-      <img src="https://via.placeholder.com/80x80?text=📡" alt="MCP Core" width="80" height="80"/><br/>
-      <b>MCP Core</b><br/>
-      <span>Orchestration Engine</span><br/>
-      <img src="https://progress-bar.dev/100" width="100" alt="100%">
-    </td>
-    <td width="33%" align="center">
-      <img src="https://via.placeholder.com/80x80?text=📷" alt="ScopeCam" width="80" height="80"/><br/>
-      <b>ScopeCam Integration</b><br/>
-      <span>USB Camera Management</span><br/>
-      <img src="https://progress-bar.dev/80" width="100" alt="80%">
-    </td>
-    <td width="33%" align="center">
-      <img src="https://via.placeholder.com/80x80?text=🔄" alt="Agents" width="80" height="80"/><br/>
-      <b>Agent Network</b><br/>
-      <span>Collaborative Processing</span><br/>
-      <img src="https://progress-bar.dev/90" width="100" alt="90%">
-    </td>
-  </tr>
-</table>
+## Documentation
 
-## Contributing to Documentation
+- [Documentation Index](/docs/README.md) - Starting point for all documentation
+- [First Steps Guide](/docs/project/first-steps.md) - First steps with MCP
+- [Project Setup](/docs/implementation/project-setup.md) - Setting up your development environment
+- [Architecture Overview](/docs/architecture/overview.md) - System design and component interactions
 
-When contributing new documentation:
+## Contributing
 
-1. **First, determine the appropriate layer**:
-   - Project-wide or integration concerns → Root documentation layer
-   - MCP implementation details → MCP documentation layer
+Contributions are welcome! Please see our [contribution guidelines](CONTRIBUTING.md) for details on how to get involved.
 
-2. **Then, determine the appropriate directory** within that layer based on the content type:
-   - `project/` - Project information, planning, roadmaps
-   - `guides/` - Technical guides and implementation instructions
-   - `architecture/` - System design and component specifications
-   - `implementation/` - Development guides and how-to content
-   - `standards/` - Guidelines and best practices
+## License
 
-3. **Follow the [Documentation Guidelines](/standards/documentation-guidelines/)**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-4. **Update relevant index files** with links to the new document
+## Project Status
+
+MCP is currently in active development. The core framework and basic agents are functional, but the project is still evolving.
+
+## Acknowledgments
+
+- This project uses [NATS](https://nats.io/) for messaging
+- The state machine implementation is based on [Tinder's StateMachine library](https://github.com/Tinder/StateMachine)

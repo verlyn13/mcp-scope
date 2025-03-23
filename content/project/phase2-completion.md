@@ -70,9 +70,9 @@ The following documents were successfully migrated in Phase 2:
    - Consistent section organization
 
 2. **Visual Elements**
-   - Status indicators using `{{< status >}}` shortcode
-   - Progress tracking with `{{< progress value="90" >}}` shortcode
-   - Related documents section with `{{< related-docs >}}` shortcode
+   - Status indicators using `{{</* status */>}}` shortcode
+   - Progress tracking with `{{</* progress value="90" */>}}` shortcode
+   - Related documents section with `{{</* related-docs */>}}` shortcode
 
 3. **Navigation and Structure**
    - Updated internal links to Hugo format (`/section/page/`)
@@ -82,11 +82,11 @@ The following documents were successfully migrated in Phase 2:
 ### Added Enhancements
 
 1. **Table of Contents**
-   - Added `{{< toc >}}` shortcode to longer documents
+   - Added `{{</* toc */>}}` shortcode to longer documents
    - Improved navigation within long technical documents
 
 2. **Custom Callouts**
-   - Implemented <code>{{< callout >}}</code> shortcode for information highlights
+   - Implemented `{{</* callout */>}}` shortcode for information highlights
    - Added CSS for styled callouts with various types (info, warning, danger, etc.)
 
 3. **Section Organization**

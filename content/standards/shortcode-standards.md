@@ -39,7 +39,7 @@ Displays the document status based on front matter.
 
 **Usage:**
 ```markdown
-{{< status >}}
+{{</* status */>}}
 ```
 
 **Example Output:**
@@ -54,7 +54,7 @@ Generates a table of contents based on the document's headings.
 
 **Usage:**
 ```markdown
-{{< toc >}}
+{{</* toc */>}}
 ```
 
 **Placement:** Place after the document introduction, before the main content sections.
@@ -65,9 +65,9 @@ Creates styled information boxes to highlight important content.
 
 **Usage:**
 ```markdown
-{{< callout "type" "title" >}}
+{{</* callout "type" "title" */>}}
 Content goes here
-{{< /callout >}}
+{{</* /callout */>}}
 ```
 
 **Parameters:**
@@ -77,9 +77,9 @@ Content goes here
 
 **Example:**
 ```markdown
-{{< callout "warning" "Important Note" >}}
+{{</* callout "warning" "Important Note" */>}}
 This is important information that needs attention.
-{{< /callout >}}
+{{</* /callout */>}}
 ```
 
 ### 4. Progress Indicator (`progress`)
@@ -88,7 +88,7 @@ Displays a visual progress bar.
 
 **Usage:**
 ```markdown
-{{< progress value="75" >}}
+{{</* progress value="75" */>}}
 ```
 
 **Parameters:**
@@ -102,7 +102,7 @@ Lists related documents defined in the front matter.
 
 **Usage:**
 ```markdown
-{{< related-docs >}}
+{{</* related-docs */>}}
 ```
 
 **Requirements:** The document must include `related_docs` in its front matter:
@@ -119,11 +119,11 @@ related_docs:
 ### General Guidelines
 
 1. **Self-Closing vs. Content Shortcodes**
-   - Use self-closing syntax for shortcodes without content: `{{< shortcode >}}`
-   - Use paired syntax for shortcodes with content: `{{< shortcode >}}Content{{< /shortcode >}}`
+   - Use self-closing syntax for shortcodes without content: `{{</* shortcode */>}}`
+   - Use paired syntax for shortcodes with content: `{{</* shortcode */>}}Content{{</* /shortcode */>}}`
 
 2. **Parameter Quoting**
-   - Always use double quotes for parameter values: `{{< shortcode "parameter" >}}`
+   - Always use double quotes for parameter values: `{{</* shortcode "parameter" */>}}`
    - Exception: Use single quotes if the parameter value itself contains double quotes
 
 3. **Placement Consistency**
@@ -143,7 +143,7 @@ status: "Active"
 
 # Document Title
 
-{{< status >}}
+{{</* status */>}}
 
 [Navigation links]
 
@@ -151,36 +151,36 @@ status: "Active"
 
 Brief introduction to the document.
 
-{{< toc >}}
+{{</* toc */>}}
 
 ## Section 1
 
 Content...
 
-{{< callout "info" "Note" >}}
+{{</* callout "info" "Note" */>}}
 Important information.
-{{< /callout >}}
+{{</* /callout */>}}
 
 ## Section 2
 
 Content with progress indicator:
 
-{{< progress value="50" >}}
+{{</* progress value="50" */>}}
 
 ## Related Documentation
 
-{{< related-docs >}}
+{{</* related-docs */>}}
 ```
 
 ## Common Mistakes to Avoid
 
 1. **Unclosed Shortcodes**
-   - ❌ `{{< callout "info" "Note" >}} Content without closing tag`
-   - ✅ `{{< callout "info" "Note" >}} Content {{< /callout >}}`
+   - ❌ `{{</* callout "info" "Note" */>}} Content without closing tag`
+   - ✅ `{{</* callout "info" "Note" */>}} Content {{</* /callout */>}}`
 
 2. **Missing Parameters**
-   - ❌ `{{< callout >}} Content {{< /callout >}}`
-   - ✅ `{{< callout "info" "Note" >}} Content {{< /callout >}}`
+   - ❌ `{{</* callout */>}} Content {{</* /callout */>}}`
+   - ✅ `{{</* callout "info" "Note" */>}} Content {{</* /callout */>}}`
 
 3. **Improper Nesting**
    - ❌ Nesting shortcodes is generally not supported
