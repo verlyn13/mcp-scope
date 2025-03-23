@@ -1,0 +1,13 @@
+<!-- Related documents shortcode -->
+<div class="related-docs">
+  <h3>Related Documentation</h3>
+  {{ if .Page.Params.related_docs }}
+  <ul>
+    {{ range .Page.Params.related_docs }}
+      <li><a href="{{ . }}">{{ . }}</a></li>
+    {{ end }}
+  </ul>
+  {{ else }}
+  <p>No related documents defined.</p>
+  {{ end }}
+</div>

@@ -1,0 +1,4 @@
+<!-- Status shortcode -->
+<div class="status-indicator status-{{ .Get 0 | default (.Page.Params.status | lower) | default "draft" }}">
+  <span class="status-text">Status: {{ .Get 0 | default .Page.Params.status | default "Draft" }}</span>
+</div>

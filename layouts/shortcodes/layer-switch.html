@@ -1,0 +1,28 @@
+<!-- Layer Switch shortcode -->
+<div class="layer-switch">
+  <button class="layer-button active" data-layer="root">Root Documentation</button>
+  <button class="layer-button" data-layer="mcp">MCP Documentation</button>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.layer-button');
+    
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        buttons.forEach(function(btn) {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Get the layer to show
+        var layer = this.getAttribute('data-layer');
+        
+        // Here you would add logic to show/hide content based on the selected layer
+        console.log('Switching to layer: ' + layer);
+      });
+    });
+  });
+</script>

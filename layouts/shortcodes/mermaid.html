@@ -1,0 +1,20 @@
+<!-- Mermaid diagram shortcode -->
+<div class="mermaid">
+  {{ if .Inner }}
+    {{- .Inner -}}
+  {{ else }}
+    {{ .Get 0 | default "" }}
+  {{ end }}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    securityLevel: 'loose',
+    flowchart: { 
+      useMaxWidth: true, 
+      htmlLabels: true 
+    }
+  });
+</script>

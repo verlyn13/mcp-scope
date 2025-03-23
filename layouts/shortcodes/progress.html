@@ -1,0 +1,6 @@
+<!-- Progress bar shortcode -->
+<div class="progress-container">
+  <div class="progress-bar" style="width: {{ .Get "value" | default "0" }}%">
+    <span class="progress-text">{{ .Get "value" | default "0" }}%</span>
+  </div>
+</div>

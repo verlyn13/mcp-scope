@@ -1,116 +1,164 @@
-# Hugo Static Site Migration Plan for ScopeCam MCP Documentation
-
-## Executive Summary
-
-This document outlines the plan for migrating the ScopeCam MCP documentation to a Hugo-based static site for deployment on GitHub Pages. The plan preserves the current dual-layer documentation structure while leveraging Hugo's capabilities for organization, navigation, and presentation.
-
-## Current State Analysis
-
-The ScopeCam MCP documentation currently follows a well-structured dual-layer approach:
-
-1. **Root Documentation Layer** (`/docs/`)
-   - Project-wide information and ScopeCam integration
-   - Audience: All stakeholders, system integrators, project managers
-   - Content: Project vision, integration guides, organizational structure
-
-2. **MCP Documentation Layer** (`/mcp-project/docs/`)
-   - Detailed MCP implementation guides and technical information
-   - Audience: Developers implementing or extending the MCP
-   - Content: Architecture details, implementation guides, API specifications
-
-The documentation uses a consistent status system and YAML front matter that is already Hugo-compatible.
-
-## Hugo Site Structure
-
-### Directory Organization
-
-```
-hugo-site/               # Root of Hugo project
-├── archetypes/          # Content templates
-├── assets/              # Raw assets (SCSS, JS, etc.)
-├── config.toml          # Hugo configuration
-├── content/             # Site content (markdown files)
-│   ├── _index.md        # Homepage (converted from README.md)
-│   ├── project/         # Project-level information
-│   │   └── _index.md    # Section index
-│   ├── guides/          # Implementation and technical guides
-│   │   └── _index.md    # Section index
-│   ├── architecture/    # Architecture documentation
-│   │   └── _index.md    # Section index
-│   ├── standards/       # Documentation standards
-│   │   └── _index.md    # Section index
-│   ├── templates/       # Document templates
-│   │   └── _index.md    # Section index
-│   ├── tools/           # Documentation tools
-│   │   └── _index.md    # Section index
-│   └── mcp/             # MCP implementation layer
-│       ├── _index.md    # MCP section index
-│       ├── project/     # MCP project information
-│       ├── architecture/# MCP architecture details
-│       ├── implementation/# Implementation guides
-│       └── standards/   # MCP documentation standards
-├── data/                # Site data files
-│   ├── status.yaml      # Status definitions
-│   └── progress.yaml    # Project progress data
-├── layouts/             # Theme overrides and custom layouts
-├── static/              # Static assets (images, etc.)
-└── themes/              # Hugo themes
-    └── mcp-theme/       # Custom theme for MCP
-```
-
-### Content Migration Strategy
-
-1. **README.md Files**: Convert to `_index.md` files with appropriate front matter
-2. **Section Organization**: Map current directories to Hugo sections 
-3. **YAML Front Matter**: Retain existing front matter and extend with Hugo-specific parameters
-4. **Status System**: Implement with Hugo taxonomies and custom shortcodes
-
-### Front Matter Standard
-
-Extend current front matter to include Hugo-specific fields:
-
-```yaml
 ---
-title: "Document Title"
-status: "Active"  # Active, Draft, Review, Outdated, or Archived
-version: "1.0"    # Semantic versioning
-date_created: "YYYY-MM-DD"
-last_updated: "YYYY-MM-DD"
-contributors: ["Name"]
+title: "Hugo Site Plan"
+status: "Active"
+version: "1.0"
+date_created: "2025-03-23"
+last_updated: "2025-03-23"
+contributors: ["Documentation Architect"]
 related_docs:
-  - "/docs/path/to/related/document.md"
-tags: ["tag1", "tag2"]
-weight: 10           # Hugo-specific for ordering
-draft: false         # Hugo-specific for draft status
-layout: "standard"   # Hugo-specific layout choice
+  - "/project/documentation-directory-structure/"
+  - "/hugo-implementation-steps/"
+tags: ["hugo", "site", "planning", "documentation"]
 ---
+
+# Hugo Site Plan
+
+{{< status >}}
+
+This document outlines the plan for implementing the Hugo-based documentation site for the MCP project.
+
+## Site Requirements
+
+### Core Requirements
+
+1. **Two Documentation Layers**
+   - Root Documentation Layer (all MCP documentation)
+   - MCP Core Documentation (specific to MCP core components)
+
+2. **Section Organization**
+   - Project (project management, plans, etc.)
+   - Architecture (architectural decisions, components)
+   - Implementation (practical guides, code structure)
+   - Standards (guidelines, coding standards)
+   - Templates (reusable documentation templates)
+   - Tools (documentation tooling guides)
+
+3. **Content Management**
+   - Markdown-based content
+   - Front matter for metadata
+   - Status tracking (Draft, Review, Active, Archived)
+   - Version tracking
+   - Last updated dates
+   - Contributors list
+
+4. **Navigation Features**
+   - Section-based hierarchy
+   - Cross-references between documents
+   - Related documents
+   - Document status indicators
+   - Layer switching (Root vs. MCP)
+
+5. **Visual Elements**
+   - Progress indicators
+   - Status badges
+   - Code syntax highlighting
+   - Diagrams via Mermaid.js
+   - Tables
+   - Callouts/admonitions
+
+### Technical Requirements
+
+1. **GitHub Pages Compatibility**
+   - Static site generation
+   - Clear separation between source and generated content
+   - Branch-based deployment strategy
+
+2. **Performance Optimization**
+   - Fast loading times
+   - Minimal JavaScript
+   - Optimized images
+   - Responsive design for all devices
+
+3. **Maintenance Considerations**
+   - Easy content updates
+   - Straightforward deployment process
+   - Proper versioning
+   - Clear contribution guidelines
+
+## Site Structure
+
+### Content Organization
+
+The content will be organized according to the following structure:
+
+```
+content/
+├── _index.md                # Home page
+├── project/                 # Project documentation
+│   ├── _index.md            # Project section index
+│   ├── current-focus.md     # Current focus areas
+│   └── ...
+├── architecture/            # Architecture documentation
+│   ├── _index.md            # Architecture section index
+│   ├── overview.md          # Architecture overview
+│   └── ...
+├── implementation/          # Implementation guides
+│   ├── _index.md            # Implementation section index
+│   ├── project-setup.md     # Project setup guide
+│   └── ...
+├── standards/               # Standards and guidelines
+│   ├── _index.md            # Standards section index
+│   ├── code-style.md        # Coding standards
+│   └── ...
+├── templates/               # Documentation templates
+│   ├── _index.md            # Templates section index
+│   ├── guide-template.md    # Guide template
+│   └── ...
+└── tools/                   # Documentation tools
+    ├── _index.md            # Tools section index
+    ├── doc-manager.md       # Documentation manager guide
+    └── ...
 ```
 
-## Hugo Theme Design
+### URL Structure
 
-### Key Features
+The URL structure will follow the content organization:
 
-1. **Dual-Layer Navigation**
-   - Sidebar menu with collapsible sections
-   - "Layer switch" toggle to navigate between Root and MCP documentation layers
-   - Breadcrumbs showing the path through the documentation hierarchy
+1. `/` - Home page
+2. `/project/` - Project section index
+3. `/project/current-focus/` - Current focus document
+4. `/architecture/` - Architecture section index
+5. `/architecture/overview/` - Architecture overview
 
-2. **Status Visualization**
-   - Color-coded status banners matching current emoji system
-   - Filtering by status in section listings
-   - Status dashboard showing document counts by status
+This structure ensures clean, descriptive URLs that are easy to share and bookmark.
 
-3. **Tagging System**
-   - Tag cloud for common tags
-   - Filtered views by tag
-   - Layer-specific tag visualization
+## Theme Design
 
-4. **Progress Tracking**
-   - Dashboard-style progress bars matching the current README.md
-   - Visual roadmap with status indicators
-   - Integration with status system
+### Visual Design
 
-5. **Search Functionality**
+The theme will be clean, minimal, and focused on readability:
+
+1. **Typography**
+   - Sans-serif for headings (Inter or similar)
+   - Slightly serif for body text (for better readability)
+   - Monospace for code (JetBrains Mono or similar)
+
+2. **Color Scheme**
+   - Primary: Blue (#0366d6)
+   - Secondary: Grey (#586069)
+   - Background: White (#ffffff)
+   - Code background: Light grey (#f6f8fa)
+   - Status colors:
+     - Draft: Yellow (#ffd700)
+     - Review: Orange (#fd7e14)
+     - Active: Green (#28a745)
+     - Archived: Grey (#6c757d)
+
+3. **Layout**
+   - Fixed sidebar for navigation
+   - Content area with comfortable width (max 900px)
+   - Top navigation for main sections
+   - Mobile-responsive design
+
+### Navigation Design
+
+The navigation scheme will be implemented with a clear hierarchy:
+
+1. **Top Level**: Main navigation menu with Documentation, Architecture, Implementation, etc.
+2. **Second Level**: Section-specific sidebar navigation
+3. **Third Level**: In-document table of contents for longer documents
+
+4. **Search Functionality**
    - Full-text search across all documentation
    - Filters by layer, section, and status
    - Result highlighting
@@ -119,11 +167,11 @@ layout: "standard"   # Hugo-specific layout choice
 
 Create Hugo shortcodes to maintain consistent styling and functionality:
 
-1. `{{< status >}}` - Display document status with appropriate styling
-2. `{{< progress value="80" >}}` - Render progress bars
-3. `{{< related-docs >}}` - List related documents with proper links
-4. `{{< mermaid >}}` - Mermaid diagram rendering
-5. `{{< layer-switch >}}` - Toggle between documentation layers
+1. `{{</* status */>}}` - Display document status with appropriate styling
+2. `{{</* progress value="80" */>}}` - Render progress bars
+3. `{{</* related-docs */>}}` - List related documents with proper links
+4. `{{</* mermaid */>}}` - Mermaid diagram rendering
+5. `{{</* layer-switch */>}}` - Toggle between documentation layers
 
 ## GitHub Pages Integration
 
@@ -143,86 +191,120 @@ gh-pages/                # Root of gh-pages branch
 ├── standards/          # Standards section
 ├── templates/          # Templates section
 ├── tools/              # Tools section
-└── mcp/                # MCP section
+└── mcp/                # MCP-specific documentation
 ```
 
-### Build and Deployment Workflow
+### Build Process
 
-1. **GitHub Actions Workflow**:
-   - Trigger: Push to main branch or manual dispatch
-   - Steps:
-     1. Checkout repository
-     2. Set up Hugo environment
-     3. Build site with Hugo
-     4. Deploy to gh-pages branch
+The build process will be automated:
 
-2. **Custom Domain Configuration**:
-   - Add CNAME file to static/ directory
-   - Configure GitHub Pages settings for custom domain (if desired)
+1. **Local Development**
+   - Hugo server for local preview
+   - Content editing in Markdown
+   - Front matter management
 
-## Implementation Roadmap
+2. **Deployment**
+   - Build Hugo site locally
+   - Copy output to `gh-pages` branch
+   - Push to GitHub
+   - GitHub Pages serves the content
 
-### Phase 1: Foundation Setup (Week 1)
+### Automation
 
-1. Create basic Hugo project structure
-2. Set up GitHub Actions workflow for CI/CD
-3. Implement custom theme foundation
-4. Create test content migration to validate structure
+Deployment will be automated through:
 
-### Phase 2: Content Migration (Week 2)
+1. **Command-Line Tool**
+   - Script for building and deploying
+   - Safety checks before deployment
+   - Clear output of steps and status
 
-1. Migrate Root Documentation Layer
-2. Migrate MCP Documentation Layer 
-3. Implement cross-references and navigation
-4. Validate content integrity
+2. **GitHub Actions (Future)**
+   - Automatic builds on main branch changes
+   - Preview deployments for pull requests
+   - Validation checks for content
 
-### Phase 3: Enhanced Functionality (Week 3)
+## Implementation Plan
 
-1. Implement status system with taxonomies
-2. Develop custom shortcodes
-3. Create dashboard and visualization components
-4. Add search functionality
+### Phase 1: Foundation Setup
 
-### Phase 4: Testing & Refinement (Week 4)
+1. **Hugo Installation and Configuration**
+   - Set up Hugo locally
+   - Create basic config.toml
+   - Set up GitHub Pages branch
 
-1. User acceptance testing
-2. Responsive design refinement
-3. Performance optimization
-4. Documentation of the Hugo site maintenance
+2. **Base Theme Development**
+   - Create layouts for basic pages
+   - Implement CSS framework
+   - Develop responsive design
 
-## Maintenance Guidelines
+3. **Content Migration Strategy**
+   - Define content organization
+   - Plan migration approach
+   - Create templates for new content
 
-### Adding New Content
+### Phase 2: Core Features
 
-1. Create markdown files in appropriate content directories
-2. Include required front matter
-3. Run local Hugo server to preview changes
-4. Commit changes to trigger deployment
+1. **Custom Shortcodes Development**
+   - Implement status shortcode
+   - Create progress indicators
+   - Build related documents features
 
-### Updating Existing Content
+2. **Navigation Implementation**
+   - Develop section navigation
+   - Create layer switcher
+   - Implement breadcrumbs
 
-1. Locate content file in the appropriate directory
-2. Update content and front matter
-3. Update `last_updated` date in the front matter
-4. Preview changes locally before committing
+3. **Metadata Handling**
+   - Parse front matter
+   - Display metadata in templates
+   - Implement status indicators
 
-### Style & Formatting
+### Phase 3: Refinement
 
-1. Follow Markdown best practices
-2. Use custom shortcodes for consistent styling
-3. Adhere to front matter requirements
-4. Optimize images before adding to the repository
+1. **Content Migration**
+   - Convert existing documentation
+   - Apply templates and shortcodes
+   - Validate internal links
 
-## Recommendations for GitHub Pages Deployment
+2. **Search Implementation**
+   - Add search functionality
+   - Index all content
+   - Implement search results page
 
-1. **Base URL Configuration**: Set `baseURL` in Hugo config to match GitHub Pages URL
-2. **404 Page**: Create a custom 404.html page with links back to documentation index
-3. **Redirects**: Implement redirects for compatibility with existing documentation links
-4. **Robots.txt**: Configure for appropriate search engine indexing
-5. **Sitemap**: Enable Hugo's built-in sitemap generation for better SEO
+3. **Performance Optimization**
+   - Optimize asset loading
+   - Minify CSS and JavaScript
+   - Implement lazy loading where appropriate
 
-## Conclusion
+### Phase 4: Deployment
 
-This plan provides a comprehensive approach to migrating the ScopeCam MCP documentation to a Hugo-based static site while preserving the current organization and enhancing the user experience. The migration will maintain the dual-layer structure while adding new features for navigation, visualization, and content discovery.
+1. **GitHub Pages Setup**
+   - Configure GitHub Pages
+   - Create deployment workflow
+   - Document deployment process
 
-The proposed implementation follows a phased approach that allows for testing and refinement at each stage, ensuring a smooth transition to the new documentation system. The result will be a more maintainable, searchable, and visually appealing documentation site that serves the needs of all stakeholders in the ScopeCam MCP project.
+2. **Testing and Validation**
+   - Test on multiple devices
+   - Validate HTML and CSS
+   - Check all links and references
+
+3. **Documentation**
+   - Document theme usage
+   - Create content contribution guide
+   - Document deployment process
+
+## Success Criteria
+
+The Hugo site implementation will be considered successful when:
+
+1. All existing documentation is migrated to the new format
+2. Navigation between documents is intuitive and efficient
+3. Status tracking is implemented and visible
+4. Both documentation layers are accessible and clearly distinguished
+5. The site is fully responsive on all devices
+6. Deployment process is automated and reliable
+7. Content creation and updates follow a clear workflow
+
+## Related Documentation
+
+{{< related-docs >}}
