@@ -1,27 +1,8 @@
-{{- $type := .Get 0 | default "info" -}}
-{{- $title := .Get 1 | default (title $type) -}}
-{{- $content := .Inner | $.Page.RenderString -}}
-
-<div class="callout callout-{{ $type }}">
-  <div class="callout-header">
-    <span class="callout-icon">
-      {{- if eq $type "info" -}}
-        <i class="fas fa-info-circle"></i>
-      {{- else if eq $type "warning" -}}
-        <i class="fas fa-exclamation-triangle"></i>
-      {{- else if eq $type "danger" -}}
-        <i class="fas fa-skull-crossbones"></i>
-      {{- else if eq $type "tip" -}}
-        <i class="fas fa-lightbulb"></i>
-      {{- else if eq $type "note" -}}
-        <i class="fas fa-sticky-note"></i>
-      {{- else -}}
-        <i class="fas fa-info-circle"></i>
-      {{- end -}}
-    </span>
-    <span class="callout-title">{{ $title }}</span>
-  </div>
-  <div class="callout-body">
-    {{ $content }}
+{{ $type := .Get 0 }}
+{{ $title := .Get 1 }}
+<div class="callout callout-{{ $type | default "info" }}">
+  {{ if $title }}<h4 class="callout-title">{{ $title }}</h4>{{ end }}
+  <div class="callout-content">
+    {{ .Inner | markdownify }}
   </div>
 </div>

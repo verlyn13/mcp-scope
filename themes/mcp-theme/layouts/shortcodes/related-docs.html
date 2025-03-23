@@ -1,9 +1,9 @@
 {{ if .Page.Params.related_docs }}
 <div class="related-docs">
-  <h3>Related Documents</h3>
-  <ul>
+  <h2>Related Documents</h2>
+  <ul class="related-docs-list">
     {{ range .Page.Params.related_docs }}
-      <li><a href="{{ . }}">{{ . }}</a></li>
+    <li><a href="{{ . }}">{{ . }}</a></li>
     {{ end }}
   </ul>
 </div>

@@ -1,12 +1,8 @@
-{{ $status := .Get 0 | default (.Page.Params.status) }}
-{{ if eq $status "Active" }}
-  <span class="status status-active">🟢 Active</span>
-{{ else if eq $status "Draft" }}
-  <span class="status status-draft">🟡 Draft</span>
-{{ else if eq $status "Review" }}
-  <span class="status status-review">🟠 Review</span>
-{{ else if eq $status "Outdated" }}
-  <span class="status status-outdated">🔴 Outdated</span>
-{{ else if eq $status "Archived" }}
-  <span class="status status-archived">⚫ Archived</span>
-{{ end }}
+{{ $status := .Page.Params.status | default "Draft" }}
+<div class="status-indicator status-{{ lower $status }}">
+  <span class="status-icon"></span>
+  <span class="status-text">{{ $status }}</span>
+  {{ if .Page.Params.last_updated }}
+  <span class="status-date">Last updated: {{ .Page.Params.last_updated }}</span>
+  {{ end }}
+</div>
