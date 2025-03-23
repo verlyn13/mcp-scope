@@ -56,7 +56,7 @@ done
 # Step 1: Build the site (now integrated into the enhanced deploy script)
 if [ "$BUILD" == "true" ] && [ "$DEPLOY" == "true" ]; then
   echo -e "${BLUE}Building and deploying documentation site...${NC}"
-  # The enhanced script handles both building and deploying
+  # Use the enhanced script for a full build and deploy
   ./deploy/scripts/enhanced-gh-pages-deploy.sh $DRY_RUN
   
   # Check if deployment was successful
@@ -66,24 +66,14 @@ if [ "$BUILD" == "true" ] && [ "$DEPLOY" == "true" ]; then
   fi
 elif [ "$BUILD" == "true" ] && [ "$DEPLOY" == "false" ]; then
   echo -e "${BLUE}Building documentation site only...${NC}"
-  # Create necessary directories and copy content
-  mkdir -p content
   
-  # Copy the main README with badges to the index
-  if [ -f "mcp-project/README.md" ]; then
-    # Create a proper front matter for the home page
-    cat > content/_index.md << EOL
----
-title: "ScopeCam MCP"
-description: "Multi-Agent Control Platform for ScopeCam Integration"
----
-
-$(cat mcp-project/README.md)
-EOL
-    echo -e "${GREEN}✓ Main README with badges copied to content/_index.md${NC}"
-  else
-    echo -e "${YELLOW}⚠ mcp-project/README.md not found, using default README${NC}"
-    cp README.md content/_index.md
+  # Use the comprehensive content copying script
+  ./deploy/scripts/copy-all-content.sh
+  
+  # Check if content copying was successful
+  if [ $? -ne 0 ]; then
+    echo -e "${RED}Content preparation failed.${NC}"
+    exit 1
   fi
   
   # Build the site using Hugo

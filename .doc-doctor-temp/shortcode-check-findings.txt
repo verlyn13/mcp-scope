@@ -1,0 +1,23 @@
+SUCCESS|Template Found|Shortcode template exists|themes/mcp-theme/layouts/shortcodes/callout.html|
+CRITICAL|Missing Template|Shortcode template file not found|themes/mcp-theme/layouts/shortcodes/tab.html|
+CRITICAL|Missing Template|Shortcode template file not found|themes/mcp-theme/layouts/shortcodes/tabs.html|
+CRITICAL|Missing Template|Shortcode template file not found|themes/mcp-theme/layouts/shortcodes/code.html|
+CRITICAL|Missing Template|Shortcode template file not found|themes/mcp-theme/layouts/shortcodes/highlight.html|
+CRITICAL|Missing Template|Shortcode template file not found|themes/mcp-theme/layouts/shortcodes/figure.html|
+SUCCESS|Template Found|Shortcode template exists|themes/mcp-theme/layouts/shortcodes/toc.html|
+SUCCESS|Template Found|Shortcode template exists|themes/mcp-theme/layouts/shortcodes/status.html|
+SUCCESS|Template Found|Shortcode template exists|themes/mcp-theme/layouts/shortcodes/progress.html|
+SUCCESS|Template Found|Shortcode template exists|themes/mcp-theme/layouts/shortcodes/related-docs.html|
+SUCCESS|Properly Closed Shortcode|All 'callout' tags are properly closed|content/doc-doctor-guide.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: '"info"'|content/doc-doctor-guide.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: '"Concept"'|content/doc-doctor-guide.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: 'layer-switch'|content/hugo-site-plan.md|126
+WARNING|Unknown Shortcode|Using unknown shortcode: 'mermaid'|content/hugo-site-plan.md|125
+WARNING|Unknown Shortcode|Using unknown shortcode: 'value="80"'|content/hugo-site-plan.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: 'value="75"'|content/HUGO-SITE-README.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: 'layer-switch'|content/hugo-theme-design.md|413
+WARNING|Unknown Shortcode|Using unknown shortcode: 'mermaid'|content/hugo-theme-design.md|412
+WARNING|Unknown Shortcode|Using unknown shortcode: 'note'|content/hugo-theme-design.md|414
+WARNING|Unknown Shortcode|Using unknown shortcode: 'value="80"'|content/hugo-theme-design.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: '"Active"'|content/hugo-theme-design.md|
+WARNING|Unknown Shortcode|Using unknown shortcode: 'warning'|content/hugo-theme-design.md|414
