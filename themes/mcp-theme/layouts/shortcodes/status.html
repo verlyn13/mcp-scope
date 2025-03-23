@@ -1,8 +1,0 @@
-{{ $status := .Page.Params.status | default "Draft" }}
-<div class="status-indicator status-{{ lower $status }}">
-  <span class="status-icon"></span>
-  <span class="status-text">{{ $status }}</span>
-  {{ if .Page.Params.last_updated }}
-  <span class="status-date">Last updated: {{ .Page.Params.last_updated }}</span>
-  {{ end }}
-</div>

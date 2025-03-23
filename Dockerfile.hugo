@@ -1,6 +1,0 @@
-FROM docker.io/klakegg/hugo:0.110-ext-alpine
-
-WORKDIR /src
-
-ENTRYPOINT ["hugo"]
-CMD ["server", "--bind=0.0.0.0"]

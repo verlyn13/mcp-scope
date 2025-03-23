@@ -1,8 +1,0 @@
-{{ $value := .Get "value" | default "0" }}
-<div class="progress-container">
-  <div class="progress">
-    <div class="progress-bar" style="width: {{ $value }}%;" role="progressbar" aria-valuenow="{{ $value }}" aria-valuemin="0" aria-valuemax="100">
-      <span class="progress-value">{{ $value }}%</span>
-    </div>
-  </div>
-</div>

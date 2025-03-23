@@ -1,4 +1,0 @@
-baseURL = "https://example.github.io/mcp-scope/"
-buildDrafts = false
-buildFuture = false
-minify = true

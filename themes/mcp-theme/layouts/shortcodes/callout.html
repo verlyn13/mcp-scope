@@ -1,8 +1,0 @@
-{{ $type := .Get 0 }}
-{{ $title := .Get 1 }}
-<div class="callout callout-{{ $type | default "info" }}">
-  {{ if $title }}<h4 class="callout-title">{{ $title }}</h4>{{ end }}
-  <div class="callout-content">
-    {{ .Inner | markdownify }}
-  </div>
-</div>
