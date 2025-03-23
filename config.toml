@@ -1,31 +1,37 @@
-baseURL = "/"
+baseURL = "https://verlyn13.github.io/mcp-scope/"
 languageCode = "en-us"
 title = "ScopeCam MCP Documentation"
+theme = "mcp-theme"
 
-# Enable emoji and GitHub-style rendering
-enableEmoji = true
-enableGitInfo = true
+# Enable syntax highlighting
+pygmentsCodeFences = true
+pygmentsStyle = "monokai"
 
+# Enable Table of Contents for all pages by default
 [markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      # This is important for rendering HTML in markdown (required for badges)
-      unsafe = true
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
 
 [params]
-  mainSections = ["docs", "architecture"]
-  description = "Documentation for the Multi-Agent Control Platform (MCP) for ScopeCam Integration"
-
-[menu]
-  [[menu.main]]
-    name = "Home"
-    url = "/"
-    weight = 1
-  [[menu.main]]
-    name = "Documentation"
-    url = "/docs/"
-    weight = 2
-  [[menu.main]]
-    name = "Architecture"
-    url = "/architecture/"
-    weight = 3
+  # Theme color scheme
+  colorScheme = "light" # or "dark", "auto"
+  
+  # Default documentation layer
+  defaultLayer = "root" # or "mcp"
+  
+  # Navigation options
+  showBreadcrumbs = true
+  showToc = true
+  tocDepth = 3
+  
+  # Status display options
+  showStatus = true
+  showUpdatedDate = true
+  showContributors = true
+  
+  # Search options
+  enableSearch = true
+  searchMinLength = 3
+  searchResultLength = 10
