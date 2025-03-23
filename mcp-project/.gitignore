@@ -1,0 +1,146 @@
+# MCP Project .gitignore
+
+# ----- Kotlin/Java -----
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Gradle specific
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ----- Python -----
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+**/venv/
+**/env/
+**/.venv/
+**/.env/
+**/ENV/
+**/.virtualenv/
+
+# ----- IDEs & Editors -----
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+*.iws
+.idea_modules/
+out/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+bin/
+
+# ----- OS Specific -----
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ----- Project Specific -----
+# Local environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Podman/Docker
+*.log
+.podman/
+.docker/
+podman-compose.override.yml
+docker-compose.override.yml
+
+# NATS
+nats-data/
+
+# Application generated files
+logs/
+tmp/
+temp/
+cache/
+
+# Test reports and coverage
+**/test-results/
+**/coverage/
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Documentation intermediates
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Misc
+*.swp
+*.swo
+*.bak
+*.orig
+*.old
+*.tmp

@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  # Core MCP Orchestrator
+  mcp-core:
+    build:
+      context: ./mcp-core
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./mcp-core:/app
+      - ~/.gradle:/root/.gradle
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+
+  # Messaging Bus (NATS for Agent Communication)
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"  # Client connections
+      - "8222:8222"  # HTTP monitoring
+    volumes:
+      - ./nats/nats-server.conf:/etc/nats/nats-server.conf
+    command: ["--config", "/etc/nats/nats-server.conf"]
+    restart: unless-stopped
+
+  # Camera Integration Agent with USB device passthrough
+  camera-agent:
+    build:
+      context: ./agents/camera-agent
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./agents/camera-agent:/app
+    devices:
+      - /dev/bus/usb:/dev/bus/usb  # USB device passthrough
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+      - mcp-core
+    restart: unless-stopped
+
+  # Optional: Python-based agent
+  python-processor:
+    build:
+      context: ./agents/python-processor
+      dockerfile: Dockerfile.python
+    volumes:
+      - ./agents/python-processor:/app
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - nats
+      - mcp-core
+    restart: unless-stopped
