@@ -86,7 +86,7 @@ The following documents were successfully migrated in Phase 2:
    - Improved navigation within long technical documents
 
 2. **Custom Callouts**
-   - Implemented `{{< callout >}}` shortcode for information highlights
+   - Implemented <code>{{< callout >}}</code> shortcode for information highlights
    - Added CSS for styled callouts with various types (info, warning, danger, etc.)
 
 3. **Section Organization**

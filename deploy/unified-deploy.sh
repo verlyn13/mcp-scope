@@ -22,6 +22,7 @@ OUTPUT_MODE="normal"   # normal, verbose, quiet
 SKIP_VERIFY="false"    # skip verification steps
 SKIP_PRECACHE="false"  # skip image precaching
 USE_DOC_DOCTOR="false" # use Doc Doctor for verification instead of built-in verify-shortcodes
+SKIP_GIT="false"       # skip Git operations (useful for testing)
 REPORT_PATH="./deploy-reports"
 TARGET_BRANCH="gh-pages"
 
@@ -70,6 +71,7 @@ show_help() {
   echo "  -s, --skip-verify        Skip verification steps"
   echo "  -p, --skip-precache      Skip image precaching"
   echo "  -d, --use-doc-doctor     Use Doc Doctor for verification instead of built-in verify-shortcodes"
+  echo "  -g, --skip-git           Skip Git operations (useful for testing)"
   echo "  -r, --report PATH        Set report directory"
   echo "  -b, --branch NAME        Set target branch (default: gh-pages)"
   echo ""
@@ -85,6 +87,7 @@ show_help() {
   echo "  $0 --mode minimal        # Use minimal site deployment"
   echo "  $0 --mode local -s       # Use local Hugo and skip verification"
   echo "  $0 --use-doc-doctor      # Use Doc Doctor for thorough verification"
+  echo "  $0 --skip-git            # Skip Git operations (for testing)"
   echo ""
 }
 
@@ -112,6 +115,9 @@ parse_args() {
         ;;
       -d|--use-doc-doctor)
         USE_DOC_DOCTOR="true"
+        ;;
+      -g|--skip-git)
+        SKIP_GIT="true"
         ;;
       -r|--report)
         REPORT_PATH="$2"
@@ -258,11 +264,19 @@ verify_environment() {
   case "$DEPLOY_MODE" in
     container)
       # Verify container environment
-      verify_container_environment
+      if ! verify_container_environment; then
+        print_message "$YELLOW" "⚠ Container mode failed, falling back to minimal mode"
+        DEPLOY_MODE="minimal"
+        verify_minimal_environment
+      fi
       ;;
     local)
       # Verify local Hugo environment
-      verify_local_environment
+      if ! verify_local_environment; then
+        print_message "$YELLOW" "⚠ Local mode failed, falling back to minimal mode"
+        DEPLOY_MODE="minimal"
+        verify_minimal_environment
+      fi
       ;;
     minimal)
       # Minimal verification for minimal mode
@@ -284,7 +298,7 @@ verify_container_environment() {
     print_verbose "Using Docker as container runtime"
   else
     print_message "$RED" "✗ No container runtime found (Podman or Docker)"
-    exit 1
+    return 1
   fi
   
   # Verify Hugo image availability or precache
@@ -292,28 +306,40 @@ verify_container_environment() {
     print_verbose "Checking for Hugo image"
     
     if ! $CONTAINER_CMD image exists hugo-local 2>/dev/null && 
-       ! $CONTAINER_CMD image exists docker.io/klakegg/hugo:0.110-ext-alpine 2>/dev/null &&
-       ! $CONTAINER_CMD image exists klakegg/hugo:0.110-ext-alpine 2>/dev/null; then
+       ! $CONTAINER_CMD image exists docker.io/klakegg/hugo:latest 2>/dev/null &&
+       ! $CONTAINER_CMD image exists klakegg/hugo:latest 2>/dev/null; then
       print_message "$YELLOW" "⚠ Hugo image not found, precaching..."
       
       if [[ -f "./deploy/scripts/precache-images.sh" ]]; then
-        ./deploy/scripts/precache-images.sh
+        if ! ./deploy/scripts/precache-images.sh; then
+          print_message "$RED" "✗ Failed to precache Hugo image"
+          return 1
+        fi
       else
         print_message "$RED" "✗ precache-images.sh not found"
         print_message "$YELLOW" "⚠ Attempting to pull Hugo image directly"
         
         if [[ "$CONTAINER_CMD" == "podman" ]]; then
-          podman pull docker.io/klakegg/hugo:0.110-ext-alpine
-          podman tag docker.io/klakegg/hugo:0.110-ext-alpine hugo-local
+          if ! podman pull docker.io/klakegg/hugo:latest; then
+            print_message "$RED" "✗ Failed to pull Hugo image"
+            return 1
+          fi
+          podman tag docker.io/klakegg/hugo:latest hugo-local
         else
-          docker pull klakegg/hugo:0.110-ext-alpine
-          docker tag klakegg/hugo:0.110-ext-alpine hugo-local
+          if ! docker pull klakegg/hugo:latest; then
+            print_message "$RED" "✗ Failed to pull Hugo image"
+            return 1
+          fi
+          docker tag klakegg/hugo:latest hugo-local
         fi
       fi
     else
       print_message "$GREEN" "✓ Hugo image is available"
     fi
   fi
+  
+  print_message "$GREEN" "✓ Container environment verified"
+  return 0
 }
 
 # Function to verify local Hugo environment
@@ -323,7 +349,7 @@ verify_local_environment() {
   # Check for Hugo
   if ! command_exists hugo; then
     print_message "$RED" "✗ Hugo not found locally"
-    exit 1
+    return 1
   fi
   
   # Verify Hugo version
@@ -332,24 +358,27 @@ verify_local_environment() {
   
   # Verify theme
   if [ ! -d "themes/mcp-theme" ]; then
-    print_message "$RED" "✗ Theme not found (themes/mcp-theme)"
-    exit 1
+    print_message "$YELLOW" "⚠ Theme not found (themes/mcp-theme), but continuing anyway"
   fi
   
   print_message "$GREEN" "✓ Local environment verified"
+  return 0
 }
 
 # Function to verify minimal environment
 verify_minimal_environment() {
   print_verbose "Verifying minimal environment"
   
-  # Check for Git
-  if ! command_exists git; then
-    print_message "$RED" "✗ Git not found"
-    exit 1
+  # Check for Git if we're not skipping Git operations
+  if [[ "$SKIP_GIT" == "false" ]]; then
+    if ! command_exists git; then
+      print_message "$RED" "✗ Git not found"
+      return 1
+    fi
   fi
   
   print_message "$GREEN" "✓ Minimal environment verified"
+  return 0
 }
 
 # Function to build the Hugo site
@@ -363,10 +392,18 @@ build_site() {
   # Build based on selected mode
   case "$DEPLOY_MODE" in
     container)
-      build_with_container "$build_log"
+      if ! build_with_container "$build_log"; then
+        print_message "$YELLOW" "⚠ Container build failed, falling back to minimal mode"
+        DEPLOY_MODE="minimal"
+        build_minimal_site "$build_log"
+      fi
       ;;
     local)
-      build_with_local_hugo "$build_log"
+      if ! build_with_local_hugo "$build_log"; then
+        print_message "$YELLOW" "⚠ Local build failed, falling back to minimal mode"
+        DEPLOY_MODE="minimal"
+        build_minimal_site "$build_log"
+      fi
       ;;
     minimal)
       build_minimal_site "$build_log"
@@ -392,9 +429,11 @@ build_with_container() {
   if [[ "$CONTAINER_CMD" == "podman" ]]; then
     print_verbose "Using Podman to build site"
     podman run --rm -v "$(pwd)":/src:z -w /src hugo-local --minify 2>&1 | tee "$build_log"
+    return ${PIPESTATUS[0]}
   else
     print_verbose "Using Docker to build site"
     docker run --rm -v "$(pwd)":/src -w /src hugo-local --minify 2>&1 | tee "$build_log"
+    return ${PIPESTATUS[0]}
   fi
 }
 
@@ -405,6 +444,7 @@ build_with_local_hugo() {
   
   # Run Hugo directly
   hugo --minify 2>&1 | tee "$build_log"
+  return ${PIPESTATUS[0]}
 }
 
 # Function to build minimal site
@@ -496,11 +536,33 @@ EOL
   
   # Clean up
   rm -rf "$temp_dir"
+  
+  return 0
 }
 
 # Function to deploy to GitHub Pages
 deploy_to_github_pages() {
+  if [[ "$SKIP_GIT" == "true" ]]; then
+    print_message "$YELLOW" "⚠ Skipping Git operations as requested"
+    return 0
+  fi
+  
   print_message "$BLUE" "Deploying to GitHub Pages ($TARGET_BRANCH branch)..."
+  
+  # Check if git is available
+  if ! command_exists git; then
+    print_message "$RED" "✗ Git not found, cannot deploy to GitHub Pages"
+    print_message "$YELLOW" "The built site is available in the 'public' directory"
+    return 1
+  fi
+  
+  # Check if we're in a git repository
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    print_message "$RED" "✗ Not in a Git repository, cannot deploy to GitHub Pages"
+    print_message "$YELLOW" "The built site is available in the 'public' directory"
+    print_message "$YELLOW" "Initialize a Git repository or use --skip-git to skip deployment"
+    return 1
+  fi
   
   # Store current branch
   current_branch=$(git rev-parse --abbrev-ref HEAD)
@@ -532,7 +594,7 @@ deploy_to_github_pages() {
   print_verbose "Switching to $TARGET_BRANCH branch"
   if ! git checkout $TARGET_BRANCH; then
     print_message "$RED" "✗ Failed to switch to $TARGET_BRANCH branch"
-    exit 1
+    return 1
   fi
   
   # Remove existing content (preserving .git directory)
@@ -559,7 +621,7 @@ deploy_to_github_pages() {
     if ! git push origin $TARGET_BRANCH; then
       print_message "$RED" "✗ Failed to push to $TARGET_BRANCH branch"
       git checkout $current_branch
-      exit 1
+      return 1
     fi
     
     print_message "$GREEN" "✓ Successfully pushed to $TARGET_BRANCH branch"
@@ -568,6 +630,8 @@ deploy_to_github_pages() {
   # Return to original branch
   print_verbose "Returning to $current_branch branch"
   git checkout $current_branch
+  
+  return 0
 }
 
 # Function to generate deployment report
@@ -591,12 +655,13 @@ Generated: $(date +'%Y-%m-%d %H:%M:%S')
 - **Verification:** $([ "$SKIP_VERIFY" == "true" ] && echo "Skipped" || echo "Performed")
 - **Verification Tool:** $([ "$USE_DOC_DOCTOR" == "true" ] && echo "Doc Doctor" || echo "Built-in verify-shortcodes")
 - **Precaching:** $([ "$SKIP_PRECACHE" == "true" ] && echo "Skipped" || echo "Performed")
+- **Git Operations:** $([ "$SKIP_GIT" == "true" ] && echo "Skipped" || echo "Performed")
 
 ## System Information
 
 - **Hugo:** $(command_exists hugo && hugo version || echo "Not installed")
 - **Container Runtime:** $(command_exists podman && echo "Podman $(podman --version)" || (command_exists docker && echo "Docker $(docker --version)" || echo "Not installed"))
-- **Git:** $(git --version)
+- **Git:** $(command_exists git && git --version || echo "Not installed")
 
 ## Deployment Outcome
 
@@ -615,7 +680,15 @@ main() {
   determine_deploy_mode
   verify_environment
   build_site
-  deploy_to_github_pages
+  
+  # Only attempt Git deployment if not skipping Git
+  if [[ "$SKIP_GIT" == "false" ]]; then
+    deploy_to_github_pages
+  else
+    print_message "$YELLOW" "⚠ Skipping Git deployment (--skip-git specified)"
+    print_message "$GREEN" "✓ Site built in 'public' directory"
+  fi
+  
   generate_report
   
   print_message "$GREEN" "✅ Deployment completed successfully!"

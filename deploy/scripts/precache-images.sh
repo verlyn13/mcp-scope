@@ -38,55 +38,52 @@ fi
 
 print_message "$BLUE" "Pre-caching Hugo container image..."
 
-# Pull the Hugo image
-if [[ "$CONTAINER_CMD" == "podman" ]]; then
-  if podman image exists hugo-local 2>/dev/null; then
-    print_message "$GREEN" "✓ Hugo image already cached"
-  else
-    print_message "$BLUE" "Pulling Hugo image using Podman..."
-    podman pull docker.io/klakegg/hugo:0.110-ext-alpine
-    
-    if [ $? -eq 0 ]; then
-      # Tag the image for easier reference
-      podman tag docker.io/klakegg/hugo:0.110-ext-alpine hugo-local
-      print_message "$GREEN" "✓ Hugo image pulled and tagged successfully"
+# Try different Hugo image tags in order of preference
+HUGO_TAGS=("latest" "latest-ext" "extended" "0.111.3" "0.91.2-ext-alpine")
+
+for tag in "${HUGO_TAGS[@]}"; do
+  if [[ "$CONTAINER_CMD" == "podman" ]]; then
+    print_message "$BLUE" "Trying to pull klakegg/hugo:$tag with Podman..."
+    if podman pull docker.io/klakegg/hugo:$tag >/dev/null 2>&1; then
+      # Tag succeeded, tag it as hugo-local
+      podman tag docker.io/klakegg/hugo:$tag hugo-local
+      print_message "$GREEN" "✓ Successfully pulled and tagged klakegg/hugo:$tag"
+      
+      # Verify the image works
+      print_message "$BLUE" "Verifying Hugo image..."
+      if podman run --rm hugo-local version >/dev/null 2>&1; then
+        print_message "$GREEN" "✓ Hugo image verified successfully"
+        exit 0
+      else
+        print_message "$YELLOW" "⚠ Image pulled but verification failed, trying next tag..."
+        podman rmi hugo-local >/dev/null 2>&1
+      fi
     else
-      print_message "$RED" "✗ Failed to pull Hugo image"
-      exit 1
+      print_message "$YELLOW" "⚠ Failed to pull klakegg/hugo:$tag, trying next tag..."
+    fi
+  else
+    # Docker
+    print_message "$BLUE" "Trying to pull klakegg/hugo:$tag with Docker..."
+    if docker pull klakegg/hugo:$tag >/dev/null 2>&1; then
+      # Tag succeeded, tag it as hugo-local
+      docker tag klakegg/hugo:$tag hugo-local
+      print_message "$GREEN" "✓ Successfully pulled and tagged klakegg/hugo:$tag"
+      
+      # Verify the image works
+      print_message "$BLUE" "Verifying Hugo image..."
+      if docker run --rm hugo-local version >/dev/null 2>&1; then
+        print_message "$GREEN" "✓ Hugo image verified successfully"
+        exit 0
+      else
+        print_message "$YELLOW" "⚠ Image pulled but verification failed, trying next tag..."
+        docker rmi hugo-local >/dev/null 2>&1
+      fi
+    else
+      print_message "$YELLOW" "⚠ Failed to pull klakegg/hugo:$tag, trying next tag..."
     fi
   fi
-else
-  if docker image inspect hugo-local >/dev/null 2>&1; then
-    print_message "$GREEN" "✓ Hugo image already cached"
-  else
-    print_message "$BLUE" "Pulling Hugo image using Docker..."
-    docker pull klakegg/hugo:0.110-ext-alpine
-    
-    if [ $? -eq 0 ]; then
-      # Tag the image for easier reference
-      docker tag klakegg/hugo:0.110-ext-alpine hugo-local
-      print_message "$GREEN" "✓ Hugo image pulled and tagged successfully"
-    else
-      print_message "$RED" "✗ Failed to pull Hugo image"
-      exit 1
-    fi
-  fi
-fi
+done
 
-# Verify the image works
-print_message "$BLUE" "Verifying Hugo image..."
-
-if [[ "$CONTAINER_CMD" == "podman" ]]; then
-  podman run --rm hugo-local version
-else
-  docker run --rm hugo-local version
-fi
-
-if [ $? -eq 0 ]; then
-  print_message "$GREEN" "✓ Hugo image verified successfully"
-else
-  print_message "$RED" "✗ Hugo image verification failed"
-  exit 1
-fi
-
-print_message "$GREEN" "✅ Container images pre-cached successfully!"
+# If we get here, we couldn't pull any image
+print_message "$RED" "✗ Failed to pull any Hugo image"
+exit 1
