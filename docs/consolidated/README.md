@@ -24,6 +24,13 @@ A detailed overview of the enhanced MCP theme and layout improvements:
 - Theme configuration details
 - Known issues and roadmap
 
+### [GitHub Actions Version Update](./github-actions-version-update.md)
+A technical document detailing the GitHub Actions workflow version updates:
+- Version compatibility issues and solutions
+- GitHub Actions component updates
+- Before and after workflow comparison
+- Troubleshooting guidance for future updates
+
 ### [Documentation Build Plan](./documentation-build-plan.md)
 A practical guide to the build, verification, and deployment process for MCP documentation:
 - The documentation quality pipeline
@@ -144,6 +151,7 @@ An enhanced GitHub Actions workflow template that integrates documentation quali
    - Directory structure is reorganized
    - Build process is modified
    - Theme features are enhanced
+   - GitHub Actions workflows are updated
 
 2. After significant updates:
    - Update the version number in each document's front matter
