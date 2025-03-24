@@ -1,9 +1,110 @@
 <nav class="main-nav">
-  <ul>
-    {{ range .Site.Menus.main }}
-      <li>
-        <a href="{{ .URL }}" class="{{ if $.IsMenuCurrent "main" . }}active{{ end }}">{{ .Name }}</a>
-      </li>
-    {{ end }}
+  <ul class="nav-links">
+    <li class="nav-item">
+      <a href="{{ .Site.BaseURL }}" class="nav-link {{ if .IsHome }}active{{ end }}">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Home</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="{{ .Site.BaseURL }}project/" class="nav-link {{ if eq .Section "project" }}active{{ end }}">
+        <span class="nav-icon">📋</span>
+        <span class="nav-text">Project</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="{{ .Site.BaseURL }}architecture/" class="nav-link {{ if eq .Section "architecture" }}active{{ end }}">
+        <span class="nav-icon">🏗️</span>
+        <span class="nav-text">Architecture</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="{{ .Site.BaseURL }}guides/" class="nav-link {{ if eq .Section "guides" }}active{{ end }}">
+        <span class="nav-icon">🧭</span>
+        <span class="nav-text">Guides</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a href="https://github.com/verlyn13/mcp-scope" target="_blank" class="nav-link external">
+        <span class="nav-icon">📦</span>
+        <span class="nav-text">Repository</span>
+      </a>
+    </li>
   </ul>
 </nav>
+
+<style>
+  .main-nav {
+    margin: 0.5rem 0;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.25rem;
+  }
+  
+  .nav-item {
+    margin: 0;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  
+  .nav-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .nav-link.external::after {
+    content: "↗";
+    margin-left: 0.3rem;
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      padding: 0.4rem 0.7rem;
+      font-size: 0.9rem;
+    }
+    
+    .nav-text {
+      display: none;
+    }
+    
+    .nav-icon {
+      margin-right: 0;
+      font-size: 1.2rem;
+    }
+  }
+</style>

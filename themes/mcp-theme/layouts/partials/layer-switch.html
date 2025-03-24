@@ -1,8 +1,83 @@
-<div class="layer-switch">
-  <button class="layer-button {{ if eq $.Site.Params.currentLayer "root" }}active{{ end }}" data-layer="root">
-    Root Documentation
-  </button>
-  <button class="layer-button {{ if eq $.Site.Params.currentLayer "mcp" }}active{{ end }}" data-layer="mcp">
-    MCP Documentation
-  </button>
+<div class="layer-switch-container">
+  <div class="layer-switch-label">Documentation View:</div>
+  <div class="layer-switch">
+    <a href="#" class="layer-button {{ if or (not $.Site.Params.currentLayer) (eq $.Site.Params.currentLayer "root") }}active{{ end }}" data-layer="root">
+      <span class="layer-icon">📚</span>
+      <span class="layer-text">Project Docs</span>
+    </a>
+    <a href="#" class="layer-button {{ if eq $.Site.Params.currentLayer "mcp" }}active{{ end }}" data-layer="mcp">
+      <span class="layer-icon">🤖</span>
+      <span class="layer-text">MCP Platform</span>
+    </a>
+  </div>
 </div>
+
+<style>
+  .layer-switch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  
+  .layer-switch-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+  }
+  
+  .layer-switch {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    padding: 0.3rem;
+    gap: 0.5rem;
+  }
+  
+  .layer-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+  
+  .layer-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    text-decoration: none;
+  }
+  
+  .layer-button.active {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .layer-icon {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .layer-text {
+      display: none;
+    }
+    
+    .layer-icon {
+      margin-right: 0;
+    }
+    
+    .layer-button {
+      padding: 0.5rem;
+    }
+  }
+</style>

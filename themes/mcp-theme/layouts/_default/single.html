@@ -1,47 +1,47 @@
 {{ define "main" }}
 <article class="content">
-  <header>
+  <header class="content-header">
     <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
     
-    {{ if .Params.status }}
-      <div class="status status-{{ lower .Params.status }}">
-        {{ if eq .Params.status "Active" }}🟢 Active{{ end }}
-        {{ if eq .Params.status "Draft" }}🟡 Draft{{ end }}
-        {{ if eq .Params.status "Review" }}🟠 Review{{ end }}
-        {{ if eq .Params.status "Outdated" }}🔴 Outdated{{ end }}
-        {{ if eq .Params.status "Archived" }}⚫ Archived{{ end }}
-      </div>
-    {{ end }}
-
     <div class="metadata">
-      {{ if .Params.date_created }}
-        <span class="created-date">Created: {{ .Params.date_created }}</span>
-      {{ end }}
+      <div class="metadata-item">
+        <span class="metadata-label">Updated:</span>
+        <span class="metadata-value">{{ .Lastmod.Format "January 2, 2006" }}</span>
+      </div>
       
-      {{ if .Params.last_updated }}
-        <span class="updated-date">Updated: {{ .Params.last_updated }}</span>
+      {{ if .Date }}
+      <div class="metadata-item">
+        <span class="metadata-label">Created:</span>
+        <span class="metadata-value">{{ .Date.Format "January 2, 2006" }}</span>
+      </div>
       {{ end }}
       
       {{ if .Params.version }}
-        <span class="version">Version: {{ .Params.version }}</span>
+      <div class="metadata-item">
+        <span class="metadata-label">Version:</span>
+        <span class="metadata-value">{{ .Params.version }}</span>
+      </div>
       {{ end }}
       
       {{ if .Params.contributors }}
-        <div class="contributors">
-          Contributors: 
+      <div class="metadata-item contributors">
+        <span class="metadata-label">Contributors:</span>
+        <span class="metadata-value">
           {{ range $index, $contributor := .Params.contributors }}
             {{ if $index }}, {{ end }}{{ $contributor }}
           {{ end }}
-        </div>
+        </span>
+      </div>
       {{ end }}
     </div>
   </header>
   
   {{ if .TableOfContents }}
-    <div class="table-of-contents">
-      <h2>Table of Contents</h2>
-      {{ .TableOfContents }}
-    </div>
+  <div class="toc">
+    <div class="toc-title">In This Article</div>
+    {{ .TableOfContents }}
+  </div>
   {{ end }}
   
   <div class="content-body">
@@ -49,25 +49,238 @@
   </div>
   
   {{ if .Params.related_docs }}
-    <div class="related-docs">
-      <h2>Related Documents</h2>
-      <ul>
-        {{ range .Params.related_docs }}
-          <li><a href="{{ . }}">{{ . }}</a></li>
-        {{ end }}
-      </ul>
+  <div class="related-content">
+    <h2>Related Documents</h2>
+    <div class="card-grid">
+      {{ range .Params.related_docs }}
+      <div class="card">
+        <div class="card-content">
+          <h3 class="card-title">{{ . | path.Base }}</h3>
+          <a href="{{ . }}" class="card-link">View Document</a>
+        </div>
+      </div>
+      {{ end }}
     </div>
+  </div>
   {{ end }}
   
   {{ if .Params.tags }}
-    <div class="tags">
-      <h3>Tags</h3>
-      <ul>
-        {{ range .Params.tags }}
-          <li><a href="/tags/{{ . | urlize }}">{{ . }}</a></li>
-        {{ end }}
-      </ul>
+  <div class="tags-section">
+    <h3>Tags</h3>
+    <div class="tag-cloud">
+      {{ range .Params.tags }}
+        <a href="/tags/{{ . | urlize }}" class="tag">{{ . }}</a>
+      {{ end }}
     </div>
+  </div>
   {{ end }}
+  
+  <div class="page-meta">
+    <div class="edit-this-page">
+      <a href="https://github.com/verlyn13/mcp-scope/edit/main/content/{{ .File.Path }}" target="_blank">
+        <i>✏️</i> Edit this page
+      </a>
+    </div>
+    <div class="last-modified">
+      Last modified on {{ .Lastmod.Format "January 2, 2006" }}
+    </div>
+  </div>
 </article>
+
+<style>
+  /* Content page specific styles */
+  .content-header {
+    margin-bottom: 2rem;
+  }
+  
+  .lead {
+    font-size: 1.2rem;
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+  }
+  
+  .metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--light-text);
+  }
+  
+  .metadata-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .metadata-label {
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+  
+  /* Table of contents */
+  .toc ul {
+    list-style-type: none;
+    padding-left: 1rem;
+  }
+  
+  .toc li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .toc a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .toc a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Related content cards */
+  .related-content {
+    margin-top: 3rem;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+    border: 1px solid var(--border-color);
+  }
+  
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    padding: 1.2rem;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+  }
+  
+  .card-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+  
+  /* Tags */
+  .tags-section {
+    margin-top: 2rem;
+  }
+  
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    background-color: rgba(48, 99, 142, 0.1);
+    color: var(--primary-color);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+  }
+  
+  .tag:hover {
+    background-color: rgba(48, 99, 142, 0.2);
+    text-decoration: none;
+  }
+  
+  /* Page meta */
+  .page-meta {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--light-text);
+    font-size: 0.9rem;
+  }
+  
+  .edit-this-page a {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+  }
+  
+  .edit-this-page i {
+    margin-right: 0.4rem;
+  }
+  
+  /* Content body */
+  .content-body {
+    line-height: 1.7;
+  }
+  
+  .content-body a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  
+  .content-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+  }
+  
+  .content-body blockquote {
+    border-left: 4px solid var(--primary-light);
+    padding-left: 1rem;
+    margin-left: 0;
+    color: var(--light-text);
+    font-style: italic;
+  }
+  
+  .content-body ul, .content-body ol {
+    padding-left: 2rem;
+    margin: 1rem 0;
+  }
+  
+  .content-body li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .content-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+  }
+  
+  .content-body th, .content-body td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+  }
+  
+  .content-body th {
+    background-color: var(--light-bg);
+    font-weight: 600;
+  }
+  
+  .content-body tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+</style>
 {{ end }}

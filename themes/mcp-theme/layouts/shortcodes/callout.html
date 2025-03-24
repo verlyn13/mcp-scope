@@ -1,8 +1,156 @@
-{{ $type := .Get 0 }}
+{{ $type := .Get 0 | default "info" }}
 {{ $title := .Get 1 }}
-<div class="callout callout-{{ $type | default "info" }}">
-  {{ if $title }}<h4 class="callout-title">{{ $title }}</h4>{{ end }}
-  <div class="callout-content">
-    {{ .Inner | markdownify }}
+
+<div class="callout callout-{{ $type }}">
+  <div class="callout-icon">
+    {{ if eq $type "info" }}<span>ℹ️</span>{{ end }}
+    {{ if eq $type "note" }}<span>📝</span>{{ end }}
+    {{ if eq $type "tip" }}<span>💡</span>{{ end }}
+    {{ if eq $type "warning" }}<span>⚠️</span>{{ end }}
+    {{ if eq $type "danger" }}<span>🚫</span>{{ end }}
+    {{ if eq $type "important" }}<span>🔑</span>{{ end }}
+    {{ if eq $type "success" }}<span>✅</span>{{ end }}
+  </div>
+  <div class="callout-body">
+    {{ if $title }}<h4 class="callout-title">{{ $title }}</h4>{{ end }}
+    <div class="callout-content">
+      {{ .Inner | markdownify }}
+    </div>
   </div>
 </div>
+
+<style>
+  .callout {
+    display: flex;
+    margin: 1.5rem 0;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+  }
+  
+  .callout-icon {
+    width: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .callout-body {
+    flex-grow: 1;
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .callout-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .callout-content p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Callout types */
+  .callout-info {
+    background-color: rgba(64, 89, 173, 0.05);
+    border-left: 4px solid var(--info-color);
+  }
+  
+  .callout-info .callout-icon {
+    background-color: rgba(64, 89, 173, 0.1);
+    color: var(--info-color);
+  }
+  
+  .callout-info .callout-title {
+    color: var(--info-color);
+  }
+  
+  .callout-note {
+    background-color: rgba(48, 99, 142, 0.05);
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .callout-note .callout-icon {
+    background-color: rgba(48, 99, 142, 0.1);
+    color: var(--primary-color);
+  }
+  
+  .callout-note .callout-title {
+    color: var(--primary-color);
+  }
+  
+  .callout-tip {
+    background-color: rgba(61, 220, 151, 0.05);
+    border-left: 4px solid var(--accent-color);
+  }
+  
+  .callout-tip .callout-icon {
+    background-color: rgba(61, 220, 151, 0.1);
+    color: var(--accent-color);
+  }
+  
+  .callout-tip .callout-title {
+    color: var(--accent-color);
+  }
+  
+  .callout-warning {
+    background-color: rgba(237, 174, 73, 0.05);
+    border-left: 4px solid var(--warning-color);
+  }
+  
+  .callout-warning .callout-icon {
+    background-color: rgba(237, 174, 73, 0.1);
+    color: var(--warning-color);
+  }
+  
+  .callout-warning .callout-title {
+    color: var(--warning-color);
+  }
+  
+  .callout-danger {
+    background-color: rgba(209, 73, 91, 0.05);
+    border-left: 4px solid var(--danger-color);
+  }
+  
+  .callout-danger .callout-icon {
+    background-color: rgba(209, 73, 91, 0.1);
+    color: var(--danger-color);
+  }
+  
+  .callout-danger .callout-title {
+    color: var(--danger-color);
+  }
+  
+  .callout-important {
+    background-color: rgba(253, 155, 77, 0.05);
+    border-left: 4px solid var(--secondary-color);
+  }
+  
+  .callout-important .callout-icon {
+    background-color: rgba(253, 155, 77, 0.1);
+    color: var(--secondary-color);
+  }
+  
+  .callout-important .callout-title {
+    color: var(--secondary-color);
+  }
+  
+  .callout-success {
+    background-color: rgba(0, 121, 140, 0.05);
+    border-left: 4px solid var(--success-color);
+  }
+  
+  .callout-success .callout-icon {
+    background-color: rgba(0, 121, 140, 0.1);
+    color: var(--success-color);
+  }
+  
+  .callout-success .callout-title {
+    color: var(--success-color);
+  }
+</style>

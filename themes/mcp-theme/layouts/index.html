@@ -1,76 +1,693 @@
 {{ define "main" }}
 <div class="home-page">
-  <header>
-    <h1>{{ .Title }}</h1>
-    
-    {{ if .Params.status }}
-      <div class="status status-{{ lower .Params.status }}">
-        {{ if eq .Params.status "Active" }}🟢 Active{{ end }}
-        {{ if eq .Params.status "Draft" }}🟡 Draft{{ end }}
-        {{ if eq .Params.status "Review" }}🟠 Review{{ end }}
-        {{ if eq .Params.status "Outdated" }}🔴 Outdated{{ end }}
-        {{ if eq .Params.status "Archived" }}⚫ Archived{{ end }}
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ .Title }}</h1>
+      <p class="hero-description">Multi-agent Control Platform with ScopeCam USB Camera Integration</p>
+      
+      <div class="hero-actions">
+        <a href="/project/github-actions-deployment-guide/" class="hero-button primary">
+          <span class="button-icon">📚</span>
+          <span>Documentation</span>
+        </a>
+        <a href="/guides/" class="hero-button secondary">
+          <span class="button-icon">🧭</span>
+          <span>Implementation Guides</span>
+        </a>
       </div>
-    {{ end }}
-  </header>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-value">20+</div>
+          <div class="stat-label">Components</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">85%</div>
+          <div class="stat-label">Completion</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Mar 23</div>
+          <div class="stat-label">Updated</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-pattern"></div>
+  </section>
   
-  <div class="content">
+  <div class="content-section">
     {{ .Content }}
   </div>
   
-  <div class="documentation-dashboard">
-    <h2>Project Dashboard</h2>
+  <section class="dashboard-section">
+    <div class="section-header">
+      <h2>Project Status</h2>
+      <p class="section-description">Current development status of major components</p>
+    </div>
     
     <div class="dashboard-grid">
-      <div class="dashboard-item">
-        <div class="dashboard-icon">📡</div>
-        <h3>MCP Core</h3>
-        <p>Orchestration Engine</p>
-        <div class="progress-bar" style="--progress: 100%;">100%</div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <div class="dashboard-icon">📡</div>
+          <h3>MCP Core</h3>
+        </div>
+        <p>Orchestration Engine for agent communication and task management</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="--progress: 100%;">
+            <span class="progress-text">100%</span>
+          </div>
+        </div>
+        <div class="dashboard-footer">
+          <span class="dashboard-tag complete">Complete</span>
+          <a href="/architecture/" class="dashboard-link">View Architecture</a>
+        </div>
       </div>
       
-      <div class="dashboard-item">
-        <div class="dashboard-icon">📷</div>
-        <h3>ScopeCam Integration</h3>
-        <p>USB Camera Management</p>
-        <div class="progress-bar" style="--progress: 80%;">80%</div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <div class="dashboard-icon">📷</div>
+          <h3>ScopeCam Integration</h3>
+        </div>
+        <p>USB Camera Integration with support for UVC protocol and device management</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="--progress: 80%;">
+            <span class="progress-text">80%</span>
+          </div>
+        </div>
+        <div class="dashboard-footer">
+          <span class="dashboard-tag in-progress">In Progress</span>
+          <a href="/guides/" class="dashboard-link">View Guides</a>
+        </div>
       </div>
       
-      <div class="dashboard-item">
-        <div class="dashboard-icon">🔄</div>
-        <h3>Agent Network</h3>
-        <p>Collaborative Processing</p>
-        <div class="progress-bar" style="--progress: 90%;">90%</div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <div class="dashboard-icon">🔄</div>
+          <h3>Agent Network</h3>
+        </div>
+        <p>Distributed processing network for real-time video analysis and control</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="--progress: 90%;">
+            <span class="progress-text">90%</span>
+          </div>
+        </div>
+        <div class="dashboard-footer">
+          <span class="dashboard-tag in-progress">In Progress</span>
+          <a href="/architecture/orchestrator-nats-integration/" class="dashboard-link">View Details</a>
+        </div>
+      </div>
+      
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <div class="dashboard-icon">📝</div>
+          <h3>Documentation</h3>
+        </div>
+        <p>Comprehensive documentation including architecture, guides, and standards</p>
+        <div class="progress-container">
+          <div class="progress-bar" style="--progress: 85%;">
+            <span class="progress-text">85%</span>
+          </div>
+        </div>
+        <div class="dashboard-footer">
+          <span class="dashboard-tag in-progress">In Progress</span>
+          <a href="/project/github-pages-deployment-solution/" class="dashboard-link">Deployment Info</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
   
-  <div class="documentation-structure">
-    <h2>Documentation Layers</h2>
+  <section class="documentation-section">
+    <div class="section-header">
+      <h2>Documentation Structure</h2>
+      <p class="section-description">Navigate through our layered documentation system</p>
+    </div>
     
-    <div class="layer-grid">
-      <div class="layer-item">
-        <h3>Root Documentation Layer</h3>
-        <p>Project-wide information and ScopeCam integration</p>
-        <ul>
-          <li><a href="/project/">Project Information</a></li>
-          <li><a href="/guides/">Implementation Guides</a></li>
-          <li><a href="/architecture/">Architecture</a></li>
-          <li><a href="/standards/">Standards</a></li>
-          <li><a href="/templates/">Templates</a></li>
-        </ul>
+    <div class="doc-layers-container">
+      <div class="doc-layer-tabs">
+        <button class="doc-layer-tab active" data-layer="root">Project Documentation</button>
+        <button class="doc-layer-tab" data-layer="mcp">MCP Platform</button>
       </div>
       
-      <div class="layer-item">
-        <h3>MCP Documentation Layer</h3>
-        <p>Detailed implementation guides and technical information</p>
-        <ul>
-          <li><a href="/mcp/docs/">MCP Documentation</a></li>
-          <li><a href="/mcp/architecture/">MCP Architecture</a></li>
-          <li><a href="/mcp/implementation/">Implementation Guides</a></li>
-        </ul>
+      <div class="doc-layer-content" id="root-layer">
+        <div class="doc-categories">
+          <a href="/project/" class="doc-category-card">
+            <div class="doc-category-icon">📋</div>
+            <div class="doc-category-content">
+              <h3>Project</h3>
+              <p>Project planning, organization, and deployment information</p>
+              <span class="doc-category-link">Explore Project Docs</span>
+            </div>
+          </a>
+          
+          <a href="/guides/" class="doc-category-card">
+            <div class="doc-category-icon">🧭</div>
+            <div class="doc-category-content">
+              <h3>Guides</h3>
+              <p>Implementation tutorials and step-by-step instructions</p>
+              <span class="doc-category-link">Browse Guides</span>
+            </div>
+          </a>
+          
+          <a href="/architecture/" class="doc-category-card">
+            <div class="doc-category-icon">🏗️</div>
+            <div class="doc-category-content">
+              <h3>Architecture</h3>
+              <p>System design, components, and technical architecture</p>
+              <span class="doc-category-link">View Architecture</span>
+            </div>
+          </a>
+          
+          <a href="/standards/" class="doc-category-card">
+            <div class="doc-category-icon">📏</div>
+            <div class="doc-category-content">
+              <h3>Standards</h3>
+              <p>Coding standards, documentation rules, and best practices</p>
+              <span class="doc-category-link">Review Standards</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <div class="doc-layer-content hidden" id="mcp-layer">
+        <div class="doc-categories">
+          <a href="/mcp/" class="doc-category-card">
+            <div class="doc-category-icon">📚</div>
+            <div class="doc-category-content">
+              <h3>MCP Overview</h3>
+              <p>Multi-agent Control Platform introduction and capabilities</p>
+              <span class="doc-category-link">Read Overview</span>
+            </div>
+          </a>
+          
+          <a href="/mcp/architecture/" class="doc-category-card">
+            <div class="doc-category-icon">🏗️</div>
+            <div class="doc-category-content">
+              <h3>MCP Architecture</h3>
+              <p>Technical architecture and system design of the platform</p>
+              <span class="doc-category-link">Explore Architecture</span>
+            </div>
+          </a>
+          
+          <a href="/mcp/implementation/" class="doc-category-card">
+            <div class="doc-category-icon">💻</div>
+            <div class="doc-category-content">
+              <h3>Implementation</h3>
+              <p>Implementation details and code-level documentation</p>
+              <span class="doc-category-link">View Implementation</span>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to Contribute?</h2>
+      <p>Join the ScopeCam MCP development effort and help build the next generation of camera control systems.</p>
+      <div class="cta-buttons">
+        <a href="https://github.com/verlyn13/mcp-scope" class="cta-button">
+          <span class="button-icon">💻</span>
+          <span>GitHub Repository</span>
+        </a>
+      </div>
+    </div>
+  </section>
 </div>
+
+<style>
+  /* Home Page Styles */
+  .home-page {
+    margin-top: -2rem;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    background: linear-gradient(120deg, var(--primary-color), var(--primary-light));
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(61, 220, 151, 0.4) 0%, transparent 70%),
+      radial-gradient(circle at 80% 70%, rgba(253, 155, 77, 0.4) 0%, transparent 70%);
+    z-index: 0;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .hero-description {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.6rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  .hero-button.primary {
+    background-color: white;
+    color: var(--primary-color);
+  }
+  
+  .hero-button.primary:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  
+  .hero-button.secondary {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  
+  .hero-button.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  
+  .button-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  
+  /* Content Section */
+  .content-section {
+    margin-bottom: 3rem;
+  }
+  
+  /* Section Header */
+  .section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .section-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    border: none;
+    padding: 0;
+  }
+  
+  .section-description {
+    color: var(--light-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Dashboard Section */
+  .dashboard-section {
+    margin-bottom: 4rem;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .dashboard-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard-icon {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(48, 99, 142, 0.1);
+    border-radius: 8px;
+    color: var(--primary-color);
+  }
+  
+  .dashboard-card h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+  }
+  
+  .dashboard-card p {
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .progress-container {
+    margin-bottom: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 50px;
+    height: 0.8rem;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    width: var(--progress);
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    border-radius: 50px;
+    position: relative;
+  }
+  
+  .progress-text {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  
+  .dashboard-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dashboard-tag {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .dashboard-tag.complete {
+    background-color: rgba(0, 121, 140, 0.1);
+    color: var(--success-color);
+  }
+  
+  .dashboard-tag.in-progress {
+    background-color: rgba(253, 155, 77, 0.1);
+    color: var(--secondary-color);
+  }
+  
+  .dashboard-link {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .dashboard-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Documentation Section */
+  .documentation-section {
+    margin-bottom: 4rem;
+  }
+  
+  .doc-layers-container {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+  }
+  
+  .doc-layer-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .doc-layer-tab {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--light-text);
+    position: relative;
+    transition: all 0.2s;
+  }
+  
+  .doc-layer-tab:hover {
+    color: var(--primary-color);
+  }
+  
+  .doc-layer-tab.active {
+    color: var(--primary-color);
+  }
+  
+  .doc-layer-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+  }
+  
+  .doc-layer-content {
+    padding: 2rem;
+  }
+  
+  .doc-layer-content.hidden {
+    display: none;
+  }
+  
+  .doc-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .doc-category-card {
+    display: flex;
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+  }
+  
+  .doc-category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    background-color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .doc-category-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: var(--primary-color);
+  }
+  
+  .doc-category-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+  }
+  
+  .doc-category-content p {
+    color: var(--light-text);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .doc-category-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(-120deg, var(--secondary-color), var(--warning-color));
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle at 30% 20%, rgba(61, 220, 151, 0.3) 0%, transparent 70%),
+      radial-gradient(circle at 70% 80%, rgba(64, 89, 173, 0.3) 0%, transparent 70%);
+    z-index: 0;
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .cta-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .cta-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.6rem;
+    border-radius: 50px;
+    font-weight: 600;
+    background-color: white;
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2rem 1.5rem;
+    }
+    
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .hero-description {
+      font-size: 1.1rem;
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+    }
+    
+    .dashboard-grid,
+    .doc-categories {
+      grid-template-columns: 1fr;
+    }
+    
+    .doc-layer-tab {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.doc-layer-tab');
+    const contents = document.querySelectorAll('.doc-layer-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Hide all content
+        contents.forEach(c => c.classList.add('hidden'));
+        
+        // Show content for selected layer
+        const layerId = tab.dataset.layer + '-layer';
+        document.getElementById(layerId).classList.remove('hidden');
+      });
+    });
+  });
+</script>
 {{ end }}

@@ -1,8 +1,146 @@
-{{ $status := .Page.Params.status | default "Draft" }}
-<div class="status-indicator status-{{ lower $status }}">
-  <span class="status-icon"></span>
-  <span class="status-text">{{ $status }}</span>
-  {{ if .Page.Params.last_updated }}
-  <span class="status-date">Last updated: {{ .Page.Params.last_updated }}</span>
-  {{ end }}
+{{ $status := .Page.Params.status | default "draft" }}
+{{ $status := lower $status }}
+
+<div class="status-banner status-{{ $status }}">
+  <div class="status-banner-icon">
+    {{ if eq $status "complete" }}✓{{ end }}
+    {{ if eq $status "draft" }}✎{{ end }}
+    {{ if eq $status "review" }}👁{{ end }}
+    {{ if eq $status "outdated" }}⚠{{ end }}
+    {{ if eq $status "archived" }}🗃{{ end }}
+  </div>
+  <div class="status-banner-content">
+    <div class="status-banner-title">
+      {{ if eq $status "complete" }}Documentation Complete{{ end }}
+      {{ if eq $status "draft" }}Working Draft{{ end }}
+      {{ if eq $status "review" }}Under Review{{ end }}
+      {{ if eq $status "outdated" }}Needs Update{{ end }}
+      {{ if eq $status "archived" }}Archived{{ end }}
+    </div>
+    <div class="status-banner-description">
+      {{ if eq $status "complete" }}This documentation is complete and up-to-date.{{ end }}
+      {{ if eq $status "draft" }}This documentation is still being written and may change.{{ end }}
+      {{ if eq $status "review" }}This documentation is being reviewed for accuracy and completeness.{{ end }}
+      {{ if eq $status "outdated" }}This documentation needs to be updated to reflect recent changes.{{ end }}
+      {{ if eq $status "archived" }}This documentation is no longer actively maintained.{{ end }}
+    </div>
+    {{ if .Page.Lastmod }}
+    <div class="status-banner-date">
+      Last updated: {{ .Page.Lastmod.Format "January 2, 2006" }}
+    </div>
+    {{ end }}
+  </div>
 </div>
+
+<style>
+  .status-banner {
+    margin: 1.5rem 0;
+    padding: 1.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .status-complete {
+    background-color: rgba(0, 121, 140, 0.1);
+    border-left: 5px solid var(--success-color);
+  }
+  
+  .status-draft {
+    background-color: rgba(237, 174, 73, 0.1);
+    border-left: 5px solid var(--warning-color);
+  }
+  
+  .status-review {
+    background-color: rgba(253, 155, 77, 0.1);
+    border-left: 5px solid var(--secondary-color);
+  }
+  
+  .status-outdated {
+    background-color: rgba(209, 73, 91, 0.1);
+    border-left: 5px solid var(--danger-color);
+  }
+  
+  .status-archived {
+    background-color: rgba(108, 117, 125, 0.1);
+    border-left: 5px solid var(--light-text);
+  }
+  
+  .status-banner-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .status-complete .status-banner-icon {
+    background-color: var(--success-color);
+    color: white;
+  }
+  
+  .status-draft .status-banner-icon {
+    background-color: var(--warning-color);
+    color: white;
+  }
+  
+  .status-review .status-banner-icon {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+  
+  .status-outdated .status-banner-icon {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .status-archived .status-banner-icon {
+    background-color: var(--light-text);
+    color: white;
+  }
+  
+  .status-banner-content {
+    flex-grow: 1;
+  }
+  
+  .status-banner-title {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  
+  .status-complete .status-banner-title {
+    color: var(--success-color);
+  }
+  
+  .status-draft .status-banner-title {
+    color: var(--warning-color);
+  }
+  
+  .status-review .status-banner-title {
+    color: var(--secondary-color);
+  }
+  
+  .status-outdated .status-banner-title {
+    color: var(--danger-color);
+  }
+  
+  .status-archived .status-banner-title {
+    color: var(--light-text);
+  }
+  
+  .status-banner-description {
+    color: var(--text-color);
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+  }
+  
+  .status-banner-date {
+    color: var(--light-text);
+    font-size: 0.85rem;
+  }
+</style>

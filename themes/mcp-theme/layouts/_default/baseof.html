@@ -6,114 +6,403 @@
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
     
-    <!-- Simple CSS for now - will be replaced with SCSS pipeline -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Docsy-inspired CSS -->
     <style>
+        :root {
+            /* Color scheme */
+            --primary-color: #30638E;
+            --primary-light: #3E8EBA;
+            --secondary-color: #FD9B4D;
+            --accent-color: #3DDC97;
+            --warning-color: #EDAE49;
+            --danger-color: #D1495B;
+            --success-color: #00798C;
+            --info-color: #4059AD;
+            --light-bg: #F8F9FA;
+            --dark-bg: #212529;
+            --text-color: #333;
+            --light-text: #6C757D;
+            --border-color: #DEE2E6;
+            
+            /* Typography */
+            --heading-font: 'Poppins', sans-serif;
+            --body-font: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --spacer: 1rem;
+            --content-width: 1200px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--body-font);
             line-height: 1.6;
-            color: #333;
-            max-width: 1200px;
+            color: var(--text-color);
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--heading-font);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: var(--spacer);
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .container {
+            max-width: var(--content-width);
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 var(--spacer);
         }
+        
+        /* Header with colorful pattern */
         .header {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            background-size: cover;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(61, 220, 151, 0.3) 0%, transparent 80%),
+                radial-gradient(circle at 80% 70%, rgba(253, 155, 77, 0.3) 0%, transparent 80%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        
+        .logo:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        /* Navigation and layer switch */
+        .nav-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
         .layer-switch {
             display: flex;
-            margin: 10px 0;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
         }
+        
         .layer-button {
-            padding: 8px 16px;
-            background: #f1f1f1;
-            border: 1px solid #ddd;
+            padding: 0.7rem 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-        }
-        .layer-button.active {
-            background: #007bff;
             color: white;
+            font-weight: 500;
+            transition: all 0.2s;
         }
+        
+        .layer-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .layer-button.active {
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Layout */
+        .main-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
         .sidebar {
-            width: 250px;
-            float: left;
-            padding-right: 30px;
+            width: 280px;
+            flex-shrink: 0;
         }
+        
         .main-content {
-            margin-left: 280px;
+            flex-grow: 1;
+            min-width: 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
+        
+        /* Status panels */
+        .status-panel {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid transparent;
+        }
+        
         .status {
             display: inline-block;
-            padding: 5px;
-            border-radius: 3px;
-            margin-bottom: 20px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
-        .status-active {
-            background-color: #d4edda;
-            color: #155724;
+        
+        .status-complete {
+            background-color: rgba(0, 121, 140, 0.1);
+            color: var(--success-color);
+            border-left-color: var(--success-color);
         }
+        
+        .status-complete .status {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
         .status-draft {
-            background-color: #fff3cd;
-            color: #856404;
+            background-color: rgba(237, 174, 73, 0.1);
+            color: var(--warning-color);
+            border-left-color: var(--warning-color);
         }
+        
+        .status-draft .status {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
         .status-review {
-            background-color: #ffe5d0;
-            color: #ff8000;
+            background-color: rgba(253, 155, 77, 0.1);
+            color: var(--secondary-color);
+            border-left-color: var(--secondary-color);
         }
+        
+        .status-review .status {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
         .status-outdated {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: rgba(209, 73, 91, 0.1);
+            color: var(--danger-color);
+            border-left-color: var(--danger-color);
         }
+        
+        .status-outdated .status {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
         .status-archived {
-            background-color: #e2e3e5;
-            color: #383d41;
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--light-text);
+            border-left-color: var(--light-text);
         }
-        .footer {
-            margin-top: 50px;
-            padding: 20px 0;
-            border-top: 1px solid #eee;
-            font-size: 0.9em;
+        
+        .status-archived .status {
+            background-color: var(--light-text);
+            color: white;
         }
+        
+        /* Code blocks */
         pre {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
+            background: var(--light-bg);
+            padding: 1.2rem;
+            border-radius: 6px;
             overflow: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
         }
+        
         code {
             font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-            background: #f8f9fa;
-            padding: 2px 4px;
+            background: var(--light-bg);
+            padding: 0.2rem 0.4rem;
             border-radius: 3px;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
         }
-        @media (max-width: 768px) {
-            .sidebar {
-                float: none;
-                width: 100%;
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            border: none;
+        }
+        
+        /* TOC */
+        .toc {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .toc-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            background-color: var(--light-bg);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
             }
+            
+            .sidebar {
+                width: 100%;
+                margin-bottom: 1.5rem;
+            }
+            
             .main-content {
                 margin-left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 2rem 0;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="container">
+        <div class="header-content">
             <a href="{{ .Site.BaseURL }}" class="logo">{{ .Site.Title }}</a>
-            {{ partial "layer-switch.html" . }}
-            {{ partial "navigation.html" . }}
+            <p class="subtitle">Multi-agent Control Platform Documentation</p>
+            <div class="nav-container">
+                {{ partial "layer-switch.html" . }}
+                {{ partial "navigation.html" . }}
+            </div>
         </div>
     </header>
 
     <div class="container">
-        <aside class="sidebar">
-            {{ partial "sidebar.html" . }}
-        </aside>
-        
-        <main class="main-content">
-            {{ block "main" . }}{{ end }}
-        </main>
+        <div class="main-container">
+            <aside class="sidebar">
+                {{ partial "sidebar.html" . }}
+            </aside>
+            
+            <main class="main-content">
+                {{ if .Params.status }}
+                <div class="status-panel status-{{ .Params.status }}">
+                    <span class="status">{{ .Params.status | title }}</span>
+                    <p>Last updated: {{ .Lastmod.Format "January 2, 2006" }}</p>
+                </div>
+                {{ end }}
+                
+                {{ block "main" . }}{{ end }}
+            </main>
+        </div>
     </div>
 
     <footer class="footer">

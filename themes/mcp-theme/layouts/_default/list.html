@@ -1,15 +1,12 @@
 {{ define "main" }}
 <section class="section-list">
-  <header>
+  <header class="section-header">
     <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="section-description">{{ . }}</p>{{ end }}
     
     {{ if .Params.status }}
-      <div class="status status-{{ lower .Params.status }}">
-        {{ if eq .Params.status "Active" }}🟢 Active{{ end }}
-        {{ if eq .Params.status "Draft" }}🟡 Draft{{ end }}
-        {{ if eq .Params.status "Review" }}🟠 Review{{ end }}
-        {{ if eq .Params.status "Outdated" }}🔴 Outdated{{ end }}
-        {{ if eq .Params.status "Archived" }}⚫ Archived{{ end }}
+      <div class="status-tag status-{{ lower .Params.status }}">
+        {{ lower .Params.status | title }}
       </div>
     {{ end }}
   </header>
@@ -20,46 +17,356 @@
   
   {{ if .Pages }}
     <div class="document-list">
-      <h2>Documents in this section</h2>
-      
-      <div class="status-filters">
-        <span>Filter by status:</span>
-        <a href="?status=all" class="filter-button active">All</a>
-        <a href="?status=active" class="filter-button">Active</a>
-        <a href="?status=draft" class="filter-button">Draft</a>
-        <a href="?status=review" class="filter-button">Review</a>
-        <a href="?status=outdated" class="filter-button">Outdated</a>
-        <a href="?status=archived" class="filter-button">Archived</a>
+      <div class="document-list-header">
+        <h2>Documents in this section</h2>
+        
+        <div class="status-filters">
+          <div class="filter-label">Filter by status:</div>
+          <div class="filter-buttons">
+            <a href="?status=all" class="filter-button active">All</a>
+            <a href="?status=complete" class="filter-button filter-complete">Complete</a>
+            <a href="?status=draft" class="filter-button filter-draft">Draft</a>
+            <a href="?status=review" class="filter-button filter-review">Review</a>
+            <a href="?status=outdated" class="filter-button filter-outdated">Outdated</a>
+            <a href="?status=archived" class="filter-button filter-archived">Archived</a>
+          </div>
+        </div>
       </div>
       
-      <ul class="document-items">
+      <div class="document-cards">
         {{ range .Pages.ByWeight }}
-          <li class="document-item {{ if .Params.status }}status-{{ lower .Params.status }}{{ end }}">
-            <a href="{{ .Permalink }}" class="document-link">
-              <span class="document-title">{{ .Title }}</span>
-              
-              {{ if .Params.status }}
-                <span class="status-badge status-{{ lower .Params.status }}">
-                  {{ if eq .Params.status "Active" }}🟢{{ end }}
-                  {{ if eq .Params.status "Draft" }}🟡{{ end }}
-                  {{ if eq .Params.status "Review" }}🟠{{ end }}
-                  {{ if eq .Params.status "Outdated" }}🔴{{ end }}
-                  {{ if eq .Params.status "Archived" }}⚫{{ end }}
-                </span>
-              {{ end }}
+          <a href="{{ .Permalink }}" class="document-card {{ if .Params.status }}status-{{ lower .Params.status }}{{ else }}status-draft{{ end }}">
+            <div class="document-card-content">
+              <h3 class="document-title">{{ .Title }}</h3>
               
               {{ if .Description }}
-                <span class="document-description">{{ .Description }}</span>
+                <p class="document-description">{{ .Description }}</p>
+              {{ else }}
+                <p class="document-description">{{ .Summary | truncate 100 }}</p>
               {{ end }}
               
-              {{ if .Params.last_updated }}
-                <span class="document-date">Updated: {{ .Params.last_updated }}</span>
-              {{ end }}
-            </a>
-          </li>
+              <div class="document-meta">
+                {{ if .Params.status }}
+                  <span class="document-status status-{{ lower .Params.status }}">
+                    {{ if eq (lower .Params.status) "complete" }}✓ Complete{{ end }}
+                    {{ if eq (lower .Params.status) "draft" }}✎ Draft{{ end }}
+                    {{ if eq (lower .Params.status) "review" }}👁 Review{{ end }}
+                    {{ if eq (lower .Params.status) "outdated" }}⚠ Outdated{{ end }}
+                    {{ if eq (lower .Params.status) "archived" }}🗃 Archived{{ end }}
+                  </span>
+                {{ else }}
+                  <span class="document-status status-draft">✎ Draft</span>
+                {{ end }}
+                
+                {{ if .Lastmod }}
+                  <span class="document-date">Updated: {{ .Lastmod.Format "Jan 2, 2006" }}</span>
+                {{ end }}
+              </div>
+            </div>
+          </a>
         {{ end }}
-      </ul>
+      </div>
     </div>
   {{ end }}
 </section>
+
+<style>
+  /* Section List Styles */
+  .section-header {
+    margin-bottom: 2rem;
+  }
+  
+  .section-description {
+    color: var(--light-text);
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 1rem 0 1.5rem;
+  }
+  
+  .status-tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .status-complete {
+    background-color: var(--success-color);
+    color: white;
+  }
+  
+  .status-draft {
+    background-color: var(--warning-color);
+    color: white;
+  }
+  
+  .status-review {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+  
+  .status-outdated {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .status-archived {
+    background-color: var(--light-text);
+    color: white;
+  }
+  
+  .section-content {
+    margin-bottom: 3rem;
+  }
+  
+  /* Document List */
+  .document-list {
+    margin-top: 2rem;
+  }
+  
+  .document-list-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .document-list-header h2 {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  
+  /* Status Filters */
+  .status-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .filter-label {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-right: 0.5rem;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .filter-button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    background-color: var(--light-bg);
+    color: var(--light-text);
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+  }
+  
+  .filter-button:hover {
+    background-color: var(--border-color);
+    text-decoration: none;
+  }
+  
+  .filter-button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .filter-complete {
+    border-color: var(--success-color);
+    color: var(--success-color);
+  }
+  
+  .filter-complete:hover, .filter-complete.active {
+    background-color: var(--success-color);
+    color: white;
+  }
+  
+  .filter-draft {
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+  }
+  
+  .filter-draft:hover, .filter-draft.active {
+    background-color: var(--warning-color);
+    color: white;
+  }
+  
+  .filter-review {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+  }
+  
+  .filter-review:hover, .filter-review.active {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+  
+  .filter-outdated {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+  }
+  
+  .filter-outdated:hover, .filter-outdated.active {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .filter-archived {
+    border-color: var(--light-text);
+    color: var(--light-text);
+  }
+  
+  .filter-archived:hover, .filter-archived.active {
+    background-color: var(--light-text);
+    color: white;
+  }
+  
+  /* Document Cards */
+  .document-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .document-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--border-color);
+    position: relative;
+  }
+  
+  .document-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .document-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--primary-color);
+  }
+  
+  .document-card.status-complete::before {
+    background-color: var(--success-color);
+  }
+  
+  .document-card.status-draft::before {
+    background-color: var(--warning-color);
+  }
+  
+  .document-card.status-review::before {
+    background-color: var(--secondary-color);
+  }
+  
+  .document-card.status-outdated::before {
+    background-color: var(--danger-color);
+  }
+  
+  .document-card.status-archived::before {
+    background-color: var(--light-text);
+  }
+  
+  .document-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .document-title {
+    font-size: 1.2rem;
+    margin: 0 0 0.8rem 0;
+    color: var(--primary-color);
+  }
+  
+  .document-description {
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    flex-grow: 1;
+  }
+  
+  .document-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    font-size: 0.85rem;
+  }
+  
+  .document-status {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    font-weight: 500;
+  }
+  
+  .status-complete {
+    background-color: rgba(0, 121, 140, 0.1);
+    color: var(--success-color);
+  }
+  
+  .status-draft {
+    background-color: rgba(237, 174, 73, 0.1);
+    color: var(--warning-color);
+  }
+  
+  .status-review {
+    background-color: rgba(253, 155, 77, 0.1);
+    color: var(--secondary-color);
+  }
+  
+  .status-outdated {
+    background-color: rgba(209, 73, 91, 0.1);
+    color: var(--danger-color);
+  }
+  
+  .status-archived {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: var(--light-text);
+  }
+  
+  .document-date {
+    color: var(--light-text);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .document-list-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .document-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 {{ end }}
