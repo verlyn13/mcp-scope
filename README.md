@@ -6,62 +6,67 @@ This repository contains the documentation for the Multi-agent Control Platform 
 
 ### Deploying Documentation
 
-Use the simple command to build and deploy documentation to GitHub Pages:
+✨ **NEW: GitHub Actions Automated Deployment** ✨
+
+The documentation now deploys **automatically** whenever changes are pushed to the main branch using GitHub Actions!
 
 ```bash
-./deploy-docs.sh
+# Simply make your changes, then commit and push
+git add .
+git commit -m "Update documentation"
+git push
+
+# The site will automatically deploy - no additional commands needed
 ```
 
-This will:
-1. Build the documentation site
-2. Deploy to GitHub Pages (gh-pages branch)
-3. Return you to the main branch
+You can view deployment progress in the GitHub Actions tab of the repository.
 
-### Options
+### Testing Locally
+
+To test the site locally before pushing changes:
 
 ```bash
-# Build site without deploying
+# Build site locally without deploying
+hugo server
+
+# Or use the legacy build script
 ./deploy-docs.sh --build-only
-
-# Deploy existing build without rebuilding
-./deploy-docs.sh --deploy-only
-
-# Test deployment without making changes
-./deploy-docs.sh --dry-run
-
-# Show all options
-./deploy-docs.sh --help
 ```
 
 ## Development Workflow
 
 1. Make all content changes on the `main` branch
-2. Build and test locally with `./deploy-docs.sh --build-only`
-3. Deploy to GitHub Pages with `./deploy-docs.sh`
+2. Test locally with `hugo server` if needed
+3. Commit and push to `main` - GitHub Actions will deploy automatically
 4. View the deployed site at your GitHub Pages URL
 
-## Branch Strategy
+## Deployment Architecture
 
-This project follows the standard GitHub Pages branch strategy:
+This project uses a modern GitHub Actions workflow for deployment:
 
 - **`main` branch**: Contains all source code, content, and configuration
-- **`gh-pages` branch**: Contains only the built site for hosting
+- **GitHub Actions**: Automatically builds and deploys the site
+- **GitHub Pages**: Hosts the generated static site
 
-**Important**: Never directly edit content on the `gh-pages` branch. All development should happen on `main`.
+**Important**: Never manually manipulate the deployment - all deployment is handled automatically by GitHub Actions.
 
 ## Documentation Structure
 
 - `content/`: Main content directory with all documentation source files
-- `deploy/`: Deployment scripts and configuration
+- `.github/workflows/`: GitHub Actions workflow configuration
 - `architecture/`: Architecture documentation
 - `docs/`: Project documentation and guides
 
-## Additional Resources
+## Deployment Resources
 
-- [Branch Management Guide](deploy/docs/branch-management.md)
-- [GitHub Pages Guide](deploy/docs/github-pages-guide.md)
-- [Deployment Scripts README](deploy/scripts/README.md)
+- [GitHub Actions Deployment Guide](content/project/github-actions-deployment-guide.md)
+- [Deployment Verification Checklist](content/project/github-actions-deployment-checklist.md)
+- [Troubleshooting Guide](content/project/github-actions-troubleshooting.md)
+- [GitHub Pages Deployment Solution](content/project/github-pages-deployment-solution.md)
 
 ## Need Help?
 
-If you encounter any issues with the documentation or deployment process, consult the troubleshooting guide in the documentation or open an issue.
+If you encounter issues with the documentation or deployment process:
+1. Check the [Troubleshooting Guide](content/project/github-actions-troubleshooting.md)
+2. Look at the GitHub Actions logs in the repository's Actions tab
+3. Open an issue if problems persist
