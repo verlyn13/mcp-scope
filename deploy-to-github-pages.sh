@@ -43,9 +43,26 @@ if [ ! -d "public" ]; then
   exit 1
 fi
 
+# List the files in the public directory to verify content
+echo -e "${BLUE}Verifying build output...${NC}"
+echo "Files in public directory:"
+ls -la public/
+echo ""
+
+if [ ! -f "public/index.html" ]; then
+  echo -e "${RED}✗ index.html not found in public directory${NC}"
+  exit 1
+else
+  echo -e "${GREEN}✓ index.html found in public directory${NC}"
+fi
+
 # Configure Git for deployment
 echo -e "${BLUE}Configuring Git for deployment...${NC}"
 REPO_URL="https://${GH_PAT}@github.com/verlyn13/mcp-scope.git"
+
+# Save current branch to return to it later
+CURRENT_BRANCH=$(git branch --show-current)
+echo -e "${BLUE}Current branch is ${CURRENT_BRANCH}, will return to it after deployment${NC}"
 
 # Create or switch to gh-pages branch
 echo -e "${BLUE}Switching to gh-pages branch...${NC}"
@@ -53,16 +70,41 @@ if git show-ref --verify --quiet refs/heads/gh-pages; then
   git checkout gh-pages
 else
   git checkout --orphan gh-pages
+  # Remove everything to start with a clean branch
+  git rm -rf . || true
+  # Create an empty commit to start with a clean history
+  git commit --allow-empty -m "Initialize gh-pages branch"
 fi
 
-# Remove existing files
+# Remove existing files but keep .git directory
 echo -e "${BLUE}Cleaning gh-pages branch...${NC}"
-find . -maxdepth 1 -not -path './.git' -not -path './public' -not -path '.' -exec rm -rf {} \; 2>/dev/null || true
+# Use find to list and remove files (excluding .git directory)
+find . -mindepth 1 -maxdepth 1 -not -path "./.git" -exec rm -rf {} \; 2>/dev/null || true
 
-# Copy the built site
-echo -e "${BLUE}Copying Hugo build to gh-pages branch...${NC}"
+# Copy the built site to the root
+echo -e "${BLUE}Copying Hugo build to gh-pages branch root...${NC}"
 cp -r public/* .
-touch .nojekyll
+touch .nojekyll  # Add .nojekyll file to disable Jekyll processing
+
+# Verify files were copied correctly
+echo -e "${BLUE}Verifying files in gh-pages branch...${NC}"
+echo "Files in gh-pages branch root:"
+ls -la
+echo ""
+
+if [ ! -f "index.html" ]; then
+  echo -e "${RED}✗ index.html not found in gh-pages root${NC}"
+  # Try to fix by copying again directly
+  echo -e "${YELLOW}Attempting to copy index.html directly...${NC}"
+  cp public/index.html .
+  if [ ! -f "index.html" ]; then
+    echo -e "${RED}✗ Failed to copy index.html${NC}"
+    git checkout $CURRENT_BRANCH
+    exit 1
+  fi
+else
+  echo -e "${GREEN}✓ index.html found in gh-pages root${NC}"
+fi
 
 # Add all changes
 echo -e "${BLUE}Committing changes...${NC}"
@@ -72,7 +114,7 @@ git add --all
 COMMIT_MSG="Update documentation - $(date +'%Y-%m-%d %H:%M:%S')"
 git commit -m "$COMMIT_MSG" || {
   echo -e "${YELLOW}⚠ No changes to commit. Site is already up to date.${NC}"
-  git checkout main
+  git checkout $CURRENT_BRANCH
   exit 0
 }
 
@@ -80,9 +122,10 @@ git commit -m "$COMMIT_MSG" || {
 echo -e "${BLUE}Pushing to GitHub with authentication...${NC}"
 git push -f "$REPO_URL" gh-pages
 
-# Switch back to main branch
-echo -e "${BLUE}Switching back to main branch...${NC}"
-git checkout main
+# Switch back to original branch
+echo -e "${BLUE}Switching back to ${CURRENT_BRANCH} branch...${NC}"
+git checkout $CURRENT_BRANCH
 
 echo -e "${GREEN}✓ Successfully deployed to GitHub Pages using local token${NC}"
 echo -e "${GREEN}✓ Site should be available at https://verlyn13.github.io/mcp-scope/${NC}"
+echo -e "${YELLOW}Note: It may take a few minutes for GitHub Pages to update${NC}"
