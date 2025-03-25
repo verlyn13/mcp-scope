@@ -3,7 +3,7 @@ title: "ScopeCam MCP"
 description: "Multi-Agent Control Platform for ScopeCam Integration"
 ---
 
-# Multi-Agent Control Platform (MCP)
+# Multi-Agent Control Platform (MCP) - 2025 Edition
 
 A distributed, message-driven orchestration platform that coordinates specialized agents for complex system integrations.
 
