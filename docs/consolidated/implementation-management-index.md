@@ -1,7 +1,7 @@
 ---
 title: "MCP Implementation Management Framework"
 status: "Active"
-version: "1.0"
+version: "1.0.1"
 date_created: "2025-03-24"
 last_updated: "2025-03-24"
 contributors: ["Documentation Architect"]
@@ -158,6 +158,17 @@ The MCP Implementation Management Framework provides a comprehensive approach to
 
 This framework should be reviewed and updated quarterly to ensure it continues to meet the evolving needs of the project.
 
+## Recently Archived Implementation Components
+
+The following components have recently been archived as part of our documentation maintenance process:
+
+| Component | Archive Date | Archive Location | Replacement |
+|-----------|--------------|------------------|-------------|
+| Local Deployment Scripts | 2025-03-24 | [Deprecated Local Deployment Method](/docs/consolidated/deprecated-local-deployment-method.md) | [GitHub Actions Deployment](/content/project/github-actions-deployment-guide.md) |
+
+For a complete list of archived components and documentation, refer to the [Documentation and Implementation Archiving Strategy](/docs/consolidated/documentation-archiving-strategy.md).
+
 ## Changelog
 
+- 1.0.1 (2025-03-24): Added section for recently archived implementation components
 - 1.0.0 (2025-03-24): Initial implementation management framework

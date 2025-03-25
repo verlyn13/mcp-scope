@@ -1,10 +1,18 @@
 # MCP Documentation Deployment
 
+🔴 **OUTDATED** - This document contains outdated deployment instructions. Please refer to [GitHub Pages Deployment Solution](/content/project/github-pages-deployment-solution.md) for the current official deployment process.
+
+## Historical Context
+
+This document describes previous deployment methods that have been replaced by GitHub Actions. The information below is preserved for historical reference only and **should not be used** for current deployments.
+
+---
+
 This document explains the two deployment options for the MCP documentation site to GitHub Pages.
 
-## Option 1: Local Deployment Script (Recommended)
+## Option 1: Local Deployment Script (NO LONGER RECOMMENDED)
 
-This repository uses a local deployment script that sources a GitHub Personal Access Token (PAT) from a local secrets file.
+This repository previously used a local deployment script that sources a GitHub Personal Access Token (PAT) from a local secrets file.
 
 ### Prerequisites
 
@@ -40,9 +48,9 @@ This script will:
 - Commit and push the changes using your GitHub token
 - Switch back to the main branch
 
-## Option 2: GitHub Actions Workflow (Alternative)
+## Option 2: GitHub Actions Workflow (NOW THE OFFICIAL METHOD)
 
-An alternative approach is to use GitHub Actions for automated deployments.
+GitHub Actions is now the official and only supported deployment method. For current instructions, please see [GitHub Pages Deployment Solution](/content/project/github-pages-deployment-solution.md).
 
 ### Prerequisites
 

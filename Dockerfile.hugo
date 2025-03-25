@@ -1,4 +1,7 @@
-FROM docker.io/klakegg/hugo:0.110-ext-alpine
+FROM docker.io/klakegg/hugo:0.111.3-ext-alpine
+
+# Install Git to eliminate warnings about Git not found
+RUN apk add --no-cache git
 
 WORKDIR /src
 

@@ -2,8 +2,13 @@
 
 # Run Hugo in the containerized environment
 
-# Build the container if it doesn't exist
-if ! podman image exists hugo-local; then
+# Check if we need to (re)build the container
+if [[ "$1" == "rebuild" ]]; then
+  echo "Forcefully rebuilding Hugo container..."
+  podman image rm -f hugo-local 2>/dev/null || true
+  podman build --no-cache -t hugo-local -f Dockerfile.hugo .
+  shift
+elif ! podman image exists hugo-local; then
   echo "Building Hugo container..."
   podman build -t hugo-local -f Dockerfile.hugo .
 fi
@@ -41,6 +46,7 @@ case "$1" in
     echo "  server      Start the Hugo development server"
     echo "  build       Build the static site"
     echo "  new [path]  Create new content"
+    echo "  rebuild     Rebuild the Hugo container before running another command"
     echo "  help        Show this help message"
     ;;
 esac
