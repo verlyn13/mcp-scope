@@ -47,14 +47,27 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
 
+      - name: Debug information
+        run: |
+          echo "Theme directory exists: $(ls -la themes)"
+          echo "Theme content: $(ls -la themes/mcp-theme)"
+          echo "Current directory: $(pwd)"
+          echo "Content directory: $(ls -la content)"
+      
       - name: Build with Hugo
         run: |
           hugo \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --debug
         
       - name: Create .nojekyll file
         run: touch public/.nojekyll
+      
+      - name: Verify build output
+        run: |
+          echo "Public directory exists: $(ls -la public)"
+          echo "Sample content files: $(ls -la public | head -10)"
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
