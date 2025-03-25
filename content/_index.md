@@ -61,11 +61,11 @@ mcp-project/
    ```
 
 2. **Choose your development approach**:
-   - [Local Development](/docs/implementation/local-development-guide.md) (recommended for daily work)
-   - [Containerized Development](/docs/implementation/containerized-development-guide.md) (for consistent environments)
+   - [Local Development](/mcp/local-development-guide/) (recommended for daily work)
+   - [Containerized Development](/mcp/containerized-development-guide/) (for consistent environments)
 
 3. **Follow the getting started guide**:
-   - Detailed instructions in [First Steps Guide](/docs/project/first-steps.md)
+   - Detailed instructions in [First Steps Guide](/mcp/getting-started/)
 
 ## Development Environment Options
 
@@ -81,7 +81,7 @@ cd mcp-core
 ./gradlew run
 ```
 
-See the [Local Development Guide](/docs/implementation/local-development-guide.md) for detailed instructions.
+See the [Local Development Guide](/mcp/local-development-guide/) for detailed instructions.
 
 ### Containerized Development
 
@@ -92,22 +92,22 @@ Use containers for a consistent development environment that closely resembles p
 podman-compose up -d
 ```
 
-See the [Containerized Development Guide](/docs/implementation/containerized-development-guide.md) for details.
+See the [Containerized Development Guide](/mcp/containerized-development-guide/) for details.
 
 ## Documentation
 
-- [Documentation Index](/docs/README.md) - Starting point for all documentation
-- [First Steps Guide](/docs/project/first-steps.md) - First steps with MCP
-- [Project Setup](/docs/implementation/project-setup.md) - Setting up your development environment
-- [Architecture Overview](/docs/architecture/overview.md) - System design and component interactions
+- [Documentation Index](/mcp/README/) - Starting point for all documentation
+- [First Steps Guide](/mcp/getting-started/) - First steps with MCP
+- [Project Setup](/mcp/environment-setup/) - Setting up your development environment
+- [Architecture Overview](/mcp/architecture/overview/) - System design and component interactions
 
 ## Contributing
 
-Contributions are welcome! Please see our [contribution guidelines](CONTRIBUTING.md) for details on how to get involved.
+Contributions are welcome! Please see our [contribution guidelines](/mcp/CONTRIBUTING/) for details on how to get involved.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](/mcp/LICENSE/) file for details.
 
 ## Project Status
 

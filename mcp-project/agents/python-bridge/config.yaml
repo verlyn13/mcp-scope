@@ -1,0 +1,41 @@
+# Python Bridge Agent Configuration
+
+# Agent identification
+agent_id: null  # Set to null to auto-generate
+
+# Logging level (DEBUG, INFO, WARNING, ERROR)
+log_level: "INFO"
+
+# NATS Messaging Configuration
+nats:
+  server_url: "nats://localhost:4222"
+  reconnect_attempts: 10
+  reconnect_timeout: 1.0
+  max_reconnect_timeout: 15.0
+
+# Health Monitoring
+health:
+  check_interval: 30  # seconds
+  metrics_enabled: true
+
+# API Service
+api:
+  enabled: true
+  host: "0.0.0.0"
+  port: 8080
+
+# AI Model Configuration
+model:
+  model_id: "Qwen/Qwen2.5-Coder-32B-Instruct"
+  use_local_model: false
+  local_model_path: null
+  model_kwargs:
+    temperature: 0.2
+    max_tokens: 4096
+    top_p: 0.95
+
+# Agent capabilities
+capabilities:
+  - "code-generation"
+  - "documentation-generation"
+  - "uvc-analysis"

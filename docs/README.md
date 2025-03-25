@@ -1,9 +1,9 @@
 ---
 title: "ScopeCam MCP Documentation Hub"
 status: "Active"
-version: "1.4"
+version: "1.9"
 date_created: "2025-03-22"
-last_updated: "2025-03-23"
+last_updated: "2025-03-24"
 contributors: ["Documentation Architect", "Build Engineer"]
 related_docs:
   - "/README.md"
@@ -99,12 +99,36 @@ Documents in this layer:
 - [Project Organization](/docs/project/project-organization.md) - Structure and organization 🟢
 - [Path Reference Guide](/docs/project/path-reference-guide.md) - Definitive path usage guide 🟢
 - [Build Engineer Next Steps](/docs/project/build-engineer-next-steps.md) - Task roadmap for build engineers 🟢
+- [MCP Server Status Assessment](/docs/project/mcp-server-status-assessment.md) - Current status and roadmap for MCP server 🟢
+- [Documentation Architect Requirements](/docs/project/documentation-architect-requirements.md) - Requirements for specialized documentation role 🟢
 
 Technical Guides:
 
 - [Testing Guide](/docs/guides/testing-guide.md) - Testing infrastructure and best practices 🟢
 - [Health Monitoring Guide](/docs/guides/health-monitoring-guide.md) - Health monitoring system documentation 🟢
 - [Containerized Development Environment](/docs/guides/containerized-dev-environment.md) - Development environment setup 🟢
+
+Python Bridge Agent Implementation:
+
+- [Python Bridge Sequential Implementation Plan](/docs/project/python-bridge-sequential-implementation-plan.md) - Detailed implementation sequence 🟢
+- [Python Bridge Implementation Kickoff Tasks](/docs/project/python-bridge-implementation-kickoff.md) - Initial tasks for the build engineer 🟢
+- [Python Bridge Implementation Status](/docs/project/python-bridge-implementation-status.md) - Current implementation progress 🟢
+- [Python Bridge Technical Reference](/docs/project/python-bridge-technical-reference.md) - Comprehensive technical reference 🟢
+- [Python Bridge Best Practices](/docs/project/python-bridge-best-practices.md) - smolagents integration best practices 🟢
+
+Implementation Management Framework:
+
+- [Implementation Management Index](/docs/consolidated/implementation-management-index.md) - Framework overview and structure 🟢
+- [Implementation Status and Priorities](/docs/consolidated/implementation-status-and-priorities.md) - Current status and prioritization 🟢
+- [Documentation Archiving Strategy](/docs/consolidated/documentation-archiving-strategy.md) - Process for managing completed work 🟢
+- [Weekly Implementation Status Template](/docs/templates/weekly-implementation-status-template.md) - Template for progress tracking 🟢
+- [Documentation Architect Role Definition](/docs/consolidated/documentation-architect-role-definition.md) - Comprehensive role definition and responsibilities 🟢
+
+Agentic Roles Implementation:
+
+- [Agentic Roles Implementation Plan](/docs/consolidated/agentic-roles-implementation-plan.md) - Implementation plan for role-switching capabilities 🟢
+- [Build Engineer Role Definition](/docs/consolidated/build-engineer-role-definition.md) - Build Engineer responsibilities and expertise 🟢
+- [Documentation Architect Role Definition](/docs/consolidated/documentation-architect-role-definition.md) - Documentation Architect responsibilities and expertise 🟢
 
 ### MCP Documentation Layer
 
@@ -155,13 +179,21 @@ When contributing new documentation:
 
 For team members working on specific aspects of the project:
 
-- **For Build Engineers**: Start with [Build Engineer Next Steps](/docs/project/build-engineer-next-steps.md)
+- **For Build Engineers**: Start with [Build Engineer Role Definition](/docs/consolidated/build-engineer-role-definition.md)
+- **For Documentation Contributors**: Read the [Documentation Architect Role Definition](/docs/consolidated/documentation-architect-role-definition.md)
+- **For Understanding Role Switching**: Review the [Agentic Roles Implementation Plan](/docs/consolidated/agentic-roles-implementation-plan.md)
+- **For Project Management**: Review the [Implementation Management Framework](/docs/consolidated/implementation-management-index.md)
 - **For Testing**: Use the [Testing Guide](/docs/guides/testing-guide.md)
 - **For Health Monitoring**: Refer to the [Health Monitoring Guide](/docs/guides/health-monitoring-guide.md)
 - **For Development Environment**: See the [Containerized Development Environment](/docs/guides/containerized-dev-environment.md)
 
 ## Changelog
 
+- 1.9.0 (2025-03-24): Added Agentic Roles Implementation section with links to role definitions
+- 1.8.0 (2025-03-24): Added Documentation Architect Role Definition to Implementation Management Framework section
+- 1.7.0 (2025-03-24): Added Implementation Management Framework section with links to new framework documents
+- 1.6.0 (2025-03-24): Added MCP Server Status Assessment and Documentation Architect Requirements
+- 1.5.0 (2025-03-24): Added Python Bridge Agent implementation documentation
 - 1.4.0 (2025-03-23): Added new guides for testing, health monitoring, and containerized development
 - 1.3.0 (2025-03-22): Added reference to Build Engineer Next Steps document
 - 1.2.0 (2025-03-22): Added reference to the Path Reference Guide

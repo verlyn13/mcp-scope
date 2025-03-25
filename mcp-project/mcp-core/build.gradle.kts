@@ -34,7 +34,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.example.mcp.MainKt")
+    mainClass.set("com.example.mcp.EntryPoint")
 }
 
 tasks.withType<Test> {

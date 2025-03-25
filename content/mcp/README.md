@@ -3,12 +3,12 @@ title: "MCP Documentation Index"
 status: "Active"
 version: "1.1"
 date_created: "2025-03-22"
-last_updated: "2025-03-22"
+last_updated: "2025-03-24"
 contributors: ["Documentation Architect"]
 related_docs:
-  - "/mcp-project/README.md"
-  - "/docs/README.md"
-  - "/docs/project/project-organization.md"
+  - "/mcp/README/"
+  - "/docs/"
+  - "/project/documentation-directory-structure/"
 tags: ["mcp-core", "documentation", "index", "navigation"]
 ---
 
@@ -16,7 +16,7 @@ tags: ["mcp-core", "documentation", "index", "navigation"]
 
 🟢 **Active**
 
-[↩️ Back to MCP Project](/mcp-project/README.md) | [↩️ Back to Documentation Hub](/docs/README.md)
+[↩️ Back to MCP Project](/mcp/README/) | [↩️ Back to Documentation Hub](/docs/)
 
 ## Overview
 
@@ -33,27 +33,27 @@ This documentation is part of the **MCP Implementation Layer** in our dual-layer
     └── docs/                          # THIS DOCUMENTATION LAYER
 ```
 
-For information about the overall ScopeCam project and project organization, please refer to the [Root Documentation Hub](/docs/README.md).
+For information about the overall ScopeCam project and project organization, please refer to the [Root Documentation Hub](/docs/).
 
 ## MCP Documentation Sections
 
 ### Project Information
 
-- [First Steps Guide](/mcp-project/docs/project/first-steps.md) - Getting started with MCP development
+- [First Steps Guide](/mcp/getting-started/) - Getting started with MCP development
 
 ### Architecture Documentation
 
-- [Architecture Overview](/mcp-project/docs/architecture/overview.md) - Comprehensive system design description
+- [Architecture Overview](/mcp/architecture/overview/) - Comprehensive system design description
 
 ### Implementation Guides
 
-- [Project Setup](/mcp-project/docs/implementation/project-setup.md) - Environment setup instructions
-- [Local Development Guide](/mcp-project/docs/implementation/local-development-guide.md) - Local development workflow
-- [Containerized Development Guide](/mcp-project/docs/implementation/containerized-development-guide.md) - Container-based development
+- [Project Setup](/mcp/environment-setup/) - Environment setup instructions
+- [Local Development Guide](/mcp/local-development-guide/) - Local development workflow
+- [Containerized Development Guide](/mcp/containerized-development-guide/) - Container-based development
 
 ### Standards and Guidelines
 
-- [Documentation Guidelines](/mcp-project/docs/standards/documentation-guidelines.md) - Documentation format and standards
+- [Documentation Guidelines](/mcp/standards/documentation-guidelines/) - Documentation format and standards
 
 ## Core Components
 
@@ -72,13 +72,13 @@ The MCP implementation consists of these core components:
 
 ### Setting Up Your Development Environment
 
-1. Follow the [Project Setup Guide](/mcp-project/docs/implementation/project-setup.md)
-2. Choose between [local](/mcp-project/docs/implementation/local-development-guide.md) or [containerized](/mcp-project/docs/implementation/containerized-development-guide.md) development
-3. Start with the [First Steps Guide](/mcp-project/docs/project/first-steps.md)
+1. Follow the [Project Setup Guide](/mcp/environment-setup/)
+2. Choose between [local](/mcp/local-development-guide/) or [containerized](/mcp/containerized-development-guide/) development
+3. Start with the [First Steps Guide](/mcp/getting-started/)
 
 ### Developing New Features
 
-1. Understand the [Architecture Overview](/mcp-project/docs/architecture/overview.md)
+1. Understand the [Architecture Overview](/mcp/architecture/overview/)
 2. Set up your development environment
 3. Implement following the appropriate development guide
 
@@ -86,8 +86,8 @@ The MCP implementation consists of these core components:
 
 For project-wide documentation and integration with the broader ScopeCam project, refer to:
 
-- [🔄 ScopeCam Documentation Hub](/docs/README.md) - Root documentation index
-- [🔄 Dual-Layer Project Organization](/docs/project/project-organization.md) - Project structure explanation
+- [🔄 ScopeCam Documentation Hub](/docs/) - Root documentation index
+- [🔄 Dual-Layer Project Organization](/project/documentation-directory-structure/) - Project structure explanation
 
 ## Documentation Status System
 
@@ -105,7 +105,7 @@ All MCP documentation follows this status system:
 
 All MCP documentation follows the standards defined in:
 
-- [Documentation Guidelines](/mcp-project/docs/standards/documentation-guidelines.md)
+- [Documentation Guidelines](/mcp/standards/documentation-guidelines/)
 
 These standards ensure consistency with the root documentation layer while focusing on MCP-specific technical content.
 
@@ -119,7 +119,7 @@ When contributing to MCP documentation:
    - `implementation/` - Development guides and how-to content
    - `standards/` - MCP-specific standards and guidelines
 
-2. Follow the [Documentation Guidelines](/mcp-project/docs/standards/documentation-guidelines.md)
+2. Follow the [Documentation Guidelines](/mcp/standards/documentation-guidelines/)
 
 3. Use the `mcp-core` or `mcp-agent` tags in your front matter to indicate MCP-specific content
 
@@ -129,5 +129,6 @@ When contributing to MCP documentation:
 
 ## Changelog
 
+- 1.1.1 (2025-03-24): Updated all documentation links to use Hugo-compatible paths
 - 1.1.0 (2025-03-22): Updated with dual-layer documentation context
 - 1.0.0 (2025-03-22): Initial release

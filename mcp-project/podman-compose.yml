@@ -57,3 +57,21 @@ services:
       - nats
       - mcp-core
     restart: unless-stopped
+    
+  # Python Bridge Agent with smolagents integration
+  python-bridge:
+    build:
+      context: ./agents/python-bridge
+      dockerfile: Dockerfile
+    volumes:
+      - ./agents/python-bridge:/app
+    ports:
+      - "8081:8080"  # Health check endpoint
+    environment:
+      - NATS_SERVER=nats://nats:4222
+      - MODEL_NAME=Qwen/Qwen2.5-Coder-32B-Instruct
+      - HEARTBEAT_INTERVAL=30
+    depends_on:
+      - nats
+      - mcp-core
+    restart: unless-stopped

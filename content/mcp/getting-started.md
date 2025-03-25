@@ -133,7 +133,7 @@ For the fastest way to get started with local development:
    ./gradlew run
    ```
 
-For detailed instructions on local development, see the [Local Development Guide](local-development-guide.md).
+For detailed instructions on local development, see the [Local Development Guide](/mcp/local-development-guide/).
 
 ### Option 2: Containerized Development Setup
 
@@ -155,7 +155,7 @@ If you prefer to use containers for development:
    podman-compose logs -f
    ```
 
-For detailed instructions on containerized development, see the [Containerized Development Guide](containerized-development-guide.md).
+For detailed instructions on containerized development, see the [Containerized Development Guide](/mcp/containerized-development-guide/).
 
 ## Development Environments
 
@@ -168,7 +168,7 @@ Advantages:
 - Easier debugging
 - Direct access to local tools
 
-Setup and workflow instructions are provided in the [Local Development Guide](local-development-guide.md).
+Setup and workflow instructions are provided in the [Local Development Guide](/mcp/local-development-guide/).
 
 ### Containerized Development
 
@@ -177,7 +177,7 @@ Advantages:
 - Isolated dependencies
 - Closer to production environment
 
-Setup and workflow instructions are provided in the [Containerized Development Guide](containerized-development-guide.md).
+Setup and workflow instructions are provided in the [Containerized Development Guide](/mcp/containerized-development-guide/).
 
 ## Core Concepts
 
@@ -276,8 +276,8 @@ Now that you're set up, you might want to:
 
 ## Additional Resources
 
-- [Local Development Guide](local-development-guide.md): Detailed guide for local development
-- [Containerized Development Guide](containerized-development-guide.md): Guide for container-based development
-- [Environment Setup](environment-setup.md): Comprehensive environment setup instructions
+- [Local Development Guide](/mcp/local-development-guide/): Detailed guide for local development
+- [Containerized Development Guide](/mcp/containerized-development-guide/): Guide for container-based development
+- [Environment Setup](/mcp/environment-setup/): Comprehensive environment setup instructions
 - [Kotlin Documentation](https://kotlinlang.org/docs/home.html): Official Kotlin language documentation
 - [NATS Documentation](https://docs.nats.io/): Official NATS documentation

@@ -1,0 +1,87 @@
+version: '3'
+
+services:
+  # NATS messaging server
+  nats:
+    image: nats:2.9.16-alpine
+    ports:
+      - "4222:4222"  # Client connections
+      - "8222:8222"  # HTTP monitoring
+    volumes:
+      - ./nats/nats-server.conf:/etc/nats/nats-server.conf
+    command: ["-c", "/etc/nats/nats-server.conf"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:8222/varz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - mcp-network
+
+  # MCP Server
+  mcp-server:
+    build:
+      context: ./mcp-core
+      dockerfile: Dockerfile
+    depends_on:
+      nats:
+        condition: service_healthy
+    ports:
+      - "8080:8080"  # API and monitoring
+    environment:
+      - NATS_URL=nats://nats:4222
+      - MCP_ENABLE_HEALTH_CHECKS=true
+      - MCP_PERSISTENCE_FILE=/data/mcp-state.json
+      - MCP_MAX_TASKS=4
+      - JAVA_OPTS=-Xms512m -Xmx1024m
+      - MCP_REGISTER_TEST_AGENTS=true
+    volumes:
+      - mcp-data:/data
+      - mcp-logs:/logs
+      - mcp-config:/config
+    networks:
+      - mcp-network
+
+  # Camera Agent (optional, can be enabled when needed)
+  camera-agent:
+    build:
+      context: ./agents/camera-agent
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - mcp-server
+    environment:
+      - NATS_URL=nats://nats:4222
+      - AGENT_ID=camera-agent-1
+      - LOG_LEVEL=INFO
+    networks:
+      - mcp-network
+    profiles:
+      - with-agents
+
+  # Python Processor Agent (optional, can be enabled when needed)
+  python-processor:
+    build:
+      context: ./agents/python-processor
+      dockerfile: Dockerfile.python
+    depends_on:
+      - mcp-server
+    environment:
+      - NATS_URL=nats://nats:4222
+      - AGENT_ID=python-processor-1
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./agents/python-processor:/app
+    networks:
+      - mcp-network
+    profiles:
+      - with-agents
+
+volumes:
+  mcp-data:    # Persistent data storage
+  mcp-logs:    # Log storage
+  mcp-config:  # Configuration files
+
+networks:
+  mcp-network:
+    driver: bridge
